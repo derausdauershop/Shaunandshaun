@@ -9,7 +9,23 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			display: ['var(--font-display)', 'Arial Narrow', 'sans-serif'],
+  			sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+  			mono: ['var(--font-mono)', 'ui-monospace', 'monospace']
+  		},
   		colors: {
+  			ink: 'hsl(var(--ink))',
+  			paper: 'hsl(var(--paper))',
+  			stone: {
+  				DEFAULT: 'hsl(var(--stone))',
+  				dark: 'hsl(var(--stone-dark))'
+  			},
+  			brand: 'hsl(var(--brand))',
+  			signal: {
+  				DEFAULT: 'hsl(var(--signal))',
+  				foreground: 'hsl(var(--signal-foreground))'
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
