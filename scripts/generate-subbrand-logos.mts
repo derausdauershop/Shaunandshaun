@@ -5,8 +5,9 @@
  * All text is converted to outlines, so the files work without installed fonts
  * (print shops, textile printers, RaceResult).
  *
- * Run: npm run brand:subbrands -- [cup season] [cup races]
- *   e.g. npm run brand:subbrands -- 2027 9
+ * Run: npm run brand:subbrands -- [cup season] [cup races] [cup edition]
+ *   e.g. npm run brand:subbrands -- 2027 8 39
+ * The series line shows one dot per race plus a red final dot (Abschlussfeier / overall ranking).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -28,7 +29,11 @@ const opentype: { loadSync(file: string): Font } = require("opentype.js");
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const SEASON = process.argv[2] ?? "2027";
-const RACES = Number(process.argv[3] ?? 9);
+const RACES = Number(process.argv[3] ?? 8);
+const EDITION = process.argv[4] ?? "39";
+const DOTS = RACES + 1; // races + final
+/** Host places of the AUSDAUER CUP (ring of the seal), in season order. */
+const PLACES = ["WEHBACH", "NIEDERFISCHBACH", "FREUDENBERG", "DEUZ", "ANZHAUSEN", "WILNSDORF", "HERDORF", "WENDEN"];
 
 const RED = "#E30110";
 const INK = "#222222";
@@ -172,10 +177,10 @@ const svg = (w: number, h: number, body: string, label: string) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${r(w)} ${r(h)}" role="img" aria-label="${label}"><title>${label}</title>${body}</svg>\n`;
 
 function stations(x: number, y: number, width: number, color: string, accent: string, dot = 2.8) {
-  const step = (width - dot * 2) / (RACES - 1);
+  const step = (width - dot * 2) / (DOTS - 1);
   let s = `<path d="M${r(x + dot)} ${r(y)}H${r(x + width - dot)}" stroke="${color}" stroke-width="${r(dot * 0.45)}" fill="none"/>`;
-  for (let i = 0; i < RACES; i++) {
-    const last = i === RACES - 1;
+  for (let i = 0; i < DOTS; i++) {
+    const last = i === DOTS - 1;
     s += `<circle cx="${r(x + dot + i * step)}" cy="${r(y)}" r="${r(last ? dot * 1.3 : dot)}" fill="${last ? accent : color}"/>`;
   }
   return s;
@@ -225,27 +230,41 @@ function series(b: SubBrand, c: Colorway) {
   return svg(width + 2, y + 5, body, `${b.title} – ${claim}`);
 }
 
-/** Round seal for certificates, chest prints, medals. */
-function seal(b: SubBrand, c: Colorway, ring: string) {
-  const S = 240, m = S / 2;
+/** Round seal: host places around the ring (like the previous cup seal), edition + season inside. */
+function seal(b: SubBrand, c: Colorway, ring: "places" | "claim") {
+  const S = 240, m = S / 2, R = 98;
   let body =
     `<circle cx="${m}" cy="${m}" r="116" fill="none" stroke="${c.name_}" stroke-width="3"/>` +
-    `<circle cx="${m}" cy="${m}" r="90" fill="none" stroke="${c.name_}" stroke-width="1.2"/>` +
-    `<path fill="${c.name_}" d="${arcText(LABEL, ring, m, m, 98, 17, 2.2)}"/>`;
-  const span = (110 * Math.PI) / 180;
-  for (let i = 0; i < RACES; i++) {
-    const a = Math.PI + span / 2 - (i * span) / (RACES - 1); // left to right, last dot = overall ranking
-    const last = i === RACES - 1;
-    body += `<circle cx="${r(m + Math.sin(a) * 103)}" cy="${r(m - Math.cos(a) * 103)}" r="${last ? 5 : 3.6}" fill="${last ? c.accent : c.name_}"/>`;
+    `<circle cx="${m}" cy="${m}" r="88" fill="none" stroke="${c.name_}" stroke-width="1.2"/>`;
+  if (ring === "places") {
+    // full circle, size fitted to the circumference
+    const label = PLACES.join(" · ") + " · ";
+    const rr = R - 5; // baseline radius
+    let size = 20;
+    // leave one tracking gap of air at the seam so the last separator never touches the first place
+    while (layout(LABEL, label, size, size * 0.14).width + size * 0.14 > 2 * Math.PI * rr) size -= 0.1;
+    body += `<path fill="${c.name_}" d="${arcText(LABEL, label, m, m, rr, size, size * 0.14)}"/>`;
+  } else {
+    body += `<path fill="${c.name_}" d="${arcText(LABEL, "LAUFSERIE · SIEGERLAND", m, m, R, 17, 2.2)}"/>`;
+    const span = (110 * Math.PI) / 180;
+    for (let i = 0; i < DOTS; i++) {
+      const a = Math.PI + span / 2 - (i * span) / (DOTS - 1); // left to right, last dot = final
+      const last = i === DOTS - 1;
+      body += `<circle cx="${r(m + Math.sin(a) * 103)}" cy="${r(m - Math.cos(a) * 103)}" r="${last ? 5 : 3.6}" fill="${last ? c.accent : c.name_}"/>`;
+    }
   }
-  const ph = 50;
-  body += plate(m - plateWidth(ph) / 2, 58, ph, c.plate, c.mark);
-  const size = 30;
+  const ph = 46;
+  const top = ring === "places" ? 50 : 58;
+  body += plate(m - plateWidth(ph) / 2, top, ph, c.plate, c.mark);
+  const size = 29;
   const nb = bounds(DISPLAY, b.title, size);
-  body += `<path fill="${c.name_}" d="${text(DISPLAY, b.title, m - nb.width / 2, 58 + ph + 12 + nb.height, size)}"/>`;
-  const sb = bounds(MONO, SEASON, 12, 2);
-  body += `<path fill="${c.name_}" d="${text(MONO, SEASON, m - sb.width / 2, 58 + ph + 12 + nb.height + 24, 12, 2)}"/>`;
-  return svg(S, S, body, `${b.title} – Siegel ${SEASON}`);
+  const ny = top + ph + 10 + nb.height;
+  body += `<path fill="${c.name_}" d="${text(DISPLAY, b.title, m - nb.width / 2, ny, size)}"/>`;
+  const line = `${EDITION}. AUSGABE · ${SEASON}`;
+  const sb = bounds(MONO, line, 9.5, 1.4);
+  body += `<path fill="${c.name_}" d="${text(MONO, line, m - sb.width / 2, ny + 20, 9.5, 1.4)}"/>`;
+  if (ring === "places") body += stations(m - 52, ny + 36, 104, c.name_, c.accent, 2.6);
+  return svg(S, S, body, `${b.title} – ${EDITION}. Ausgabe ${SEASON}`);
 }
 
 function icon(c: Colorway) {
@@ -269,7 +288,8 @@ for (const b of SUBBRANDS) {
     write(b.dir, `${b.file}-gestapelt-${c.name}.svg`, stacked(b, c));
     if (b.id === "cup") {
       write(b.dir, `${b.file}-serie-${c.name}.svg`, series(b, c));
-      write(b.dir, `${b.file}-siegel-${c.name}.svg`, seal(b, c, "LAUFSERIE · SIEGERLAND"));
+      write(b.dir, `${b.file}-siegel-${c.name}.svg`, seal(b, c, "places"));
+      write(b.dir, `${b.file}-siegel-claim-${c.name}.svg`, seal(b, c, "claim"));
     }
   }
   write(b.dir, `${b.file}-icon.svg`, icon(b.colorways[0]));

@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { CupLogo, SeriesTrack } from "@/components/brand/cup-logo";
-import { PaceLines } from "@/components/brand/pace-lines";
 import { TopoLines } from "@/components/brand/topo-lines";
 import { Badge } from "@/components/ui/badge";
-import { CUP_RACES, CUP_SEASON, cupLogo, type CupLogoColor, type CupLogoKind } from "@/lib/brand/cup";
+import { CUP_EDITION, CUP_FINAL, CUP_RACES, CUP_SEASON, cupLogo, type CupLogoColor, type CupLogoKind } from "@/lib/brand/cup";
 import { cn } from "@/lib/utils";
 import { Rule, Section } from "../_sections/section";
 
@@ -26,7 +25,7 @@ const VARIANTS: Array<{ kind: CupLogoKind; label: string; use: string; h: string
   { kind: "serie-", label: "Serienlogo", use: "Urkunden, RaceResult, Webseite, Flyer", h: "h-14" },
   { kind: "", label: "Standard", use: "Banner, Startnummern, Medaillenband, Webseite", h: "h-12" },
   { kind: "gestapelt-", label: "Gestapelt", use: "T-Shirt-Rücken, Hochformate, Beachflag", h: "h-32" },
-  { kind: "siegel-", label: "Siegel", use: "Urkunden-Siegel, Brust-Logo, Medaille, Sticker", h: "h-32" },
+  { kind: "siegel-", label: "Siegel", use: "Mit allen acht Orten im Ring und der Auflage – wie das bisherige Cup-Siegel. Urkunde, Brust-Logo, Medaille", h: "h-32" },
 ];
 
 const SPONSORS = ["Co-Sponsor A", "Co-Sponsor B", "Co-Sponsor C", "Co-Sponsor D", "Co-Sponsor E"];
@@ -73,8 +72,8 @@ export default function CupPage() {
           <p className="mt-12 font-mono text-xs uppercase tracking-[0.25em] text-brand">Logo-Entwurf · Laufserie Siegerland</p>
           <CupLogo kind="serie-" color="negativ" className="mt-8 h-auto w-full max-w-xl" />
           <p className="mt-10 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            Neun Läufe, neun Vereine, eine Wertung. Die Vereine richten die Läufe aus, AUSDAUER spannt den Cup darum – ab jetzt mit
-            einem einheitlichen Logo als Untermarke, gebaut wie die Run Academy.
+            Acht Läufe, acht Orte, ein Finale – zum {CUP_EDITION}. Mal. Die Vereine richten die Läufe aus, AUSDAUER spannt den Cup
+            darum. Ab jetzt mit einem einheitlichen Logo als Untermarke, gebaut wie die Run Academy.
           </p>
         </div>
       </header>
@@ -113,7 +112,8 @@ export default function CupPage() {
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Nur beim Cup</p>
               <p className="mt-2 font-display text-2xl font-extrabold uppercase">Serienleiste</p>
               <p className="mt-1 text-muted-foreground">
-                Ein Punkt pro Lauf der Saison, der rote Punkt am Ende ist die Gesamtwertung. Wird pro Saison mit 8 oder 9 Läufen neu erzeugt.
+                Acht Punkte für die acht Läufe, der rote Punkt am Ende ist die Abschlussfeier mit der Gesamtwertung. Wird pro Saison neu
+                erzeugt, falls ein Lauf dazukommt oder wegfällt.
               </p>
             </li>
           </ol>
@@ -150,12 +150,12 @@ export default function CupPage() {
             </div>
             <ul className="space-y-3">
               <Rule kind="do">Farbig auf Weiß, negativ auf Ink, Weiß auf Rot. Schwarz für Fax, Stempel und Einfarbdruck.</Rule>
-              <Rule kind="do">Mindestgrößen: Serienlogo 60 mm, Standard 35 mm, Siegel 20 mm, Plakette 8 mm.</Rule>
+              <Rule kind="do">Mindestgrößen: Serienlogo 60 mm, Standard 35 mm, Siegel 35 mm (darunter die Variante „siegel-claim“ ohne Ortsnamen), Plakette 8 mm.</Rule>
               <Rule kind="dont">Rote Plakette auf Rot, Logo auf unruhigen Fotos, Cup in Volt oder Academy in Rot.</Rule>
             </ul>
           </div>
           <p className="mt-8 font-mono text-xs text-muted-foreground">
-            Alle Dateien als SVG mit Schrift in Pfaden: public/brand/cup/ · Neue Saison: npm run brand:subbrands -- 2028 8
+            Alle Dateien als SVG mit Schrift in Pfaden: public/brand/cup/ · Neue Saison: npm run brand:subbrands -- 2028 8 40
           </p>
         </Section>
 
@@ -185,8 +185,8 @@ export default function CupPage() {
                   </p>
                 </div>
                 <div className="relative mt-[8%]">
-                  <p className="mb-2 font-mono text-[0.55rem] uppercase tracking-[0.2em] text-stone-dark">7 von 9 Läufen in der Wertung</p>
-                  <SeriesTrack total={9} done={[1, 2, 3, 5, 6, 8, 9]} />
+                  <p className="mb-2 font-mono text-[0.55rem] uppercase tracking-[0.2em] text-stone-dark">6 von 8 Läufen in der Wertung</p>
+                  <SeriesTrack total={8} done={[1, 2, 4, 5, 7, 8]} final />
                 </div>
                 <div className="relative mt-auto flex items-end justify-between gap-4 pt-6">
                   <div className="w-1/2 border-t border-ink pt-1 font-mono text-[0.5rem] uppercase tracking-[0.15em] text-stone-dark">
@@ -227,15 +227,15 @@ export default function CupPage() {
           </div>
         </Section>
 
-        <Section id="raceresult" km={4} kicker="RaceResult & Web" title="Ein Header für alle neun Läufe." dark>
+        <Section id="raceresult" km={4} kicker="RaceResult & Web" title="Ein Header für alle acht Läufe." dark>
           <Mock label="RaceResult-Header · 1200 × 240 px" note="Format bitte an die Vorgabe eures RaceResult-Layouts anpassen">
             <div className="relative flex aspect-[5/1] w-full items-center justify-between gap-6 overflow-hidden border-b-4 border-brand bg-ink px-[4%] text-paper ring-1 ring-border">
               <TopoLines className="absolute inset-0 h-full w-full text-stone opacity-30" />
               <CupLogo kind="serie-" color="negativ" className="relative h-auto w-[52%]" />
               <div className="relative text-right">
-                <p className="font-mono text-[clamp(0.45rem,1.2vw,0.75rem)] uppercase tracking-[0.2em] text-muted-foreground">Lauf 4 von 9</p>
-                <p className="font-display text-[clamp(0.9rem,3vw,2.2rem)] font-black uppercase italic leading-none">Lauf 4</p>
-                <p className="font-mono text-[clamp(0.45rem,1.2vw,0.75rem)] uppercase tracking-[0.15em] text-muted-foreground">Ausrichter-Verein</p>
+                <p className="font-mono text-[clamp(0.45rem,1.2vw,0.75rem)] uppercase tracking-[0.2em] text-muted-foreground">Lauf 4 von 8 · Deuz</p>
+                <p className="font-display text-[clamp(0.9rem,2.6vw,2rem)] font-black uppercase italic leading-none">Pfingst-Lauf</p>
+                <p className="font-mono text-[clamp(0.45rem,1.2vw,0.75rem)] uppercase tracking-[0.15em] text-muted-foreground">Deuzer Sparkassen Pfingst-Lauf</p>
               </div>
             </div>
           </Mock>
@@ -244,13 +244,13 @@ export default function CupPage() {
               <div className="rounded-sm bg-paper p-6 text-ink">
                 <CupLogo className="h-8" />
                 <p className="mt-6 font-display text-3xl font-black uppercase">Saison {CUP_SEASON}</p>
-                <SeriesTrack total={9} done={[1, 2, 3]} className="mt-4" />
+                <SeriesTrack total={8} done={[1, 2, 3]} final className="mt-4" />
                 <ul className="mt-6 divide-y divide-ink/10 text-sm">
                   {CUP_RACES.slice(3, 6).map((r) => (
                     <li key={r.no} className="flex items-center justify-between gap-3 py-2">
-                      <span className="font-mono text-xs tabular">{r.date}</span>
-                      <span className="flex-1 font-display text-lg font-bold uppercase">{r.name}</span>
-                      <span className="text-stone-dark">{r.distance}</span>
+                      <span className="w-8 font-mono text-xs">{r.month}</span>
+                      <span className="flex-1 font-display text-lg font-bold uppercase leading-tight">{r.name}</span>
+                      <span className="text-stone-dark">{r.place}</span>
                     </li>
                   ))}
                 </ul>
@@ -260,13 +260,13 @@ export default function CupPage() {
               <div className="relative mx-auto flex aspect-[4/5] max-w-sm flex-col overflow-hidden bg-brand p-6 text-white">
                 <TopoLines className="absolute inset-0 h-full w-full text-white opacity-15" />
                 <CupLogo color="weiss" className="relative h-7 self-start" />
-                <p className="relative mt-auto font-mono text-xs uppercase tracking-[0.2em]">Lauf 4 von 9 · Sonntag</p>
+                <p className="relative mt-auto font-mono text-xs uppercase tracking-[0.2em]">Lauf 4 von 8 · Deuz · Pfingsten</p>
                 <p className="relative mt-2 font-display text-6xl font-black uppercase italic leading-[0.85]">
                   Halbzeit
                   <br />
                   im Cup.
                 </p>
-                <SeriesTrack total={9} done={[1, 2, 3]} light className="relative mt-6" />
+                <SeriesTrack total={8} done={[1, 2, 3]} final light className="relative mt-6" />
               </div>
             </Mock>
           </div>
@@ -289,10 +289,13 @@ export default function CupPage() {
                     {CUP_RACES.map((r) => (
                       <li key={r.no} className="flex justify-between gap-2">
                         <span className="tabular">{String(r.no).padStart(2, "0")}</span>
-                        <span className="flex-1 truncate">{r.name}</span>
-                        <span className="font-mono font-normal tabular">{r.date}</span>
+                        <span className="flex-1 truncate">{r.place}</span>
                       </li>
                     ))}
+                    <li className="flex justify-between gap-2 text-brand">
+                      <span>∞</span>
+                      <span className="flex-1">Finale</span>
+                    </li>
                   </ol>
                 </div>
               </Shirt>
@@ -310,18 +313,26 @@ export default function CupPage() {
               <div className="mx-auto flex aspect-[148/210] w-full max-w-sm flex-col bg-white p-6 text-ink shadow-xl">
                 <CupLogo kind="serie-" className="h-auto w-full" />
                 <p className="mt-6 font-display text-4xl font-black uppercase italic leading-[0.85]">
-                  9 Läufe.
+                  8 Läufe.
                   <br />
-                  <span className="text-brand">1 Wertung.</span>
+                  <span className="text-brand">1 Finale.</span>
                 </p>
                 <ol className="mt-5 flex-1 divide-y divide-ink/10 text-xs">
                   {CUP_RACES.map((r) => (
                     <li key={r.no} className="flex items-center gap-2 py-1">
-                      <span className="w-6 border-l-2 border-brand pl-1.5 font-display text-sm font-black tabular">{String(r.no).padStart(2, "0")}</span>
-                      <span className="flex-1 font-display text-sm font-bold uppercase">{r.name}</span>
-                      <span className="font-mono tabular">{r.date}</span>
+                      <span className="w-6 border-l-2 border-ink pl-1.5 font-display text-sm font-black tabular">{String(r.no).padStart(2, "0")}</span>
+                      <span className="flex-1 font-display text-sm font-bold uppercase leading-tight">
+                        {r.name}
+                        <span className="block font-sans text-[0.6rem] font-normal normal-case text-stone-dark">{r.place}</span>
+                      </span>
+                      <span className="font-mono">{r.month}</span>
                     </li>
                   ))}
+                  <li className="flex items-center gap-2 py-1 text-brand">
+                    <span className="w-6 border-l-2 border-brand pl-1.5 font-display text-sm font-black">∞</span>
+                    <span className="flex-1 font-display text-sm font-bold uppercase">{CUP_FINAL.name} & Siegerehrung</span>
+                    <span className="font-mono">{CUP_FINAL.month}</span>
+                  </li>
                 </ol>
                 <div className="mt-3 flex items-center justify-between border-t border-ink/15 pt-3">
                   <span className="font-mono text-[0.5rem] uppercase tracking-[0.15em] text-stone-dark">Präsentiert von</span>
@@ -332,12 +343,11 @@ export default function CupPage() {
             <div className="space-y-10">
               <Mock label="Bauzaunbanner 340 × 85 cm · Weiß auf Rot">
                 <div className="relative flex aspect-[4/1] w-full items-center justify-between overflow-hidden bg-brand px-[5%]">
-                  <PaceLines className="absolute -left-4 top-1/2 w-1/4 -translate-y-1/2 text-white opacity-20" count={5} />
                   <CupLogo kind="serie-" color="weiss" className="relative h-auto w-[58%]" />
                   <p className="relative text-right font-display text-[clamp(0.8rem,2.6vw,1.8rem)] font-black uppercase italic leading-none text-white">
                     Ziel
                     <br />
-                    Lauf 4
+                    Herdorf
                   </p>
                 </div>
               </Mock>
@@ -347,8 +357,10 @@ export default function CupPage() {
                 </div>
               </Mock>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline">Beispieldaten</Badge>
-                <p className="text-sm text-muted-foreground">Läufe, Termine und Vereine sind Platzhalter bis zum Saisonkalender {CUP_SEASON}.</p>
+                <Badge variant="outline">Termine vorläufig</Badge>
+                <p className="text-sm text-muted-foreground">
+                  Läufe wie 2026, Monate als Orientierung. Die Termine {CUP_SEASON} werden eingesetzt, sobald sie feststehen.
+                </p>
               </div>
             </div>
           </div>

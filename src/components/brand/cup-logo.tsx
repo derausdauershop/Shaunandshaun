@@ -13,8 +13,21 @@ export function CupLogo({ kind = "", color = "farbig", className }: CupLogoProps
   return <img src={cupLogo(kind, color)} alt="AUSDAUER CUP – Laufserie Siegerland" className={cn("h-10 w-auto", className)} />;
 }
 
-/** One dot per race; filled dots = races run. Used on certificates and the website season tracker. */
-export function SeriesTrack({ total, done = [], className, light = false }: { total: number; done?: number[]; className?: string; light?: boolean }) {
+/** One dot per race plus the final; filled dots = races run. Used on certificates and the website season tracker. */
+export function SeriesTrack({
+  total,
+  done = [],
+  final = false,
+  className,
+  light = false,
+}: {
+  total: number;
+  done?: number[];
+  /** Adds the red final dot (Abschlussfeier / overall ranking) */
+  final?: boolean;
+  className?: string;
+  light?: boolean;
+}) {
   return (
     <ol className={cn("flex items-center", className)} aria-label={`${done.length} von ${total} Läufen absolviert`}>
       {Array.from({ length: total }, (_, i) => {
@@ -30,10 +43,15 @@ export function SeriesTrack({ total, done = [], className, light = false }: { to
             >
               {i + 1}
             </span>
-            {i < total - 1 && <span aria-hidden className={cn("h-0.5 flex-1", light ? "bg-paper/60" : "bg-ink/60")} />}
+            {(i < total - 1 || final) && <span aria-hidden className={cn("h-0.5 flex-1", light ? "bg-paper/60" : "bg-ink/60")} />}
           </li>
         );
       })}
+      {final && (
+        <li className="flex-none">
+          <span className="block size-4 rounded-full bg-brand ring-2 ring-white" title="Abschlussfeier & Gesamtwertung" />
+        </li>
+      )}
     </ol>
   );
 }

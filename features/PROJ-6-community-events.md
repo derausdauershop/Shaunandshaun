@@ -16,3 +16,8 @@
 
 ## Open Questions
 - [x] Crown Town Runners = der Donnerstags-Lauftreff in Siegen (bestätigt 2026-10-15).
+
+## AUSDAUER CUP (Kundeninfo 2026-10-15)
+- 8 Läufe + Abschlussfeier: Asdorflauf Wehbach, Föschber Radweglauf (Niederfischbach), Flecker Tunnellauf (Freudenberg), Deuzer Sparkassen Pfingst-Lauf, Anzhäuser Gückellauf, Wilnsdorfer Bahnlauf, Herdorfer Götzelauf, Südsauerlandlauf Wenden; Abschlussfeier im November.
+- 2026 = 38. Ausgabe → 2027 = 39. Ausgabe. Termine 2027 noch nicht final (Daten in `src/lib/brand/cup.ts`).
+- [ ] Termine 2027 eintragen, sobald final.
