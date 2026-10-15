@@ -21,7 +21,11 @@ const config: Config = {
   				DEFAULT: 'hsl(var(--stone))',
   				dark: 'hsl(var(--stone-dark))'
   			},
-  			brand: 'hsl(var(--brand))',
+  			brand: {
+  				DEFAULT: 'hsl(var(--brand))',
+  				foreground: 'hsl(var(--brand-foreground))'
+  			},
+  			partner: 'hsl(var(--partner))',
   			signal: {
   				DEFAULT: 'hsl(var(--signal))',
   				foreground: 'hsl(var(--signal-foreground))'

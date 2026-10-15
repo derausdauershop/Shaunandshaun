@@ -1,6 +1,7 @@
 import { PaceLines } from "@/components/brand/pace-lines";
 import { RunAcademyIcon, RunAcademyLogo } from "@/components/brand/run-academy-logo";
 import { StartNumber } from "@/components/brand/start-number";
+import { TopoLines } from "@/components/brand/topo-lines";
 import { Rule, Section } from "./section";
 
 const COURSES = [
@@ -15,34 +16,42 @@ export function Academy() {
       id="academy"
       km={8}
       kicker="Run Academy"
-      title="Neues Logo. Gleiche Familie."
-      intro="Die Run Academy bekommt ein eigenes Zeichen: drei Bahnen, die durch eine Kurve laufen – Lernen als Strecke. „by AUSDAUER“ verankert die Laufschule in der Dachmarke und grenzt sie von gleichnamigen Angeboten anderer Händler ab."
+      title="Gleiche Idee. Neue Form."
+      intro="Was bleibt: das ∞, Volt als Academy-Farbe und der Claim „Besser. Laufen. Lernen.“ – alles schon gelernt. Was neu ist: das ∞ sitzt in einer um 5° geneigten Startnummern-Plakette, der Name steht in der neuen Headline-Schrift. So gehört die Academy sichtbar zu AUSDAUER und hebt sich klar von gleichnamigen Angeboten ab."
     >
-      <div className="grid gap-4 md:grid-cols-3">
-        <figure className="flex aspect-[4/3] flex-col items-center justify-center gap-4 rounded-sm bg-paper ring-1 ring-border">
-          <RunAcademyLogo />
-          <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Horizontal</figcaption>
+      <div className="grid gap-4 md:grid-cols-[1fr_2fr]">
+        <figure className="flex flex-col items-center justify-center gap-4 rounded-sm bg-white p-6 ring-1 ring-border">
+          {/* eslint-disable-next-line @next/next/no-img-element -- reference of the previous logo */}
+          <img src="/brand/logos/run-academy-alt.svg" alt="Bisheriges Run-Academy-Logo" className="h-24 w-auto" />
+          <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Bisher</figcaption>
         </figure>
-        <figure className="surface-ink flex aspect-[4/3] flex-col items-center justify-center gap-4 rounded-sm">
-          <RunAcademyLogo layout="stacked" className="[&_svg]:text-signal" />
-          <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Gestapelt · Negativ</figcaption>
-        </figure>
-        <figure className="flex aspect-[4/3] flex-col items-center justify-center gap-4 rounded-sm bg-signal text-signal-foreground">
-          <div className="flex items-end gap-4">
-            <RunAcademyIcon framed className="size-20" />
-            <RunAcademyIcon className="size-12" />
-            <RunAcademyIcon className="size-6" />
-          </div>
-          <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] opacity-70">Icon · Avatar · Favicon</figcaption>
-        </figure>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <figure className="flex aspect-[4/3] flex-col items-center justify-center gap-4 rounded-sm bg-paper ring-1 ring-border">
+            <RunAcademyLogo />
+            <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Neu · horizontal</figcaption>
+          </figure>
+          <figure className="surface-ink flex aspect-[4/3] flex-col items-center justify-center gap-4 rounded-sm">
+            <RunAcademyLogo layout="stacked" surface="dark" endorsed />
+            <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Neu · gestapelt · extern</figcaption>
+          </figure>
+          <figure className="flex aspect-[4/3] flex-col items-center justify-center gap-4 rounded-sm bg-signal text-signal-foreground sm:col-span-2 sm:aspect-auto sm:py-8">
+            <RunAcademyLogo surface="signal" />
+            <div className="flex items-end gap-4">
+              <RunAcademyIcon className="h-16" />
+              <RunAcademyIcon className="h-10" />
+              <RunAcademyIcon className="h-6" />
+            </div>
+            <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] opacity-70">Auf Volt · Plakette als Avatar & Favicon</figcaption>
+          </figure>
+        </div>
       </div>
 
       <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.2fr]">
         <ul className="space-y-3">
-          <Rule kind="do">Icon allein nur, wenn AUSDAUER im selben Medium sichtbar ist (Social-Avatar, Shirt-Rücken).</Rule>
-          <Rule kind="do">Unter 24 px nur das Icon verwenden.</Rule>
-          <Rule kind="do">Academy-Medien dürfen mehr Signalfarbe tragen – sie sind Aktivierung.</Rule>
-          <Rule kind="dont">„by AUSDAUER“ weglassen bei externer Kommunikation.</Rule>
+          <Rule kind="do">Academy-Medien tragen Volt – bis zu 50 % der Fläche.</Rule>
+          <Rule kind="do">Unter 24 px nur die Plakette verwenden.</Rule>
+          <Rule kind="do">„by AUSDAUER“ in externer Kommunikation (Presse, Partner, Vereine).</Rule>
+          <Rule kind="dont">Rot in Academy-Medien – außer im AUSDAUER-Logo als Absender.</Rule>
         </ul>
         <div className="grid gap-3">
           {COURSES.map((c) => (
@@ -58,6 +67,7 @@ export function Academy() {
         </div>
       </div>
       <div className="surface-ink relative mt-12 flex flex-col gap-6 overflow-hidden rounded-sm p-8 sm:flex-row sm:items-center sm:justify-between">
+        <TopoLines className="absolute inset-0 h-full w-full text-signal opacity-20" />
         <div className="relative">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-signal">Kursstart Frühjahr</p>
           <p className="mt-2 font-display text-5xl font-black uppercase italic leading-none">Dein erster Kilometer.</p>

@@ -4,7 +4,7 @@ const PRINCIPLES = [
   { title: "Du, auf Augenhöhe", do: "Komm vorbei, wir schauen uns deinen Laufstil an.", dont: "Vereinbaren Sie einen Termin für eine Laufanalyse." },
   { title: "Fachlich, nicht fachchinesisch", do: "Dein Fuß knickt beim Aufsetzen leicht nach innen – das gleichen wir aus.", dont: "Überpronation mit erhöhtem Rückfußwinkel festgestellt." },
   { title: "Motivierend, nicht marktschreierisch", do: "Fünf Kilometer? Schaffst du. Wir zeigen dir wie.", dont: "MEGA-SALE!!! Nur heute!!!" },
-  { title: "Kurz & mit Tempo", do: "Mittwoch. 18:15. Wilhelmsgasse. Lauf mit.", dont: "Unser Lauftreff findet regelmäßig an Mittwochen statt, Treffpunkt ist …" },
+  { title: "Kurz & mit Tempo", do: "Donnerstag. 18:30. Koblenzer Straße. Lauf mit.", dont: "Unser Lauftreff findet regelmäßig donnerstags statt, Treffpunkt ist …" },
 ];
 
 const HEADLINES = ["Dein nächster Kilometer.", "Erst laufen. Dann kaufen.", "Gemeinsam ist das neue schnell.", "Wir schauen dir auf die Füße.", "Westerwald-Höhenmeter inklusive."];
@@ -31,7 +31,7 @@ export function Tone() {
       <h3 className="mt-12 text-3xl">Headline-Bank</h3>
       <ul className="mt-6 flex flex-wrap gap-3">
         {HEADLINES.map((h) => (
-          <li key={h} className="rounded-sm bg-signal px-4 py-2 font-display text-xl font-extrabold uppercase italic text-signal-foreground">
+          <li key={h} className="rounded-sm bg-brand px-4 py-2 font-display text-xl font-extrabold uppercase italic text-brand-foreground">
             {h}
           </li>
         ))}

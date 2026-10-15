@@ -2,35 +2,26 @@ import { resolveLogo } from "@/lib/brand/logos";
 import { cn } from "@/lib/utils";
 
 interface PartnerLogoProps {
-  /** Background of the neutral field – the partner logo itself is never recoloured */
-  field?: "white" | "ink";
   showSender?: boolean;
   className?: string;
 }
 
 /**
  * Co-branding container for "Absolute Run Ausdauer" (Sport 2000 format, Siegen).
- * Rules: neutral field, fixed clear space, never recoloured, always with the sender line.
+ * The supplied logo only works on light backgrounds, so it always sits on its own white field
+ * with fixed clear space – never recoloured, always with the sender line.
  */
-export function PartnerLogo({ field = "white", showSender = true, className }: PartnerLogoProps) {
+export function PartnerLogo({ showSender = true, className }: PartnerLogoProps) {
   const src = resolveLogo("absoluteRun");
 
   return (
     <figure className={cn("inline-flex flex-col gap-2", className)}>
-      <div className={cn("flex items-center justify-center p-5", field === "white" ? "bg-white" : "bg-ink")}>
+      <div className="flex items-center justify-center bg-white px-4 py-2">
         {src ? (
           // eslint-disable-next-line @next/next/no-img-element -- partner logo is used as supplied
-          <img src={src} alt="Absolute Run Ausdauer" className="h-12 w-auto" />
+          <img src={src} alt="Absolute Run Ausdauer" className="h-16 w-auto" />
         ) : (
-          <span
-            role="img"
-            aria-label="Absolute Run Ausdauer"
-            title="Platzhalter – Partner-Logo in public/brand/logos/ablegen"
-            className={cn(
-              "inline-flex h-12 items-center border border-dashed px-3 font-sans text-sm font-bold uppercase tracking-widest",
-              field === "white" ? "border-ink/50 text-ink" : "border-paper/50 text-paper",
-            )}
-          >
+          <span className="inline-flex h-16 items-center border border-dashed border-ink/50 px-3 text-sm font-bold uppercase tracking-widest text-ink">
             Absolute Run Ausdauer
           </span>
         )}

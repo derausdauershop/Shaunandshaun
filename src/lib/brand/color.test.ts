@@ -4,7 +4,7 @@ import { contrastRatio, hexToRgb, wcagLevel } from "./color";
 describe("color", () => {
   it("parses short and long hex", () => {
     expect(hexToRgb("#fff")).toEqual([255, 255, 255]);
-    expect(hexToRgb("D4FF3A")).toEqual([212, 255, 58]);
+    expect(hexToRgb("CAFF42")).toEqual([202, 255, 66]);
   });
 
   it("rejects invalid hex", () => {

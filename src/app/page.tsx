@@ -8,15 +8,15 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   return (
     <main className="surface-ink relative flex min-h-screen flex-col overflow-hidden px-4 py-8 sm:px-8">
-      <TopoLines className="absolute inset-0 h-full w-full text-signal opacity-20" />
-      <BrandLogo negative className="relative h-8 text-2xl" />
+      <TopoLines className="absolute inset-0 h-full w-full text-stone opacity-30" />
+      <BrandLogo variant="white" className="relative h-8" />
       <div className="relative my-auto max-w-4xl">
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-signal">Rebranding 2026 · in Arbeit</p>
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-brand">Rebranding 2026 · in Arbeit</p>
         <h1 className="mt-6 text-6xl sm:text-8xl">
-          Dein nächster <span className="italic text-signal">Kilometer.</span>
+          Dein nächster <span className="italic text-brand">Kilometer.</span>
         </h1>
-        <PaceLines className="mt-8 h-10 w-40 text-signal" />
-        <Button asChild variant="signal" size="lg" className="mt-10">
+        <PaceLines className="mt-8 h-10 w-40 text-brand" />
+        <Button asChild variant="brand" size="lg" className="mt-10">
           <Link href="/brand">Zum Brand Guide</Link>
         </Button>
       </div>

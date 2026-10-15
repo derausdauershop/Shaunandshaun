@@ -13,8 +13,9 @@
 - Tokens liegen zusätzlich als `brand/tokens.json` (HEX, RGB, CMYK, Pantone-Näherung) für Print vor.
 
 ## Edge Cases
-- Logofarben noch unbekannt → Platzhalter-Token `--brand` (Tiefschwarz) bis Upload.
-- Volt-Signalfarbe hat auf Weiß zu wenig Kontrast → nur als Fläche mit Ink-Text, nie als Textfarbe auf Weiß.
+- Volt hat auf Paper/Weiß zu wenig Kontrast → nur als Fläche mit Ink-Text, nie als Textfarbe auf hellem Grund.
+- Rot auf Paper erreicht nur 4,4:1 → Fließtext in Rot nur auf Weiß, auf Paper nur große Schrift.
+- Rot und Volt flimmern nebeneinander → nie als gleich große Flächen kombinieren.
 
 ## Out of Scope
 - Änderung des Ausdauer-Logos.
@@ -22,11 +23,14 @@
 ## Product Decisions
 - Barlow-Familie (OFL): kondensiert + normal aus einer Familie → harmonisch, frei für Print & Web.
 - JetBrains Mono als Daten-Akzent (Pace, Laufanalyse-Werte).
-- Signalfarbe: zwei Kandidaten (Volt `#D4FF3A`, Signal-Orange `#FF5A1F`), Default Volt; finale Wahl nach Logo-Sichtung.
+- Logofarben aus dem Logo-Manual übernommen: Rot `#E30110` (P 48-8 C), Schwarz `#222222` (Neutral Black C).
+- Signalfarbe = Volt `#CAFF42`, exakt aus dem bisherigen Run-Academy-Logo → bereits gelernt; Orange verworfen (zu nah am Logo-Rot).
+- Cyan `#29B9D2` aus Absolute Run / Crown Town Runners wird „Siegen-Farbe“, nur im Siegen-Kontext.
+- Proxima Nova (bisherige Hausschrift, kommerziell) wird durch die Barlow-Familie (OFL) ersetzt; Barlow Condensed Black Italic greift die 5°-Neigung des Logos auf.
 
 ## Open Questions
-- [ ] Exakte Logofarben (aus SVG) übernehmen.
-- [ ] Finale Signalfarbe festlegen.
+- [x] Exakte Logofarben übernommen (2026-10-15).
+- [x] Signalfarbe festgelegt: Volt (2026-10-15).
 
 ## Implementation Notes
 - `src/app/globals.css`: Marken-Tokens + shadcn-Variablen gemappt.

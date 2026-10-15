@@ -9,7 +9,7 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 ## Target Users
 - **Einsteiger:innen** – wollen loslegen, brauchen Orientierung, Laufkurs, ersten richtigen Schuh.
 - **Ambitionierte Läufer:innen** – Wettkampf, 10 km bis Marathon, Trail; erwarten Fachkompetenz (Laufanalyse, Einlagen).
-- **Junge urbane Runner** – Run-Club-Kultur, Instagram, Community Runs.
+- **Junge urbane Runner** – Run-Club-Kultur, Instagram, Crown Town Runners (Siegen).
 - **Outdoor & Familien** – Wandern/Outdoor-Abteilung in Betzdorf.
 - **Intern:** Team, Druckerei/Agentur, die mit Brand Guide und Vorlagen arbeiten.
 
@@ -18,10 +18,10 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 |---|---|
 | Name | **AUSDAUER** („Ausdauer-Shop“ nur Domain/Rechtliches) |
 | Persönlichkeit | Expertise + Community |
-| Logo | Ausdauer-Logo bleibt unverändert |
-| Farben | Logofarben + eine Signalfarbe (finale Wahl nach Logo-Sichtung) |
-| Schriften | sportlich-kondensierte Headline + klare Grotesk |
-| Architektur | Dachmarke AUSDAUER; Sub-Brands Run Academy & Run Clubs; Absolute Run Ausdauer (Siegen) als gekennzeichneter Partner-Store |
+| Logo | Ausdauer-Logo (∞ + AUSDAUER) bleibt unverändert; das ∞ wird zur Klammer der Markenfamilie |
+| Farben | Logofarben Rot `#E30110` + Schwarz `#222222`; Signalfarbe Volt `#CAFF42` (aus dem bisherigen Academy-Logo) für Academy & Community; Cyan `#29B9D2` nur Siegen |
+| Architektur | Dachmarke AUSDAUER; Untermarke Run Academy; Absolute Run Ausdauer (Siegen) und Crown Town Runners (Run Club Siegen) behalten ihr eigenes Logo und werden gekennzeichnet |
+| Schriften | sportlich-kondensiert: Barlow Condensed / Barlow / JetBrains Mono ersetzen Proxima Nova |
 | Run Academy | Logo neu gestalten |
 | Ansprache | Du |
 | Print | Entwürfe/Previews; Reinzeichnung durch Druckerei/Agentur |
@@ -47,7 +47,7 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 - Konsistente NAP-Daten (Name, Adresse, Öffnungszeiten) auf Webseite, Google und Verzeichnissen.
 
 ## Constraints
-- Ausdauer-Logo und Absolute-Run-Logo (Sport-2000-Format) dürfen nicht verändert werden.
+- Ausdauer-Logo, Absolute-Run-Logo (Sport-2000-Format) und Crown-Town-Runners-Logo dürfen nicht verändert werden.
 - Fonts müssen frei für Web + Print lizenziert sein (OFL) und DSGVO-konform selbst gehostet werden.
 - Shop bleibt Shopify; keine Shop-Migration.
 - Kleines Team → Inhalte als einfach pflegbare Datendateien.

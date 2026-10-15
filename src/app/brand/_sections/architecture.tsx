@@ -1,13 +1,16 @@
 import { BrandLogo } from "@/components/brand/brand-logo";
+import { CrownTownLogo } from "@/components/brand/crown-town-logo";
+import { InfinityMark } from "@/components/brand/infinity-mark";
 import { PartnerLogo } from "@/components/brand/partner-logo";
 import { RunAcademyLogo } from "@/components/brand/run-academy-logo";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import { Section } from "./section";
 
-function Node({ label, title, children, tone = "default" }: { label: string; title?: string; children?: React.ReactNode; tone?: "default" | "partner" }) {
+function Node({ label, title, children, tone = "default" }: { label: string; title?: string; children?: React.ReactNode; tone?: "default" | "own-logo" }) {
   return (
-    <div className={tone === "partner" ? "rounded-sm border border-dashed border-ink/40 bg-white p-5" : "rounded-sm border bg-white p-5"}>
-      <Badge variant={tone === "partner" ? "outline" : "secondary"} className="font-mono text-[0.6rem] uppercase tracking-[0.15em]">
+    <div className={cn("rounded-sm bg-white p-5", tone === "own-logo" ? "border border-dashed border-ink/40" : "border")}>
+      <Badge variant={tone === "own-logo" ? "outline" : "secondary"} className="font-mono text-[0.6rem] uppercase tracking-[0.15em]">
         {label}
       </Badge>
       {title && <p className="mt-3 font-display text-2xl font-extrabold uppercase">{title}</p>}
@@ -22,12 +25,12 @@ export function Architecture() {
       id="architektur"
       km={2}
       kicker="Markenarchitektur"
-      title="Eine Dachmarke. Klare Rollen."
-      intro="AUSDAUER führt. Run Academy und die Run Clubs sind Untermarken im selben System. Absolute Run Ausdauer in Siegen ist ein Partner-Format von Sport 2000 – es wird gekennzeichnet, nie angepasst."
+      title="Eine Dachmarke. Ein Zeichen. Klare Rollen."
+      intro="AUSDAUER führt. Das ∞ aus dem Logo steckt bereits in Absolute Run Ausdauer und in der Run Academy – es wird zur Klammer der ganzen Familie. Marken mit eigenem Fremd-Logo (Absolute Run, Crown Town Runners) werden gekennzeichnet, nie angepasst."
     >
       <div className="flex justify-center">
-        <div className="rounded-sm bg-ink px-10 py-6 text-paper">
-          <BrandLogo negative className="h-12 text-4xl" />
+        <div className="rounded-sm bg-ink px-10 py-6">
+          <BrandLogo variant="white" className="h-10" />
         </div>
       </div>
       <div aria-hidden className="mx-auto h-8 w-px bg-ink" />
@@ -35,30 +38,33 @@ export function Architecture() {
       <div className="mt-0 grid gap-4 lg:mt-8 lg:grid-cols-3">
         <div className="space-y-4">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Stores</p>
-          <Node label="Flagship" title="AUSDAUER Betzdorf">
-            <p className="text-sm text-muted-foreground">Wilhelmstraße 16 · Running, Laufanalyse, Einlagen, Outdoor</p>
+          <Node label="Flagship · Betzdorf">
+            <BrandLogo className="h-6" />
+            <p className="mt-3 text-sm text-muted-foreground">Wilhelmstraße 16 · Running, Laufanalyse, Einlagen, Outdoor</p>
           </Node>
-          <Node label="Partner-Format · Sport 2000" tone="partner">
+          <Node label="Partner-Format Sport 2000 · Siegen" tone="own-logo">
             <PartnerLogo />
             <p className="mt-3 text-sm text-muted-foreground">Koblenzer Straße 40 · reines Running</p>
           </Node>
         </div>
         <div className="space-y-4">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Untermarke · Lernen</p>
-          <Node label="Laufschule">
+          <Node label="Laufschule · neu gestaltet">
             <RunAcademyLogo />
             <p className="mt-3 text-sm text-muted-foreground">Einsteigerkurs, 10 km / Halbmarathon, Lauf-ABC & Technik</p>
           </Node>
+          <div className="flex items-center gap-3 rounded-sm bg-ink p-5 text-paper">
+            <InfinityMark className="h-6 w-auto text-brand" />
+            <p className="text-sm">Das ∞ verbindet AUSDAUER, Absolute Run Ausdauer und Run Academy.</p>
+          </div>
         </div>
         <div className="space-y-4">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Untermarke · Community</p>
-          <Node label="Run Club Siegen" title="Community Run">
-            <p className="text-sm text-muted-foreground">Donnerstags 18:30 · ab Store Siegen</p>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Community</p>
+          <Node label="Run Club Siegen · eigenes Logo" tone="own-logo">
+            <CrownTownLogo />
+            <p className="mt-3 text-sm text-muted-foreground">Community Run · donnerstags 18:30 ab Store Siegen · Absender „powered by AUSDAUER“</p>
           </Node>
-          <Node label="Run Club Betzdorf" title="BTown Run Club">
-            <p className="text-sm text-muted-foreground">Mittwochs 18:15 · Wilhelmsgasse</p>
-          </Node>
-          <Node label="Events" title="Firmenlauf · Ausdauer-Cup">
+          <Node label="Events" title="Westerwälder Firmenlauf · Ausdauer-Cup">
             <p className="text-sm text-muted-foreground">Absender immer „präsentiert von AUSDAUER“</p>
           </Node>
         </div>

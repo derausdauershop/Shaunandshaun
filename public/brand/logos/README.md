@@ -1,12 +1,15 @@
-# Original-Logos hier ablegen
+# Original-Logos
 
-Die Logos werden **nicht verändert**, nur referenziert. Bitte genau diese Dateinamen verwenden (SVG bevorzugt, sonst PNG/WebP mit transparentem Hintergrund, min. 2000 px breit):
+Die Logos werden **nicht verändert**, nur referenziert. Quelle: vom Kunden gelieferte PDFs (Okt. 2026), per `pdftocairo` verlustfrei nach SVG konvertiert.
 
-| Datei | Inhalt |
-|---|---|
-| `ausdauer.svg` | AUSDAUER-Logo, Standardversion (für helle Hintergründe) |
-| `ausdauer-negativ.svg` | AUSDAUER-Logo, Negativversion für dunkle Hintergründe (optional – sonst wird invertiert) |
-| `absolute-run-ausdauer.svg` | Logo „Absolute Run Ausdauer“ (Siegen) |
-| `run-academy-alt.svg` | Bisheriges Run-Academy-Logo (optional, nur zur Referenz) |
+| Datei | Inhalt | Quelle |
+|---|---|---|
+| `ausdauer.svg` | AUSDAUER, Schwarz `#222222` (Neutral Black C) | Ausdauershop-2018.pdf |
+| `ausdauer-rot.svg` | AUSDAUER, Rot `#E30110` (P 48-8 C) | Ausdauershop-2018.pdf |
+| `ausdauer-negativ.svg` | AUSDAUER, Weiß – für Ink- und Rot-Flächen | Ausdauershop-2018.pdf |
+| `ausdauer-symbol.svg` | Nur das ∞ aus dem Logo | Ausdauershop-2018.pdf |
+| `absolute-run-ausdauer.svg` | Absolute Run Ausdauer (Siegen) – nur auf hellem Grund | AbsoluteRun_Ausdauer.pdf |
+| `crown-town-runners.svg` | Crown Town Runners (Run Club Siegen) | CTR_Rücken_Logo_schwarz.pdf |
+| `run-academy-alt.svg` | Bisheriges Run-Academy-Logo – nur Referenz, wird ersetzt | Run_Academy_Logo_schwarz.pdf |
 
-Sobald `ausdauer.svg` vorliegt, werden die Logofarben ausgelesen und als `--brand` in `src/app/globals.css` sowie in `brand/tokens.json` eingetragen. Danach wird die finale Signalfarbe festgelegt.
+Das neue Run-Academy-Logo ist eine Komponente (`src/components/brand/run-academy-logo.tsx`), die Plakette liegt als SVG in `public/brand/run-academy/`.

@@ -18,7 +18,7 @@ export function Typography() {
       km={6}
       kicker="Typografie"
       title="Kondensiert, schnell, gut lesbar."
-      intro="Barlow Condensed bringt Startnummern- und Sportplakat-Energie in die Headlines, Barlow hält den Text ruhig und lesbar. Beide aus einer Familie, frei lizenziert für Print und Web."
+      intro="Barlow Condensed Black Italic nimmt die 5°-Neigung und die Wucht des Logo-Schriftzugs auf und bringt Startnummern-Energie in die Headlines. Barlow hält den Text ruhig. Sie ersetzen die bisherige Proxima Nova – frei lizenziert für Print und Web, ohne Lizenzkosten pro Arbeitsplatz."
       dark
     >
       <div className="grid gap-4 sm:grid-cols-3">

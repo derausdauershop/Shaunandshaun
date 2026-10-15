@@ -5,10 +5,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import { topoSvg } from "../src/lib/brand/topo.ts";
+import { INFINITY_PATH, INFINITY_VIEWBOX } from "../src/lib/brand/infinity.ts";
 
 const root = path.resolve(import.meta.dirname, "..", "public", "brand");
-const INK = "#111214";
-const VOLT = "#D4FF3A";
+const INK = "#222222";
+const VOLT = "#CAFF42";
+const RED = "#E30110";
 
 function write(rel: string, svg: string) {
   const file = path.join(root, rel);
@@ -37,19 +39,24 @@ function paceLines(fill: string, count = 4) {
 write("elements/pace-lines-ink.svg", paceLines(INK));
 write("elements/pace-lines-volt.svg", paceLines(VOLT));
 
-// Run Academy icon (same geometry as src/components/brand/run-academy-logo.tsx)
-function academyIcon(stroke: string, background?: string) {
-  const bg = background ? `<rect width="64" height="64" rx="4" fill="${background}"/>` : "";
-  const lanes = [38, 27, 16].map((r) => `<path d="M${54 - r} 60 V54 A${r} ${r} 0 0 1 54 ${54 - r} H60"/>`).join("");
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${bg}<g fill="none" stroke="${stroke}" stroke-width="6">${lanes}</g></svg>`;
+// Run Academy badge (same geometry as src/components/brand/run-academy-logo.tsx)
+function academyIcon(badge: string, mark: string) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 64"><polygon points="5.6,0 80,0 74.4,64 0,64" fill="${badge}"/><path d="${INFINITY_PATH}" transform="translate(13.1 19.95) scale(0.85)" fill="${mark}"/></svg>`;
 }
-write("run-academy/icon-ink.svg", academyIcon(INK));
-write("run-academy/icon-volt-on-ink.svg", academyIcon(VOLT, INK));
-write("run-academy/icon-white.svg", academyIcon("#FFFFFF"));
+write("run-academy/icon-volt-on-ink.svg", academyIcon(INK, VOLT));
+write("run-academy/icon-ink-on-volt.svg", academyIcon(VOLT, INK));
+
+// ∞ symbol as outlined "track" supergraphic
+for (const [name, color] of [["ink", INK], ["red", RED], ["volt", VOLT]]) {
+  write(
+    `elements/infinity-track-${name}.svg`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${INFINITY_VIEWBOX}"><path d="${INFINITY_PATH}" fill="none" stroke="${color}" stroke-width="0.4"/></svg>`,
+  );
+}
 
 // Design tokens for print shops / agencies
-import { COLORS, SIGNAL_CANDIDATES, TYPE } from "../src/lib/brand/tokens.ts";
+import { ACCENT_COLORS, COLORS, PREVIOUS_TYPE, TYPE } from "../src/lib/brand/tokens.ts";
 const tokensFile = path.resolve(import.meta.dirname, "..", "brand", "tokens.json");
 fs.mkdirSync(path.dirname(tokensFile), { recursive: true });
-fs.writeFileSync(tokensFile, `${JSON.stringify({ colors: COLORS, signalCandidates: SIGNAL_CANDIDATES, typography: TYPE }, null, 2)}\n`);
+fs.writeFileSync(tokensFile, `${JSON.stringify({ colors: COLORS, accentColors: ACCENT_COLORS, typography: TYPE, previousTypography: PREVIOUS_TYPE }, null, 2)}\n`);
 console.log("wrote", path.relative(process.cwd(), tokensFile));

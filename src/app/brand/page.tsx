@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SignalSwitcher } from "@/components/brand/signal-switcher";
 import { Academy } from "./_sections/academy";
 import { Applications } from "./_sections/applications";
 import { Architecture } from "./_sections/architecture";
@@ -20,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function BrandGuidePage() {
   return (
-    <SignalSwitcher>
+    <>
       <Hero />
       <main>
         <Idea />
@@ -37,9 +36,9 @@ export default function BrandGuidePage() {
       <footer className="surface-ink px-4 py-10 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground sm:flex-row">
           <p>Der Ausdauer-Shop GmbH & Co. KG · Betzdorf & Siegen</p>
-          <p>Brand Guide v0.1 · Entwurf zur Freigabe</p>
+          <p>Brand Guide v0.2 · Entwurf zur Freigabe</p>
         </div>
       </footer>
-    </SignalSwitcher>
+    </>
   );
 }

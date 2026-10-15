@@ -1,75 +1,73 @@
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { resolveLogo } from "@/lib/brand/logos";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { InfinityMark } from "@/components/brand/infinity-mark";
 import { Rule, Section } from "./section";
 
-export function Logo() {
-  const uploaded = resolveLogo("ausdauer") !== null;
+const VARIANTS = [
+  { bg: "bg-white ring-1 ring-border", variant: "red", label: "Rot auf Weiß · Standard", text: "text-muted-foreground" },
+  { bg: "bg-paper ring-1 ring-border", variant: "ink", label: "Schwarz auf Paper", text: "text-muted-foreground" },
+  { bg: "bg-ink", variant: "white", label: "Weiß auf Ink", text: "text-paper/70" },
+  { bg: "bg-brand", variant: "white", label: "Weiß auf Rot · Aktionen", text: "text-white/80" },
+] as const;
 
+export function Logo() {
   return (
     <Section
       id="logo"
       km={3}
       kicker="Logo"
       title="Das Logo bleibt. Das System drumherum ist neu."
-      intro="Das AUSDAUER-Logo wird unverändert übernommen. Neu sind die Regeln, wie es eingesetzt wird: auf welchen Flächen, mit wie viel Luft und in welcher Mindestgröße."
+      intro="∞ + AUSDAUER, 5° geneigt, in Rot oder Schwarz – unverändert übernommen aus dem bestehenden Logo-Manual. Neu sind die Regeln, wie es eingesetzt wird."
     >
-      {!uploaded && (
-        <Alert className="mb-8 border-dashed bg-white">
-          <AlertTitle className="font-display text-lg font-bold uppercase">Original-Logo fehlt noch</AlertTitle>
-          <AlertDescription>
-            Bitte als <code className="font-mono">public/brand/logos/ausdauer.svg</code> ablegen. Bis dahin zeigen alle Seiten einen gekennzeichneten
-            Platzhalter.
-          </AlertDescription>
-        </Alert>
-      )}
-      <div className="grid gap-4 sm:grid-cols-3">
-        <figure className="flex aspect-[4/3] flex-col items-center justify-center gap-4 rounded-sm bg-paper ring-1 ring-border">
-          <BrandLogo className="h-14 text-4xl" />
-          <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Positiv auf Paper</figcaption>
-        </figure>
-        <figure className="flex aspect-[4/3] flex-col items-center justify-center gap-4 rounded-sm bg-ink text-paper">
-          <BrandLogo negative className="h-14 text-4xl" />
-          <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] opacity-70">Negativ auf Ink</figcaption>
-        </figure>
-        <figure className="flex aspect-[4/3] flex-col items-center justify-center gap-4 rounded-sm bg-signal text-signal-foreground">
-          <BrandLogo className="h-14 text-4xl" />
-          <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] opacity-70">Positiv auf Signal (nur Aktionen)</figcaption>
-        </figure>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {VARIANTS.map((v) => (
+          <figure key={v.label} className={`flex aspect-[16/7] flex-col items-center justify-center gap-5 rounded-sm ${v.bg}`}>
+            <BrandLogo variant={v.variant} className="h-10 sm:h-12" />
+            <figcaption className={`font-mono text-[0.65rem] uppercase tracking-[0.2em] ${v.text}`}>{v.label}</figcaption>
+          </figure>
+        ))}
       </div>
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-2">
+      <div className="mt-12 grid gap-10 lg:grid-cols-3 [&>*]:min-w-0">
         <div>
           <h3 className="text-3xl">Schutzraum & Größe</h3>
-          <div className="mt-6 flex items-center justify-center rounded-sm bg-white p-6 ring-1 ring-border">
-            <div className="relative border border-dashed border-signal p-8 [background:repeating-linear-gradient(45deg,transparent_0_6px,hsl(var(--signal)/0.25)_6px_7px)]">
+          <div className="mt-6 flex items-center justify-center rounded-sm bg-white p-4 ring-1 ring-border sm:p-6">
+            <div className="relative border border-dashed border-brand p-4 sm:p-6 [background:repeating-linear-gradient(45deg,transparent_0_6px,hsl(var(--brand)/0.15)_6px_7px)]">
               <div className="bg-white">
-                <BrandLogo className="h-12 text-3xl" />
+                <BrandLogo variant="red" className="h-6 sm:h-8" />
               </div>
-              <span className="absolute -top-5 left-1/2 -translate-x-1/2 font-mono text-[0.65rem]">x</span>
             </div>
           </div>
           <ul className="mt-6 space-y-2 text-muted-foreground">
             <li>
-              <strong className="text-foreground">Schutzraum:</strong> rundum mindestens <span className="font-mono">x</span> = Höhe des Buchstabens „A“ im
-              Logo.
+              <strong className="text-foreground">Schutzraum:</strong> rundum mindestens die Höhe des ∞.
             </li>
             <li>
-              <strong className="text-foreground">Mindestgröße:</strong> 25 mm Breite im Druck, 120 px digital.
+              <strong className="text-foreground">Mindestgröße:</strong> 30 mm Breite im Druck, 140 px digital.
             </li>
             <li>
-              <strong className="text-foreground">Position:</strong> Flyer & Plakate oben links oder unten links, Social unten links.
+              <strong className="text-foreground">Position:</strong> oben links oder unten links.
             </li>
           </ul>
         </div>
         <div>
+          <h3 className="text-3xl">Das ∞ allein</h3>
+          <div className="mt-6 flex items-center justify-center gap-6 rounded-sm bg-ink p-6">
+            <InfinityMark className="h-10 w-auto text-brand" />
+            <InfinityMark className="h-10 w-auto text-paper" />
+            <InfinityMark variant="track" className="h-10 w-auto text-signal" />
+          </div>
+          <p className="mt-6 text-muted-foreground">
+            Das ∞ darf allein stehen – als Avatar, Stempel, Shirt-Detail oder als Kontur-Supergrafik. Immer dann, wenn der Absender schon klar ist.
+          </p>
+        </div>
+        <div>
           <h3 className="text-3xl">Do&apos;s & Don&apos;ts</h3>
           <ul className="mt-6 space-y-3">
-            <Rule kind="do">Original-Datei verwenden, auf Paper, Weiß, Ink oder vollflächigem Signal.</Rule>
+            <Rule kind="do">Nur die Original-Dateien aus public/brand/logos verwenden.</Rule>
             <Rule kind="do">Auf Fotos nur auf ruhigen Bildbereichen oder mit Ink-Verlauf darunter.</Rule>
-            <Rule kind="dont">Logo verzerren, drehen, umfärben, mit Effekten (Schatten, Kontur) versehen.</Rule>
-            <Rule kind="dont">Logo auf Höhenlinien oder Pace-Lines legen – Elemente halten Abstand.</Rule>
-            <Rule kind="dont">Logo und Absolute-Run-Logo direkt aneinanderkleben (siehe KM 04).</Rule>
+            <Rule kind="dont">Rotes Logo auf Ink oder Volt – zu wenig Kontrast bzw. flimmert.</Rule>
+            <Rule kind="dont">Verzerren, Neigung ändern, umfärben, Effekte (Schatten, Kontur).</Rule>
+            <Rule kind="dont">Logo auf Höhenlinien oder Pace-Lines legen.</Rule>
           </ul>
         </div>
       </div>
