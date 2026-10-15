@@ -1,6 +1,6 @@
 # PROJ-5: Run Academy (Web)
 
-**Status:** Planned · **Priorität:** P0 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-3, PROJ-4
+**Status:** In Progress · **Priorität:** P0 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-3, PROJ-4
 
 ## User Stories
 - Als Einsteiger:in möchte ich den passenden Kurs finden und mich direkt anmelden.
@@ -12,3 +12,7 @@
 
 ## Open Questions
 - [ ] Preise/Termine für 10 km/HM und Lauf-ABC, Shopify-Produkt-URLs.
+
+## Implementation Notes (2026-10-15)
+- `/run-academy` + `/run-academy/[slug]`; Einsteiger-Laufkurs mit Originalinhalten aus Shopify, Anmeldung über Shopify-Produktlink.
+- 10 km/HM und Lauf-ABC als „In Planung“ mit „Interesse melden“ (E-Mail); Inhalte dort sind Vorschläge.

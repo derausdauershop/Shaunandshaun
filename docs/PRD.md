@@ -34,10 +34,10 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 | P0 | PROJ-1 Design-System & Tokens | In Progress (Basis freigegeben) |
 | P0 | PROJ-2 Brand Guide (live) | In Progress |
 | P0 | PROJ-3 Grafik-Kit & Run-Academy-Logo | In Progress |
-| P0 | PROJ-4 Webseite Kernseiten | Planned |
-| P0 | PROJ-5 Run Academy (Web) | Planned |
-| P1 | PROJ-6 Community & Events | Planned |
-| P1 | PROJ-7 Magazin & Jobs | Planned |
+| P0 | PROJ-4 Webseite Kernseiten | In Progress |
+| P0 | PROJ-5 Run Academy (Web) | In Progress |
+| P1 | PROJ-6 Community & Events | In Progress |
+| P1 | PROJ-7 Magazin & Jobs | In Progress |
 | P1 | PROJ-8 Print-Vorlagen (Flyer, Plakat, Geschäftsausstattung) | Planned |
 | P1 | PROJ-9 Social-Media-Vorlagen | Planned |
 

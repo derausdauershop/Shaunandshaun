@@ -27,6 +27,8 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.ausdauer-shop.de"),
+  openGraph: { locale: "de_DE", siteName: "AUSDAUER", type: "website" },
   title: {
     default: "AUSDAUER – Wir leben Sport",
     template: "%s | AUSDAUER",

@@ -1,6 +1,6 @@
 # PROJ-4: Webseite Kernseiten
 
-**Status:** Planned · **Priorität:** P0 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-1–3
+**Status:** In Progress · **Priorität:** P0 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-1–3
 
 ## User Stories
 - Als Kund:in möchte ich schnell Öffnungszeiten, Adresse und Leistungen beider Stores finden.
@@ -19,3 +19,12 @@
 
 ## Out of Scope
 - Online-Terminbuchung (zunächst Telefon/Mail).
+
+## Implementation Notes (2026-10-15)
+- Inhalte von ausdauer-shop.de übernommen (Texte, Team, Öffnungszeiten, Service, Bewertungen, Store-Fotos) in `src/content/*.ts`; Fotos als WebP in `public/images/`.
+- Route-Gruppe `src/app/(site)/` mit Header (Mobile-Menü via shadcn `Sheet`), Footer mit Standortleiste und Live-Öffnungsstatus (`src/lib/opening-hours.ts`, unit-getestet).
+- Seiten: Start, `/laufanalyse` (statt `/leistungen`), `/stores`, `/stores/[slug]`, `/ueber-uns` (inkl. Team), `/kontakt`, `/impressum`, `/datenschutz`.
+- Abweichung: keine eigene `/marken`-Seite (keine gesicherte Markenliste); Kontaktformular entfällt zugunsten Telefon/WhatsApp/E-Mail (kein Backend).
+- SEO: LocalBusiness-JSON-LD, `sitemap.xml`, `robots.txt`, 301-Weiterleitungen aller alten Contao-URLs (`next.config.ts`).
+- Impressum übernommen (§ 5 TMG → § 5 DDG). Datenschutz nur als Entwurf – vor Livegang rechtlich prüfen.
+- E2E: `tests/site.spec.ts` (22 Tests, `PW_CHROMIUM=… npm run test:e2e -- --project=chromium`).

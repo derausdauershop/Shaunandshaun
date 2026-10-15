@@ -9,6 +9,8 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
+    // Cloud/CI containers ship their own Chromium: PW_CHROMIUM=/path/to/chromium npm run test:e2e
+    launchOptions: process.env.PW_CHROMIUM ? { executablePath: process.env.PW_CHROMIUM } : {},
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },

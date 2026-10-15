@@ -1,6 +1,6 @@
 # PROJ-6: Community & Events
 
-**Status:** Planned · **Priorität:** P1 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-4
+**Status:** In Progress · **Priorität:** P1 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-4
 
 ## User Stories
 - Als junge:r Runner:in möchte ich wissen, wann und wo der nächste Run Club läuft.
@@ -21,3 +21,7 @@
 - 8 Läufe + Abschlussfeier: Asdorflauf Wehbach, Föschber Radweglauf (Niederfischbach), Flecker Tunnellauf (Freudenberg), Deuzer Sparkassen Pfingst-Lauf, Anzhäuser Gückellauf, Wilnsdorfer Bahnlauf, Herdorfer Götzelauf, Südsauerlandlauf Wenden; Abschlussfeier im November.
 - 2026 = 38. Ausgabe → 2027 = 39. Ausgabe. Termine 2027 noch nicht final (Daten in `src/lib/brand/cup.ts`).
 - [ ] Termine 2027 eintragen, sobald final.
+
+## Implementation Notes (2026-10-15)
+- `/ausdauer-cup` (Termine 2026, Modus, Ergebnisse) + 8 Laufseiten `/ausdauer-cup/[slug]` mit Startzeiten, Strecke, RaceResult-Links (aus den alten Eventseiten).
+- `/community` (Crown Town Runners, Test & Try, Firmenlauf), `/events` mit Datumsfilter (`src/content/events.ts`, unit-getestet), tägliche Revalidierung.
