@@ -22,8 +22,8 @@
 | PROJ-5 | Run Academy (Web) | In Progress | [Spec](PROJ-5-run-academy.md) | 2026-10-15 |
 | PROJ-6 | Community & Events | In Progress | [Spec](PROJ-6-community-events.md) | 2026-10-15 |
 | PROJ-7 | Magazin & Jobs | In Progress | [Spec](PROJ-7-magazine-jobs.md) | 2026-10-15 |
-| PROJ-8 | Print-Vorlagen | Planned | [Spec](PROJ-8-print-templates.md) | 2026-10-15 |
-| PROJ-9 | Social-Media-Vorlagen | Planned | [Spec](PROJ-9-social-templates.md) | 2026-10-15 |
+| PROJ-8 | Print-Vorlagen | In Progress | [Spec](PROJ-8-print-templates.md) | 2026-10-15 |
+| PROJ-9 | Social-Media-Vorlagen | In Progress | [Spec](PROJ-9-social-templates.md) | 2026-10-15 |
 | PROJ-10 | Shop-Integration (Headless Shopify) & Domain ausdauer.shop | Planned | [Spec](PROJ-10-shopify-headless.md) | 2026-10-15 |
 
 ## Next Available ID: PROJ-11

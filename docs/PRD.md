@@ -38,8 +38,8 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 | P0 | PROJ-5 Run Academy (Web) | In Progress |
 | P1 | PROJ-6 Community & Events | In Progress |
 | P1 | PROJ-7 Magazin & Jobs | In Progress |
-| P1 | PROJ-8 Print-Vorlagen (Flyer, Plakat, Geschäftsausstattung) | Planned |
-| P1 | PROJ-9 Social-Media-Vorlagen | Planned |
+| P1 | PROJ-8 Print-Vorlagen (Flyer, Plakat, Geschäftsausstattung) | In Progress |
+| P1 | PROJ-9 Social-Media-Vorlagen | In Progress |
 | P0 | PROJ-10 Shop-Integration (Headless Shopify) & Domain ausdauer.shop | Planned |
 
 ## Success Metrics
