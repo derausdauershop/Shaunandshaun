@@ -21,7 +21,7 @@ export const SERVICES = [
   },
   {
     title: "Individuelle FootBalance-Einlegesohlen",
-    text: "Auf Basis deines 3D-Scans erwärmen wir die Einlegesohle und formen sie direkt im Store an deinen Fuß an – passend zu deinem Laufschuh.",
+    text: "Auf Basis deines 3D-Scans erwärmen wir die Einlegesohle und formen sie direkt im Store an deinen Fuß – du nimmst sie sofort mit. In Betzdorf und Siegen.",
   },
   { title: "Geschenk-Gutscheine", text: "Im Store oder online ab 10 € – direkt per E-Mail zum Verschenken. Kostenlose Geschenkverpackung inklusive." },
   { title: "Textildruck & Beflockung", text: "Wir bedrucken und beflocken Textilien jeder Art – fürs Team, den Lauftreff oder die Firma." },

@@ -29,3 +29,4 @@
 - Impressum übernommen (§ 5 TMG → § 5 DDG). Datenschutz nur als Entwurf – vor Livegang rechtlich prüfen.
 - E2E: `tests/site.spec.ts` (22 Tests, `PW_CHROMIUM=… npm run test:e2e -- --project=chromium`).
 - 2026-10-15 (Kundenhinweis): Currex-Druckmessung und Dartfish werden nicht mehr genutzt. Ersetzt durch FootBalance 3D-Fußvermessung mit individuell angepassten (thermoformbaren) Einlegesohlen und „Videoanalyse der dynamischen Bewegung“ (`src/content/services.ts`, Laufanalyse-Seite, Startseite).
+- Bestätigt (Kunde): FootBalance in beiden Stores, Einlegesohlen werden direkt mitgenommen.

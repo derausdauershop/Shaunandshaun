@@ -46,7 +46,7 @@ export default function AnalysisPage() {
             {
               img: "/images/betzdorf-fussanalyse.webp",
               title: "3D-Fußvermessung",
-              text: "Das FootBalance-System vermisst deine Füße dreidimensional – im Stand und unter Belastung. So sehen wir Fußlänge, Breite, Gewölbe und Fußstellung, bevor du den ersten Schuh anziehst. Auf Basis des Scans passen wir dir bei Bedarf eine individuelle Einlegesohle an: erwärmt und direkt im Store an deinen Fuß geformt.",
+              text: "Das FootBalance-System vermisst deine Füße dreidimensional – im Stand und unter Belastung. So sehen wir Fußlänge, Breite, Gewölbe und Fußstellung, bevor du den ersten Schuh anziehst. Auf Basis des Scans passen wir dir bei Bedarf eine individuelle Einlegesohle an: erwärmt, direkt im Store an deinen Fuß geformt und sofort zum Mitnehmen – in Betzdorf und Siegen.",
               data: [{ label: "System", value: "FootBalance" }, { label: "Scan", value: "3D" }],
             },
             {

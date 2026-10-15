@@ -33,7 +33,7 @@ export const STORES: Store[] = [
     phoneHref: "tel:+4927414372",
     size: "400 m²",
     since: 1986,
-    focus: ["Running", "Laufanalyse", "Einlagen", "Wandern & Outdoor", "Fitness & Lifestyle"],
+    focus: ["Running", "Laufanalyse", "FootBalance-Einlegesohlen", "Wandern & Outdoor", "Fitness & Lifestyle"],
     intro:
       "Hier hat alles angefangen: 1986 auf 40 m², heute auf 400 m². Running mit Laufanalyse, eine große Wanderschuh- und Outdoor-Abteilung und alles für deinen aktiven Alltag.",
     hours: {
@@ -60,7 +60,7 @@ export const STORES: Store[] = [
     phoneHref: "tel:+4927177005090",
     size: "230 m²",
     since: 2019,
-    focus: ["Running", "Laufanalyse", "Laufbekleidung", "Laufuhren & Zubehör", "Crown Town Runners"],
+    focus: ["Running", "Laufanalyse", "FootBalance-Einlegesohlen", "Laufbekleidung", "Laufuhren & Zubehör", "Crown Town Runners"],
     intro:
       "Seit September 2019 dein Laufspezialist in Siegen. 230 m², die sich komplett ums Laufen drehen – von der Laufschuhberatung mit Analyse bis zu Laufuhren und Trinksystemen.",
     hours: {
