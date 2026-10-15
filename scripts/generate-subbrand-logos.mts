@@ -158,7 +158,7 @@ const SUBBRANDS: SubBrand[] = [
     dir: "cup",
     file: "ausdauer-cup",
     title: "AUSDAUER CUP",
-    claim: "LAUFSERIE SIEGERLAND",
+    claim: "SEIT 1989",
     colorways: [
       { name: "farbig", plate: RED, mark: WHITE, name_: INK, claim: INK, accent: RED },
       { name: "negativ", plate: RED, mark: WHITE, name_: WHITE, claim: WHITE, accent: RED },
@@ -220,7 +220,7 @@ function series(b: SubBrand, c: Colorway) {
   const nb = bounds(DISPLAY, b.title, NAME_SIZE);
   const tx = plateWidth(PLATE_H) + 16;
   const width = tx + nb.width;
-  const claim = `${b.claim} · ${SEASON}`;
+  const claim = `${b.claim} · SAISON ${SEASON}`;
   const y = PLATE_H + 16;
   const body =
     plate(0, 0, PLATE_H, c.plate, c.mark) +
@@ -245,7 +245,7 @@ function seal(b: SubBrand, c: Colorway, ring: "places" | "claim") {
     while (layout(LABEL, label, size, size * 0.14).width + size * 0.14 > 2 * Math.PI * rr) size -= 0.1;
     body += `<path fill="${c.name_}" d="${arcText(LABEL, label, m, m, rr, size, size * 0.14)}"/>`;
   } else {
-    body += `<path fill="${c.name_}" d="${arcText(LABEL, "LAUFSERIE · SIEGERLAND", m, m, R, 17, 2.2)}"/>`;
+    body += `<path fill="${c.name_}" d="${arcText(LABEL, `SEIT 1989 · SAISON ${SEASON}`, m, m, R, 17, 2.2)}"/>`;
     const span = (110 * Math.PI) / 180;
     for (let i = 0; i < DOTS; i++) {
       const a = Math.PI + span / 2 - (i * span) / (DOTS - 1); // left to right, last dot = final
@@ -260,7 +260,7 @@ function seal(b: SubBrand, c: Colorway, ring: "places" | "claim") {
   const nb = bounds(DISPLAY, b.title, size);
   const ny = top + ph + 10 + nb.height;
   body += `<path fill="${c.name_}" d="${text(DISPLAY, b.title, m - nb.width / 2, ny, size)}"/>`;
-  const line = `${EDITION}. AUSGABE · ${SEASON}`;
+  const line = ring === "places" ? `${EDITION}. AUSGABE · ${SEASON}` : `${EDITION}. AUSGABE`;
   const sb = bounds(MONO, line, 9.5, 1.4);
   body += `<path fill="${c.name_}" d="${text(MONO, line, m - sb.width / 2, ny + 20, 9.5, 1.4)}"/>`;
   if (ring === "places") body += stations(m - 52, ny + 36, 104, c.name_, c.accent, 2.6);

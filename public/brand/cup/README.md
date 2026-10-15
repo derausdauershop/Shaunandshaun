@@ -4,11 +4,11 @@ Untermarke nach dem Bauplan der Run Academy (∞-Plakette + Name + Claim), Plake
 
 | Datei | Einsatz |
 |---|---|
-| `ausdauer-cup-serie-*.svg` | Serienlogo mit „Laufserie Siegerland“, Serienleiste (8 Läufe + rotes Finale) und Saison – Urkunden, RaceResult, Webseite, Flyer |
+| `ausdauer-cup-serie-*.svg` | Serienlogo mit „Seit 1989 · Saison …“, Serienleiste (8 Läufe + rotes Finale) und Saison – Urkunden, RaceResult, Webseite, Flyer |
 | `ausdauer-cup-*.svg` | Standard (Plakette + Name + Claim) – Banner, Startnummern, Webseite |
 | `ausdauer-cup-gestapelt-*.svg` | Gestapelt – T-Shirt-Rücken, Hochformate, Beachflag |
 | `ausdauer-cup-siegel-*.svg` | Rundes Siegel mit den acht Orten im Ring und der Auflage – Urkunde, Brust-Logo, Medaille (ab 35 mm) |
-| `ausdauer-cup-siegel-claim-*.svg` | Siegel mit „Laufserie Siegerland“ statt Orten – für kleine Größen, Sticker |
+| `ausdauer-cup-siegel-claim-*.svg` | Siegel mit „Seit 1989 · Saison …“ statt Orten – für kleine Größen, Sticker |
 | `ausdauer-cup-icon*.svg` | ∞-Plakette allein – Social-Avatar, Favicon, Stempel, Medaille |
 
 Farbstellungen: `farbig` (auf Weiß), `negativ` (auf Ink), `schwarz` (Einfarbdruck), `weiss` (auf Rot oder Ink).

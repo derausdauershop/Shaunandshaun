@@ -69,7 +69,7 @@ export default function CupPage() {
           <Link href="/brand" className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground">
             ← Brand Guide
           </Link>
-          <p className="mt-12 font-mono text-xs uppercase tracking-[0.25em] text-brand">Logo-Entwurf · Laufserie Siegerland</p>
+          <p className="mt-12 font-mono text-xs uppercase tracking-[0.25em] text-brand">Logo-Entwurf · Laufserie seit 1989</p>
           <CupLogo kind="serie-" color="negativ" className="mt-8 h-auto w-full max-w-xl" />
           <p className="mt-10 max-w-2xl text-lg text-muted-foreground sm:text-xl">
             Acht Läufe, acht Orte, ein Finale – zum {CUP_EDITION}. Mal. Die Vereine richten die Läufe aus, AUSDAUER spannt den Cup
@@ -106,7 +106,7 @@ export default function CupPage() {
             <li className="border-t-4 border-ink pt-4">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Name & Claim</p>
               <p className="mt-2 font-display text-2xl font-extrabold uppercase">AUSDAUER CUP</p>
-              <p className="mt-1 text-muted-foreground">„Laufserie Siegerland“ sagt in zwei Worten, was der Cup ist und wo er stattfindet.</p>
+              <p className="mt-1 text-muted-foreground">„Seit 1989“ erzählt die Tradition: {CUP_SEASON} läuft der Cup zum {CUP_EDITION}. Mal – von Wehbach bis Wenden.</p>
             </li>
             <li className="border-t-4 border-stone pt-4">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Nur beim Cup</p>
@@ -368,7 +368,7 @@ export default function CupPage() {
       </main>
       <footer className="surface-ink px-4 py-10 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground sm:flex-row">
-          <p>AUSDAUER CUP · Laufserie Siegerland</p>
+          <p>AUSDAUER CUP · seit 1989</p>
           <p>Logo-Entwurf v1 · zur Freigabe</p>
         </div>
       </footer>

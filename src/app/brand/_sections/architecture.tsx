@@ -54,7 +54,7 @@ export function Architecture() {
             <RunAcademyLogo />
             <p className="mt-3 text-sm text-muted-foreground">Einsteigerkurs, 10 km / Halbmarathon, Lauf-ABC & Technik</p>
           </Node>
-          <Node label="Laufserie Siegerland · erstmals einheitlich">
+          <Node label="Laufserie seit 1989 · erstmals einheitlich">
             <CupLogo className="h-12 max-w-full" />
             <p className="mt-3 text-sm text-muted-foreground">
               8–9 Vereinsläufe, AUSDAUER stellt den Cup. <a href="/brand/cup" className="underline underline-offset-4">Logo-System & Anwendungen →</a>
