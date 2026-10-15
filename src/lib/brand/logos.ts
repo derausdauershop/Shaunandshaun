@@ -11,6 +11,7 @@ export const LOGO_FILES = {
   ausdauerNegative: "ausdauer-negativ",
   absoluteRun: "absolute-run-ausdauer",
   crownTown: "crown-town-runners",
+  firmenlauf: "westerwaelder-firmenlauf",
 } as const;
 
 export type LogoKey = keyof typeof LOGO_FILES;

@@ -1,5 +1,5 @@
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { CrownTownLogo } from "@/components/brand/crown-town-logo";
+import { CrownTownLogo, FirmenlaufLogo } from "@/components/brand/crown-town-logo";
 import { InfinityMark } from "@/components/brand/infinity-mark";
 import { PartnerLogo } from "@/components/brand/partner-logo";
 import { RunAcademyLogo } from "@/components/brand/run-academy-logo";
@@ -26,7 +26,7 @@ export function Architecture() {
       km={2}
       kicker="Markenarchitektur"
       title="Eine Dachmarke. Ein Zeichen. Klare Rollen."
-      intro="AUSDAUER führt. Das ∞ aus dem Logo steckt bereits in Absolute Run Ausdauer und in der Run Academy – es wird zur Klammer der ganzen Familie. Marken mit eigenem Fremd-Logo (Absolute Run, Crown Town Runners) werden gekennzeichnet, nie angepasst."
+      intro="AUSDAUER führt. Das ∞ aus dem Logo steckt bereits in Absolute Run Ausdauer und in der Run Academy – es wird zur Klammer der ganzen Familie. Marken mit eigenem Logo (Absolute Run, Crown Town Runners, Westerwälder Firmenlauf) werden gekennzeichnet, nie angepasst."
     >
       <div className="flex justify-center">
         <div className="rounded-sm bg-ink px-10 py-6">
@@ -64,8 +64,12 @@ export function Architecture() {
             <CrownTownLogo />
             <p className="mt-3 text-sm text-muted-foreground">Community Run · donnerstags 18:30 ab Store Siegen · Absender „powered by AUSDAUER“</p>
           </Node>
-          <Node label="Events" title="Westerwälder Firmenlauf · Ausdauer-Cup">
-            <p className="text-sm text-muted-foreground">Absender immer „präsentiert von AUSDAUER“</p>
+          <Node label="Event Betzdorf · eigenes Logo" tone="own-logo">
+            <FirmenlaufLogo className="h-10" />
+            <p className="mt-3 text-sm text-muted-foreground">Organisiert von AUSDAUER · Absender „präsentiert von AUSDAUER“</p>
+          </Node>
+          <Node label="Events" title="Ausdauer-Cup & Laufevents">
+            <p className="text-sm text-muted-foreground">Ohne eigenes Logo: im AUSDAUER-Design mit Rot</p>
           </Node>
         </div>
       </div>

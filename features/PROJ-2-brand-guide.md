@@ -27,3 +27,5 @@
 - Kontrasttabelle wird live aus `src/lib/brand/color.ts` berechnet (unit-getestet).
 - Erste Anwendungsskizzen (A5 Academy, IG-Post Run Club, DIN lang Laufanalyse) in KM 10.
 - Geprüft: 1440 px und 375 px ohne horizontalen Overflow, keine Console-Fehler.
+
+- 2026-10-15: Brand Guide v0.2 vom Kunden als Basis freigegeben; Firmenlauf-Logo nachgereicht und in der Markenarchitektur ergänzt.

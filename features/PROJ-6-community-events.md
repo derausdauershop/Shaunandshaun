@@ -7,6 +7,7 @@
 
 ## Acceptance Criteria
 - `/community`: Crown Town Runners – Community Run Siegen (Do 18:30, ab Koblenzer Str. 40), mit eigenem Logo + „powered by AUSDAUER“.
+- Westerwälder Firmenlauf mit eigenem Logo (`public/brand/logos/westerwaelder-firmenlauf.svg`) + „präsentiert von AUSDAUER“.
 - `/events`: kommende Events chronologisch, vergangene ausgeblendet (unit-getestete Sortierung/Filter).
 - Leerzustand: „Gerade keine Events geplant – folge uns auf Instagram“.
 

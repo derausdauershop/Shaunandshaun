@@ -20,7 +20,7 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 | Persönlichkeit | Expertise + Community |
 | Logo | Ausdauer-Logo (∞ + AUSDAUER) bleibt unverändert; das ∞ wird zur Klammer der Markenfamilie |
 | Farben | Logofarben Rot `#E30110` + Schwarz `#222222`; Signalfarbe Volt `#CAFF42` (aus dem bisherigen Academy-Logo) für Academy & Community; Cyan `#29B9D2` nur Siegen |
-| Architektur | Dachmarke AUSDAUER; Untermarke Run Academy; Absolute Run Ausdauer (Siegen) und Crown Town Runners (Run Club Siegen) behalten ihr eigenes Logo und werden gekennzeichnet |
+| Architektur | Dachmarke AUSDAUER; Untermarke Run Academy; Absolute Run Ausdauer (Siegen), Crown Town Runners (Run Club Siegen) und Westerwälder Firmenlauf behalten ihr eigenes Logo und werden gekennzeichnet |
 | Schriften | sportlich-kondensiert: Barlow Condensed / Barlow / JetBrains Mono ersetzen Proxima Nova |
 | Run Academy | Logo neu gestalten |
 | Ansprache | Du |
@@ -30,7 +30,7 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 
 | Priority | Feature | Status |
 |----------|---------|--------|
-| P0 | PROJ-1 Design-System & Tokens | In Progress |
+| P0 | PROJ-1 Design-System & Tokens | In Progress (Basis freigegeben) |
 | P0 | PROJ-2 Brand Guide (live) | In Progress |
 | P0 | PROJ-3 Grafik-Kit & Run-Academy-Logo | In Progress |
 | P0 | PROJ-4 Webseite Kernseiten | Planned |
@@ -47,7 +47,7 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 - Konsistente NAP-Daten (Name, Adresse, Öffnungszeiten) auf Webseite, Google und Verzeichnissen.
 
 ## Constraints
-- Ausdauer-Logo, Absolute-Run-Logo (Sport-2000-Format) und Crown-Town-Runners-Logo dürfen nicht verändert werden.
+- Ausdauer-Logo, Absolute-Run-Logo (Sport-2000-Format), Crown-Town-Runners- und Firmenlauf-Logo dürfen nicht verändert werden.
 - Fonts müssen frei für Web + Print lizenziert sein (OFL) und DSGVO-konform selbst gehostet werden.
 - Shop bleibt Shopify; keine Shop-Migration.
 - Kleines Team → Inhalte als einfach pflegbare Datendateien.
