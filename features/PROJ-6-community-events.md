@@ -14,4 +14,4 @@
 - BTown Run Club (Betzdorf) existiert nicht mehr → entfällt (Info Kunde, 2026-10-15).
 
 ## Open Questions
-- [ ] Bestätigen: Crown Town Runners = der Donnerstags-Lauftreff in Siegen?
+- [x] Crown Town Runners = der Donnerstags-Lauftreff in Siegen (bestätigt 2026-10-15).
