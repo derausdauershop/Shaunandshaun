@@ -80,7 +80,7 @@ export function Applications() {
             />
             <div className="mt-auto space-y-2">
               <KmMarker km={1} label="Video" />
-              <KmMarker km={2} label="Druckmessung" />
+              <KmMarker km={2} label="3D-Scan" />
               <KmMarker km={3} label="Schuh" />
             </div>
           </div>

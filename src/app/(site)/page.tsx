@@ -85,16 +85,16 @@ export default function HomePage() {
         km={1}
         kicker="Laufanalyse"
         title="Erst laufen. Dann kaufen."
-        intro="Den richtigen Schuh findest du nicht im Regal, sondern auf der Laufbahn. Wir nehmen uns Zeit – mit Fußdruckmessung, Videoanalyse und Probelauf vor der Tür."
+        intro="Den richtigen Schuh findest du nicht im Regal, sondern auf der Laufbahn. Wir nehmen uns Zeit – mit 3D-Fußvermessung, Videoanalyse und Probelauf vor der Tür."
       >
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
           <div className="relative aspect-square overflow-hidden rounded-sm">
-            <Image src="/images/betzdorf-fussanalyse.webp" alt="Fußdruckmessung im Store Betzdorf" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
+            <Image src="/images/betzdorf-fussanalyse.webp" alt="FootBalance 3D-Fußvermessung im Store Betzdorf" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
             <DataOverlay
               className="absolute bottom-4 left-4 bg-ink/80 text-paper backdrop-blur"
               data={[
-                { label: "Videoanalyse", value: "Dartfish" },
-                { label: "Fußdruck", value: "Currex" },
+                { label: "Fuß", value: "3D-Scan" },
+                { label: "Bewegung", value: "Video" },
               ]}
             />
           </div>

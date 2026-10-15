@@ -10,7 +10,7 @@ import { COMPANY } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Laufanalyse & Service",
-  description: "Laufschuhberatung mit Fußdruckmessung (Currex), Videoanalyse (Dartfish) und Probelauf. Dazu Einlagen, Bonussystem, Gutscheine und Textildruck.",
+  description: "Laufschuhberatung mit 3D-Fußvermessung (FootBalance), Videoanalyse der dynamischen Bewegung und Probelauf. Dazu individuelle Einlegesohlen, Bonussystem, Gutscheine und Textildruck.",
 };
 
 export default function AnalysisPage() {
@@ -23,7 +23,7 @@ export default function AnalysisPage() {
             Erst laufen. <span className="italic text-brand">Dann kaufen.</span>
           </>
         }
-        intro="Wir schauen dir auf die Füße – per Fußdruckmessung und Video – und finden den Schuh, der zu deinem Laufstil passt. Ohne Termin, in beiden Stores."
+        intro="Wir schauen dir auf die Füße – per 3D-Scan und Video – und finden den Schuh, der zu deinem Laufstil passt. Ohne Termin, in beiden Stores."
         image="/images/betzdorf-beratung.webp"
         imageAlt="Beratungsecke im Store Betzdorf"
       />
@@ -43,8 +43,18 @@ export default function AnalysisPage() {
       <SiteSection km={2} kicker="Technik" title="Messen statt raten." tone="ink">
         <div className="grid gap-8 lg:grid-cols-2">
           {[
-            { img: "/images/betzdorf-fussanalyse.webp", title: "Fußdruckmessung", text: "Der Currex Motionquest Neo zeigt, wie sich die Belastung beim Stehen und Gehen über deinen Fuß verteilt.", data: [{ label: "System", value: "Currex" }, { label: "Messung", value: "Fußdruck" }] },
-            { img: "/images/siegen-laufbahn.webp", title: "Videoanalyse", text: "Auf unserer Laufbahn filmen wir deinen Laufstil. Mit Dartfish sehen wir in Zeitlupe, was dein Fuß beim Aufsetzen macht.", data: [{ label: "System", value: "Dartfish" }, { label: "Auf der", value: "Laufbahn" }] },
+            {
+              img: "/images/betzdorf-fussanalyse.webp",
+              title: "3D-Fußvermessung",
+              text: "Das FootBalance-System vermisst deine Füße dreidimensional – im Stand und unter Belastung. So sehen wir Fußlänge, Breite, Gewölbe und Fußstellung, bevor du den ersten Schuh anziehst. Auf Basis des Scans passen wir dir bei Bedarf eine individuelle Einlegesohle an: erwärmt und direkt im Store an deinen Fuß geformt.",
+              data: [{ label: "System", value: "FootBalance" }, { label: "Scan", value: "3D" }],
+            },
+            {
+              img: "/images/siegen-laufbahn.webp",
+              title: "Videoanalyse der dynamischen Bewegung",
+              text: "Stehen ist nicht laufen. Deshalb filmen wir dich auf unserer Laufbahn und sehen in Zeitlupe, wie Fuß, Knie und Hüfte in der Bewegung zusammenarbeiten – und wie sich das mit dem richtigen Schuh verändert.",
+              data: [{ label: "Analyse", value: "Video" }, { label: "Bewegung", value: "dynamisch" }],
+            },
           ].map((t) => (
             <figure key={t.title} className="overflow-hidden rounded-sm bg-card ring-1 ring-border">
               <div className="relative aspect-[4/3]">

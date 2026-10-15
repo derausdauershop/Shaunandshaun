@@ -7,7 +7,7 @@ const SCALE = [
   { name: "H2", cls: "font-display text-4xl font-extrabold uppercase leading-[0.95]", spec: "Barlow Condensed 800 · 40/38", sample: "Laufanalyse in 30 Minuten" },
   { name: "H3", cls: "font-display text-2xl font-bold uppercase", spec: "Barlow Condensed 700 · 24/28", sample: "Einsteiger-Laufkurs" },
   { name: "Lead", cls: "font-sans text-xl", spec: "Barlow 400 · 20/30", sample: "In acht Wochen von null auf fünf Kilometer – mit Plan, Gruppe und Trainer:in." },
-  { name: "Body", cls: "font-sans text-base", spec: "Barlow 400 · 16/24", sample: "Wir schauen dir beim Laufen auf die Füße – per Video und Druckmessung – und finden den Schuh, der zu deinem Laufstil passt." },
+  { name: "Body", cls: "font-sans text-base", spec: "Barlow 400 · 16/24", sample: "Wir schauen dir beim Laufen auf die Füße – per 3D-Scan und Video – und finden den Schuh, der zu deinem Laufstil passt." },
   { name: "Daten", cls: "font-mono text-sm uppercase tracking-[0.15em]", spec: "JetBrains Mono 600 · 14/20 · +15 %", sample: "Pace 5:12 /km · Kadenz 172 · Do 18:30" },
 ];
 
