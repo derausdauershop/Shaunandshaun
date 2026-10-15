@@ -15,7 +15,14 @@
 
 | ID | Feature | Status | Spec | Created |
 |----|---------|--------|------|---------|
+| PROJ-1 | Design-System & Tokens | In Progress | [Spec](PROJ-1-design-system.md) | 2026-10-15 |
+| PROJ-2 | Brand Guide (live) | In Progress | [Spec](PROJ-2-brand-guide.md) | 2026-10-15 |
+| PROJ-3 | Grafik-Kit & Run-Academy-Logo | In Progress | [Spec](PROJ-3-graphic-kit.md) | 2026-10-15 |
+| PROJ-4 | Webseite Kernseiten | Planned | [Spec](PROJ-4-website-core.md) | 2026-10-15 |
+| PROJ-5 | Run Academy (Web) | Planned | [Spec](PROJ-5-run-academy.md) | 2026-10-15 |
+| PROJ-6 | Community & Events | Planned | [Spec](PROJ-6-community-events.md) | 2026-10-15 |
+| PROJ-7 | Magazin & Jobs | Planned | [Spec](PROJ-7-magazine-jobs.md) | 2026-10-15 |
+| PROJ-8 | Print-Vorlagen | Planned | [Spec](PROJ-8-print-templates.md) | 2026-10-15 |
+| PROJ-9 | Social-Media-Vorlagen | Planned | [Spec](PROJ-9-social-templates.md) | 2026-10-15 |
 
-<!-- Add features above this line -->
-
-## Next Available ID: PROJ-1
+## Next Available ID: PROJ-10
