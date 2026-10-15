@@ -40,6 +40,7 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 | P1 | PROJ-7 Magazin & Jobs | In Progress |
 | P1 | PROJ-8 Print-Vorlagen (Flyer, Plakat, Geschäftsausstattung) | Planned |
 | P1 | PROJ-9 Social-Media-Vorlagen | Planned |
+| P0 | PROJ-10 Shop-Integration (Headless Shopify) & Domain ausdauer.shop | Planned |
 
 ## Success Metrics
 - Einheitlicher Auftritt über alle Touchpoints (Brand-Guide-Abnahme durch GF).
@@ -50,11 +51,11 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 ## Constraints
 - Ausdauer-Logo, Absolute-Run-Logo (Sport-2000-Format), Crown-Town-Runners- und Firmenlauf-Logo dürfen nicht verändert werden.
 - Fonts müssen frei für Web + Print lizenziert sein (OFL) und DSGVO-konform selbst gehostet werden.
-- Shop bleibt Shopify; keine Shop-Migration.
+- Shopify bleibt Backend für Gutscheine/Kurse (Headless, Kasse unter checkout.ausdauer.shop); Hauptdomain wird ausdauer.shop.
 - Kleines Team → Inhalte als einfach pflegbare Datendateien.
 
 ## Non-Goals
 - Kein neues Ausdauer-Logo, keine Änderung am Absolute-Run-Branding.
-- Keine Shopify-Theme-Entwicklung, kein eigener Checkout.
+- Keine Shopify-Theme-Entwicklung, kein eigener Checkout (Bezahlung bleibt in der Shopify-Kasse).
 - Keine druckfertige Reinzeichnung (nur Entwürfe/Previews).
 - Kein Login/Kundenkonto in dieser Version.
