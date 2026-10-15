@@ -1,5 +1,6 @@
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { CrownTownLogo, FirmenlaufLogo } from "@/components/brand/crown-town-logo";
+import { CupLogo } from "@/components/brand/cup-logo";
 import { InfinityMark } from "@/components/brand/infinity-mark";
 import { PartnerLogo } from "@/components/brand/partner-logo";
 import { RunAcademyLogo } from "@/components/brand/run-academy-logo";
@@ -68,8 +69,11 @@ export function Architecture() {
             <FirmenlaufLogo className="h-10" />
             <p className="mt-3 text-sm text-muted-foreground">Organisiert von AUSDAUER · Absender „präsentiert von AUSDAUER“</p>
           </Node>
-          <Node label="Events" title="Ausdauer-Cup & Laufevents">
-            <p className="text-sm text-muted-foreground">Ohne eigenes Logo: im AUSDAUER-Design mit Rot</p>
+          <Node label="Laufserie Siegerland · neu">
+            <CupLogo kind="serie-" className="h-auto w-full max-w-xs" />
+            <p className="mt-3 text-sm text-muted-foreground">
+              8–9 Vereinsläufe, AUSDAUER stellt den Cup. <a href="/brand/cup" className="underline underline-offset-4">Logo-System & Anwendungen →</a>
+            </p>
           </Node>
         </div>
       </div>

@@ -31,3 +31,4 @@
 - `npm run brand:assets` schreibt SVGs nach `public/brand/elements/` + `public/brand/run-academy/` und `brand/tokens.json`.
 - Original-Logos aus den Kunden-PDFs als SVG in `public/brand/logos/` (Rot/Schwarz/Weiß, Symbol, Absolute Run, Crown Town Runners, altes Academy-Logo); geladen über `src/lib/brand/logos.ts`.
 - ∞-Pfad als Konstante in `src/lib/brand/infinity.ts`, Komponenten `infinity-mark.tsx`, `crown-town-logo.tsx`.
+- 2026-10-15: Logo-System AUSDAUER CUP ergänzt (`scripts/generate-cup-logo.mts`, Ausgabe `public/brand/cup/`): Serienlogo, kompakt, gestapelt, Siegel, Icon in vier Farbstellungen; Text als Pfade (opentype.js + @fontsource als devDependencies). Anwendungen unter `/brand/cup` (Urkunde mit Co-Sponsorenleiste, RaceResult-Header, T-Shirt, Flyer, Banner, Social). Läufe/Termine sind Beispieldaten in `src/lib/brand/cup.ts`.

@@ -23,6 +23,7 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 | Architektur | Dachmarke AUSDAUER; Untermarke Run Academy; Absolute Run Ausdauer (Siegen), Crown Town Runners (Run Club Siegen) und Westerwälder Firmenlauf behalten ihr eigenes Logo und werden gekennzeichnet |
 | Schriften | sportlich-kondensiert: Barlow Condensed / Barlow / JetBrains Mono ersetzen Proxima Nova |
 | Run Academy | Logo neu gestalten |
+| AUSDAUER CUP | Laufserie Siegerland (8–9 Vereinsläufe): Original-Logo + CUP-Plakette + Serienleiste, Siegel für Urkunden/Textil |
 | Ansprache | Du |
 | Print | Entwürfe/Previews; Reinzeichnung durch Druckerei/Agentur |
 
