@@ -39,12 +39,7 @@ function paceLines(fill: string, count = 4) {
 write("elements/pace-lines-ink.svg", paceLines(INK));
 write("elements/pace-lines-volt.svg", paceLines(VOLT));
 
-// Run Academy badge (same geometry as src/components/brand/run-academy-logo.tsx)
-function academyIcon(badge: string, mark: string) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 64"><polygon points="5.6,0 80,0 74.4,64 0,64" fill="${badge}"/><path d="${INFINITY_PATH}" transform="translate(13.1 19.95) scale(0.85)" fill="${mark}"/></svg>`;
-}
-write("run-academy/icon-volt-on-ink.svg", academyIcon(INK, VOLT));
-write("run-academy/icon-ink-on-volt.svg", academyIcon(VOLT, INK));
+// Run Academy and AUSDAUER CUP logos: see scripts/generate-subbrand-logos.mts
 
 // ∞ symbol as outlined "track" supergraphic
 for (const [name, color] of [["ink", INK], ["red", RED], ["volt", VOLT]]) {

@@ -24,7 +24,7 @@ const SURFACE: Record<CupLogoColor, string> = {
 
 const VARIANTS: Array<{ kind: CupLogoKind; label: string; use: string; h: string }> = [
   { kind: "serie-", label: "Serienlogo", use: "Urkunden, RaceResult, Webseite, Flyer", h: "h-14" },
-  { kind: "", label: "Kompakt", use: "Banner, Startnummern, Medaillenband", h: "h-10" },
+  { kind: "", label: "Standard", use: "Banner, Startnummern, Medaillenband, Webseite", h: "h-12" },
   { kind: "gestapelt-", label: "Gestapelt", use: "T-Shirt-Rücken, Hochformate, Beachflag", h: "h-32" },
   { kind: "siegel-", label: "Siegel", use: "Urkunden-Siegel, Brust-Logo, Medaille, Sticker", h: "h-32" },
 ];
@@ -71,10 +71,10 @@ export default function CupPage() {
             ← Brand Guide
           </Link>
           <p className="mt-12 font-mono text-xs uppercase tracking-[0.25em] text-brand">Logo-Entwurf · Laufserie Siegerland</p>
-          <CupLogo kind="serie-" color="negativ" className="mt-8 h-auto w-full max-w-3xl" />
+          <CupLogo kind="serie-" color="negativ" className="mt-8 h-auto w-full max-w-xl" />
           <p className="mt-10 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            Neun Läufe, neun Vereine, eine Wertung. Die Vereine richten die Läufe aus, AUSDAUER spannt den Cup darum. Das Logo zeigt
-            genau das.
+            Neun Läufe, neun Vereine, eine Wertung. Die Vereine richten die Läufe aus, AUSDAUER spannt den Cup darum – ab jetzt mit
+            einem einheitlichen Logo als Untermarke, gebaut wie die Run Academy.
           </p>
         </div>
       </header>
@@ -84,34 +84,42 @@ export default function CupPage() {
           id="konzept"
           km={1}
           kicker="Konzept"
-          title="Neun Läufe. Eine Strecke."
-          intro="Das Logo besteht aus drei Teilen, die sich je nach Medium zusammen oder einzeln einsetzen lassen. Das AUSDAUER-Logo bleibt dabei unverändert."
+          title="Eine Untermarke wie die Run Academy."
+          intro="Der AUSDAUER CUP bekommt erstmals ein einheitliches Logo und folgt dabei genau dem Bauplan der Run Academy: das ∞ aus dem AUSDAUER-Logo in der 5° geneigten Plakette, der Name in Barlow Condensed Black Italic, darunter der Claim. Nur die Farbe unterscheidet die beiden: Volt fürs Lernen, Rot für den Wettkampf."
         >
-          <div className="overflow-x-auto rounded-sm bg-white p-6 ring-1 ring-border sm:p-10">
-            <CupLogo kind="serie-" className="h-auto w-full min-w-[520px] max-w-4xl" />
+          <div className="grid gap-4 md:grid-cols-2">
+            <figure className="flex min-h-48 flex-col items-center justify-center gap-4 rounded-sm bg-white p-8 ring-1 ring-border">
+              {/* eslint-disable-next-line @next/next/no-img-element -- static vector logo */}
+              <img src="/brand/run-academy/run-academy-farbig.svg" alt="Run Academy" className="h-14 w-auto max-w-full" />
+              <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Untermarke Lernen · Volt</figcaption>
+            </figure>
+            <figure className="flex min-h-48 flex-col items-center justify-center gap-4 rounded-sm bg-white p-8 ring-1 ring-border">
+              <CupLogo className="h-14 max-w-full" />
+              <figcaption className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Untermarke Wettkampf · Rot</figcaption>
+            </figure>
           </div>
           <ol className="mt-8 grid gap-6 md:grid-cols-3">
-            <li className="border-t-4 border-ink pt-4">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Absender</p>
-              <p className="mt-2 font-display text-2xl font-extrabold uppercase">Original-Logo</p>
-              <p className="mt-1 text-muted-foreground">∞ + AUSDAUER, unverändert. Der Cup ist klar eine AUSDAUER-Serie.</p>
-            </li>
             <li className="border-t-4 border-brand pt-4">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Name</p>
-              <p className="mt-2 font-display text-2xl font-extrabold uppercase">CUP-Plakette</p>
-              <p className="mt-1 text-muted-foreground">
-                Rote Startnummer, 5° geneigt wie der Logo-Schriftzug. Funktioniert einfarbig als Aussparung, auch im Siebdruck.
-              </p>
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Zeichen</p>
+              <p className="mt-2 font-display text-2xl font-extrabold uppercase">∞-Plakette in Rot</p>
+              <p className="mt-1 text-muted-foreground">Gleiche Form wie bei der Run Academy. Sie funktioniert allein als Avatar, Stempel oder Medaillen-Prägung.</p>
+            </li>
+            <li className="border-t-4 border-ink pt-4">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Name & Claim</p>
+              <p className="mt-2 font-display text-2xl font-extrabold uppercase">AUSDAUER CUP</p>
+              <p className="mt-1 text-muted-foreground">„Laufserie Siegerland“ sagt in zwei Worten, was der Cup ist und wo er stattfindet.</p>
             </li>
             <li className="border-t-4 border-stone pt-4">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Serie</p>
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Nur beim Cup</p>
               <p className="mt-2 font-display text-2xl font-extrabold uppercase">Serienleiste</p>
               <p className="mt-1 text-muted-foreground">
-                Ein Punkt pro Lauf der Saison, der rote Punkt am Ende ist die Gesamtwertung. Mit 8 oder 9 Läufen wird sie pro Saison neu
-                erzeugt.
+                Ein Punkt pro Lauf der Saison, der rote Punkt am Ende ist die Gesamtwertung. Wird pro Saison mit 8 oder 9 Läufen neu erzeugt.
               </p>
             </li>
           </ol>
+          <div className="mt-10 overflow-x-auto rounded-sm bg-white p-6 ring-1 ring-border sm:p-10">
+            <CupLogo kind="serie-" className="h-auto w-full min-w-[480px] max-w-3xl" />
+          </div>
         </Section>
 
         <Section id="system" km={2} kicker="Logo-System" title="Vier Formen. Vier Farbstellungen." dark>
@@ -137,17 +145,17 @@ export default function CupPage() {
               {/* eslint-disable-next-line @next/next/no-img-element -- static vector icon */}
               <img src="/brand/cup/ausdauer-cup-icon.svg" alt="AUSDAUER CUP Icon" className="h-20 w-auto" />
               {/* eslint-disable-next-line @next/next/no-img-element -- static vector icon */}
-              <img src="/brand/cup/ausdauer-cup-icon-schwarz.svg" alt="AUSDAUER CUP Icon schwarz" className="h-12 w-auto bg-white" />
+              <img src="/brand/cup/ausdauer-cup-icon-negativ.svg" alt="AUSDAUER CUP Icon auf Ink" className="h-12 w-auto" />
               <p className="max-w-xs text-sm text-muted-foreground">Icon für Social-Avatar, App-Icon in RaceResult, Favicon und Stempel.</p>
             </div>
             <ul className="space-y-3">
               <Rule kind="do">Farbig auf Weiß, negativ auf Ink, Weiß auf Rot. Schwarz für Fax, Stempel und Einfarbdruck.</Rule>
-              <Rule kind="do">Mindestgrößen: Serienlogo 60 mm, kompakt 35 mm, Siegel 20 mm, Icon 8 mm.</Rule>
-              <Rule kind="dont">Farbige Plakette auf Rot, Logo auf unruhigen Fotos, Serienpunkte ändern.</Rule>
+              <Rule kind="do">Mindestgrößen: Serienlogo 60 mm, Standard 35 mm, Siegel 20 mm, Plakette 8 mm.</Rule>
+              <Rule kind="dont">Rote Plakette auf Rot, Logo auf unruhigen Fotos, Cup in Volt oder Academy in Rot.</Rule>
             </ul>
           </div>
           <p className="mt-8 font-mono text-xs text-muted-foreground">
-            Alle Dateien als SVG mit Schrift in Pfaden: public/brand/cup/ · Neue Saison: npm run brand:cup -- 2028 8
+            Alle Dateien als SVG mit Schrift in Pfaden: public/brand/cup/ · Neue Saison: npm run brand:subbrands -- 2028 8
           </p>
         </Section>
 

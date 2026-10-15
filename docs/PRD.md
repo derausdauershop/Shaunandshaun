@@ -20,10 +20,10 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 | Persönlichkeit | Expertise + Community |
 | Logo | Ausdauer-Logo (∞ + AUSDAUER) bleibt unverändert; das ∞ wird zur Klammer der Markenfamilie |
 | Farben | Logofarben Rot `#E30110` + Schwarz `#222222`; Signalfarbe Volt `#CAFF42` (aus dem bisherigen Academy-Logo) für Academy & Community; Cyan `#29B9D2` nur Siegen |
-| Architektur | Dachmarke AUSDAUER; Untermarke Run Academy; Absolute Run Ausdauer (Siegen), Crown Town Runners (Run Club Siegen) und Westerwälder Firmenlauf behalten ihr eigenes Logo und werden gekennzeichnet |
+| Architektur | Dachmarke AUSDAUER; Untermarken Run Academy und AUSDAUER CUP (gleicher Bauplan); Absolute Run Ausdauer (Siegen), Crown Town Runners (Run Club Siegen) und Westerwälder Firmenlauf behalten ihr eigenes Logo und werden gekennzeichnet |
 | Schriften | sportlich-kondensiert: Barlow Condensed / Barlow / JetBrains Mono ersetzen Proxima Nova |
 | Run Academy | Logo neu gestalten |
-| AUSDAUER CUP | Laufserie Siegerland (8–9 Vereinsläufe): Original-Logo + CUP-Plakette + Serienleiste, Siegel für Urkunden/Textil |
+| AUSDAUER CUP | Laufserie Siegerland (8–9 Vereinsläufe), erstmals einheitliches Logo als Untermarke nach dem Bauplan der Run Academy (rote ∞-Plakette + Name + Claim), dazu Serienleiste und Siegel |
 | Ansprache | Du |
 | Print | Entwürfe/Previews; Reinzeichnung durch Druckerei/Agentur |
 

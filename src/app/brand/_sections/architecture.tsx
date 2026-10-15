@@ -49,14 +49,20 @@ export function Architecture() {
           </Node>
         </div>
         <div className="space-y-4">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Untermarke · Lernen</p>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Untermarken · gleicher Bauplan</p>
           <Node label="Laufschule · neu gestaltet">
             <RunAcademyLogo />
             <p className="mt-3 text-sm text-muted-foreground">Einsteigerkurs, 10 km / Halbmarathon, Lauf-ABC & Technik</p>
           </Node>
+          <Node label="Laufserie Siegerland · erstmals einheitlich">
+            <CupLogo className="h-12 max-w-full" />
+            <p className="mt-3 text-sm text-muted-foreground">
+              8–9 Vereinsläufe, AUSDAUER stellt den Cup. <a href="/brand/cup" className="underline underline-offset-4">Logo-System & Anwendungen →</a>
+            </p>
+          </Node>
           <div className="flex items-center gap-3 rounded-sm bg-ink p-5 text-paper">
             <InfinityMark className="h-6 w-auto text-brand" />
-            <p className="text-sm">Das ∞ verbindet AUSDAUER, Absolute Run Ausdauer und Run Academy.</p>
+            <p className="text-sm">Das ∞ verbindet AUSDAUER, Absolute Run Ausdauer, Run Academy und AUSDAUER CUP.</p>
           </div>
         </div>
         <div className="space-y-4">
@@ -68,12 +74,6 @@ export function Architecture() {
           <Node label="Event Betzdorf · eigenes Logo" tone="own-logo">
             <FirmenlaufLogo className="h-10" />
             <p className="mt-3 text-sm text-muted-foreground">Organisiert von AUSDAUER · Absender „präsentiert von AUSDAUER“</p>
-          </Node>
-          <Node label="Laufserie Siegerland · neu">
-            <CupLogo kind="serie-" className="h-auto w-full max-w-xs" />
-            <p className="mt-3 text-sm text-muted-foreground">
-              8–9 Vereinsläufe, AUSDAUER stellt den Cup. <a href="/brand/cup" className="underline underline-offset-4">Logo-System & Anwendungen →</a>
-            </p>
           </Node>
         </div>
       </div>

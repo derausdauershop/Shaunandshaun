@@ -51,7 +51,7 @@ export function Academy() {
           <Rule kind="do">Academy-Medien tragen Volt – bis zu 50 % der Fläche.</Rule>
           <Rule kind="do">Unter 24 px nur die Plakette verwenden.</Rule>
           <Rule kind="do">„by AUSDAUER“ in externer Kommunikation (Presse, Partner, Vereine).</Rule>
-          <Rule kind="dont">Rot in Academy-Medien – außer im AUSDAUER-Logo als Absender.</Rule>
+          <Rule kind="dont">Rot in Academy-Medien – Rot gehört dem AUSDAUER CUP und dem Absender-Logo.</Rule>
         </ul>
         <div className="grid gap-3">
           {COURSES.map((c) => (
