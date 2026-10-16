@@ -17,6 +17,13 @@ export const COMPANY = {
   url: "https://www.ausdauer-shop.de",
 } as const;
 
+/** Events, Lauftreffs and registration live in the app (no events page on the website any more). */
+export const COMMUNITY_APP = {
+  name: "Absolute Run Community",
+  ios: "https://apps.apple.com/de/app/absolute-run-community/id6808254762",
+  android: "https://play.google.com/store/apps/details?id=shop.ausdauer.absoluterun",
+} as const;
+
 export interface NavItem {
   href: string;
   label: string;
@@ -34,7 +41,6 @@ export const MAIN_NAV: NavItem[] = [
 
 export const SECONDARY_NAV: NavItem[] = [
   { href: "/ueber-uns", label: "Über uns & Team" },
-  { href: "/events", label: "Events" },
   { href: "/jobs", label: "Jobs" },
   { href: "/kontakt", label: "Kontakt" },
 ];

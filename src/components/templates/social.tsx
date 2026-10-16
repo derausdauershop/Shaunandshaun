@@ -12,7 +12,7 @@ import { StartNumber } from "@/components/brand/start-number";
 import { TopoLines } from "@/components/brand/topo-lines";
 import { cupLogo } from "@/lib/brand/cup";
 import { CUP_RACES } from "@/content/cup";
-import { formatDate } from "@/content/events";
+import { formatDate } from "@/lib/dates";
 import { cn } from "@/lib/utils";
 import { Artboard } from "./artboard";
 

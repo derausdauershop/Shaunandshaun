@@ -7,7 +7,7 @@ import { SiteSection } from "@/components/site/section";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CUP, CUP_RACES, raceBySlug } from "@/content/cup";
-import { formatDate } from "@/content/events";
+import { formatDate } from "@/lib/dates";
 
 export function generateStaticParams() {
   return CUP_RACES.map((r) => ({ slug: r.slug }));

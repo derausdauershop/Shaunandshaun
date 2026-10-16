@@ -11,7 +11,7 @@ import { StartNumber } from "@/components/brand/start-number";
 import { TopoLines } from "@/components/brand/topo-lines";
 import { courseBySlug } from "@/content/academy";
 import { CUP, CUP_FINAL, CUP_RACES } from "@/content/cup";
-import { formatDate } from "@/content/events";
+import { formatDate } from "@/lib/dates";
 import { ANALYSIS_STEPS } from "@/content/services";
 import { COMPANY } from "@/content/site";
 import { Artboard, StoreLine } from "./artboard";

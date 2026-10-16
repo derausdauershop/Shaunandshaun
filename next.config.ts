@@ -26,7 +26,9 @@ const LEGACY_REDIRECTS: Array<[string, string]> = [
   ["/eventleser/herdorfer-goetzelauf-2", "/ausdauer-cup/herdorfer-goetzelauf"],
   ["/eventleser/suedsauerlandlauf-wenden-2", "/ausdauer-cup/suedsauerlandlauf-wenden"],
   ["/eventleser/abschlussfeier-ausdauer-cup-2026", "/ausdauer-cup#abschlussfeier"],
-  ["/eventleser/:slug*", "/events"],
+  ["/eventleser/:slug*", "/community#app"],
+  // Events now live in the Absolute Run Community App
+  ["/events", "/community#app"],
   ["/newsreader/:slug*", "/magazin"],
 ];
 

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CrownTownLogo, FirmenlaufLogo } from "@/components/brand/crown-town-logo";
 import { CupLogo } from "@/components/brand/cup-logo";
+import { AppTeaser } from "@/components/site/app-teaser";
 import { PageHero } from "@/components/site/page-hero";
 import { SiteSection } from "@/components/site/section";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,7 @@ import { COMPANY } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Community",
-  description: "Crown Town Runners – der Lauftreff in Siegen jeden Donnerstag um 18:30 Uhr. Dazu Test & Try Events, der Westerwälder Firmenlauf und der AUSDAUER CUP.",
+  description: "Crown Town Runners – der Lauftreff in Siegen jeden Donnerstag um 18:30 Uhr. Alle Termine in der Absolute Run Community App, dazu der Westerwälder Firmenlauf und der AUSDAUER CUP.",
 };
 
 export default function CommunityPage() {
@@ -56,7 +57,8 @@ export default function CommunityPage() {
         </div>
       </SiteSection>
 
-      <SiteSection km={2} kicker="Events" title="Mitlaufen, anfeuern, feiern." tone="white">
+      <SiteSection km={2} kicker="Events" title="Mitlaufen, anfeuern, feiern." tone="white" id="app">
+        <AppTeaser className="mb-6" />
         <div className="grid gap-6 md:grid-cols-2">
           <article className="rounded-sm border border-dashed border-ink/30 p-8">
             <FirmenlaufLogo className="h-12" />

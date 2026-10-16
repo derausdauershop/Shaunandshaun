@@ -11,7 +11,6 @@ const ROUTES = [
   "/ausdauer-cup",
   "/ausdauer-cup/herdorfer-goetzelauf",
   "/community",
-  "/events",
   "/magazin",
   "/magazin/dehnuebungen-fuer-laeufer",
   "/ueber-uns",
@@ -37,6 +36,8 @@ test.describe("website", () => {
     await expect(page).toHaveURL(/\/magazin\/dehnuebungen-fuer-laeufer$/);
     await page.goto("/eventleser/herdorfer-goetzelauf-2");
     await expect(page).toHaveURL(/\/ausdauer-cup\/herdorfer-goetzelauf$/);
+    await page.goto("/events");
+    await expect(page).toHaveURL(/\/community#app$/);
   });
 
   test("Absolute Run logo appears on the Siegen store but not on the Betzdorf store body", async ({ page }) => {
@@ -55,4 +56,11 @@ test.describe("website", () => {
     await page.goto("/kontakt");
     await expect(page.locator("main [role=status]")).toHaveCount(2);
   });
+});
+
+test("events point to the community app", async ({ page }) => {
+  await page.goto("/community");
+  await expect(page.locator("#app").getByRole("link", { name: "App Store" })).toHaveAttribute("href", /apps\.apple\.com/);
+  await expect(page.locator("#app").getByRole("link", { name: "Google Play" })).toHaveAttribute("href", /play\.google\.com/);
+  await expect(page.getByRole("navigation").getByRole("link", { name: "Events" })).toHaveCount(0);
 });

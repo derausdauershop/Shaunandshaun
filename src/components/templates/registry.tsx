@@ -1,6 +1,7 @@
 import { EmailSignature } from "./email-signature";
 import * as P from "./print";
 import * as S from "./social";
+import { TeamwearTestSheet } from "./teamwear";
 
 export type TemplateKind = "print" | "social" | "email";
 
@@ -37,6 +38,7 @@ export const TEMPLATES: TemplateDef[] = [
   { id: "visitenkarte-vorne", title: "Visitenkarte – Vorderseite", group: "Geschäftsausstattung", kind: "print", format: "85 × 55 mm", size: { w: 91, h: 61, unit: "mm" }, zoom: "[zoom:0.85]", Component: P.BusinessCardFront },
   { id: "visitenkarte-hinten", title: "Visitenkarte – Rückseite", group: "Geschäftsausstattung", kind: "print", format: "85 × 55 mm", size: { w: 91, h: 61, unit: "mm" }, zoom: "[zoom:0.85]", Component: P.BusinessCardBack },
   { id: "briefbogen-a4", title: "Briefbogen DIN 5008 (Form B)", group: "Geschäftsausstattung", kind: "print", format: "A4 · 210 × 297 mm", size: { w: 210, h: 297, unit: "mm" }, zoom: "[zoom:0.38]", Component: P.Letterhead },
+  { id: "teamwear-testbogen", title: "Teamwear Lesbarkeitstest (1:1 drucken)", group: "Teamwear", kind: "print", format: "A4 · 210 × 297 mm", size: { w: 210, h: 297, unit: "mm" }, zoom: "[zoom:0.38]", Component: TeamwearTestSheet },
   { id: "email-signatur", title: "E-Mail-Signatur", group: "Geschäftsausstattung", kind: "email", format: "HTML · 600 px", size: { w: 600, h: 260, unit: "px" }, zoom: "[zoom:0.5]", Component: () => <EmailSignature /> },
   { id: "post-laufanalyse", title: "Post Laufanalyse", group: "Instagram Posts", kind: "social", format: "1080 × 1350 px", size: POST, zoom: "[zoom:0.28]", Component: S.PostAnalysis },
   { id: "post-run-academy", title: "Post Run Academy Kursstart", group: "Instagram Posts", kind: "social", format: "1080 × 1350 px", size: POST, zoom: "[zoom:0.28]", Component: S.PostAcademy },

@@ -16,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/ausdauer-cup",
     ...CUP_RACES.map((r) => `/ausdauer-cup/${r.slug}`),
     "/community",
-    "/events",
     "/magazin",
     ...ARTICLES.map((a) => `/magazin/${a.slug}`),
     "/ueber-uns",

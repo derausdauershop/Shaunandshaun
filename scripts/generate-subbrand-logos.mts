@@ -1,5 +1,5 @@
 /**
- * AUSDAUER sub-brand logo system (Run Academy, AUSDAUER CUP).
+ * AUSDAUER sub-brand logo system (Run Academy, AUSDAUER CUP, AUSDAUER TEAMWEAR).
  * Both share one construction: the ∞ from the AUSDAUER logo in a plate slanted 5°,
  * the name in Barlow Condensed Black Italic and a claim in JetBrains Mono.
  * All text is converted to outlines, so the files work without installed fonts
@@ -8,10 +8,13 @@
  * Run: npm run brand:subbrands -- [cup season] [cup races] [cup edition]
  *   e.g. npm run brand:subbrands -- 2027 8 39
  * The series line shows one dot per race plus a red final dot (Abschlussfeier / overall ranking).
+ * TEAMWEAR additionally gets textile marks (sleeve, neck) – one-colour versions are single
+ * knock-out paths so Flex plotters cut them as one piece.
  */
 import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
+import svgpath from "svgpath";
 
 const require = createRequire(import.meta.url);
 
@@ -166,15 +169,31 @@ const SUBBRANDS: SubBrand[] = [
       { name: "weiss", plate: WHITE, mark: RED, name_: WHITE, claim: WHITE, accent: WHITE },
     ],
   },
+  {
+    id: "teamwear",
+    dir: "teamwear",
+    file: "ausdauer-teamwear",
+    title: "AUSDAUER TEAMWEAR",
+    claim: "BEDRUCKT IN BETZDORF",
+    colorways: [
+      { name: "farbig", plate: RED, mark: WHITE, name_: INK, claim: INK, accent: RED },
+      { name: "negativ", plate: RED, mark: WHITE, name_: WHITE, claim: WHITE, accent: RED },
+      { name: "schwarz", plate: INK, mark: WHITE, name_: INK, claim: INK, accent: INK },
+      { name: "weiss", plate: WHITE, mark: RED, name_: WHITE, claim: WHITE, accent: WHITE },
+    ],
+  },
 ];
+/** Second claim, shown next to the first one in the brand guide for the decision. */
+const TEAMWEAR_ALT_CLAIM = "FÜR VEREINE & FIRMEN";
 
 const NAME_SIZE = 50;
 const CLAIM_SIZE = 11;
 const CLAIM_TRACK = 2.4;
 const PLATE_H = 64;
 
+const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 const svg = (w: number, h: number, body: string, label: string) =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${r(w)} ${r(h)}" role="img" aria-label="${label}"><title>${label}</title>${body}</svg>\n`;
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${r(w)} ${r(h)}" role="img" aria-label="${esc(label)}"><title>${esc(label)}</title>${body}</svg>\n`;
 
 function stations(x: number, y: number, width: number, color: string, accent: string, dot = 2.8) {
   const step = (width - dot * 2) / (DOTS - 1);
@@ -267,6 +286,77 @@ function seal(b: SubBrand, c: Colorway, ring: "places" | "claim") {
   return svg(S, S, body, `${b.title} – ${EDITION}. Ausgabe ${SEASON}`);
 }
 
+// ---------- TEAMWEAR textile marks ----------
+/** The original AUSDAUER logo: path 0 is the ∞, paths 1–8 are the letters (unchanged, only re-positioned). */
+const LOGO = (() => {
+  const s = fs.readFileSync(path.join(ROOT, "public", "brand", "logos", "ausdauer.svg"), "utf8");
+  const [vx, vy, vw, vh] = s.match(/viewBox="([^"]+)"/)![1].split(/\s+/).map(Number);
+  const ds = [...s.matchAll(/ d="([^"]+)"/g)].map((m) => m[1]);
+  return { vx, vy, vw, vh, symbol: ds[0], letters: ds.slice(1) };
+})();
+const WORD = (() => {
+  // bbox of the letters only
+  let x1 = Infinity, x2 = -Infinity;
+  for (const d of LOGO.letters) {
+    svgpath(d).abs().iterate((seg) => {
+      const n = seg.length;
+      if (n >= 3) { x1 = Math.min(x1, seg[n - 2] as number); x2 = Math.max(x2, seg[n - 2] as number); }
+    });
+  }
+  return { x1, x2, w: x2 - x1 };
+})();
+const tf = (d: string, ox: number, oy: number, s: number, dx: number, dy: number) =>
+  svgpath(d).translate(-ox, -oy).scale(s).translate(dx, dy).round(2).toString();
+
+/** Plate as ONE path, ∞ knocked out (evenodd) – for one-colour Flex/DTF. h = plate height. */
+function plateKnockout(x: number, y: number, h: number) {
+  const s = h / 64;
+  const poly = `M${r(x + 5.6 * s)} ${r(y)}H${r(x + 80 * s)}L${r(x + 74.4 * s)} ${r(y + h)}H${r(x)}Z`;
+  return poly + tf(LOGO.symbol, SYMBOL.vx, SYMBOL.vy, 0.85 * s, x + 13.1 * s, y + 19.95 * s);
+}
+/** Letters of the original logo, scaled to width w, top-left at (x, y). */
+function wordmark(x: number, y: number, w: number) {
+  const s = w / WORD.w;
+  return LOGO.letters.map((d) => tf(d, WORD.x1, LOGO.vy, s, x, y)).join("");
+}
+const wordHeight = (w: number) => (LOGO.vh / WORD.w) * w;
+
+type Textile = { name: string; plate?: string; mark?: string; word?: string; one?: string };
+const TEXTILE: Textile[] = [
+  { name: "farbig", plate: RED, mark: WHITE, word: INK }, // DTF on light textiles
+  { name: "negativ", plate: RED, mark: WHITE, word: WHITE }, // DTF on dark textiles
+  { name: "1c-weiss", one: WHITE }, // Flex, one colour, ∞ = textile colour
+  { name: "1c-schwarz", one: INK },
+  { name: "1c-rot", one: RED },
+];
+
+/** Sleeve: plate alone (from 25 mm). */
+function sleevePlate(t: Textile) {
+  const body = t.one ? `<path fill="${t.one}" fill-rule="evenodd" d="${plateKnockout(0, 0, 64)}"/>` : plate(0, 0, 64, t.plate!, t.mark!);
+  return svg(80, 64, body, "AUSDAUER – Ärmel-Plakette");
+}
+/** Sleeve from 40 mm: plate above, original lettering below – about twice the letter height of the long logo at the same width. */
+function sleeveVertical(t: Textile) {
+  const W = 120, ph = 64, gap = 9, wy = ph + gap;
+  const px = (W - plateWidth(ph)) / 2;
+  const word = wordmark(0, wy, W);
+  const body = t.one
+    ? `<path fill="${t.one}" fill-rule="evenodd" d="${plateKnockout(px, 0, ph)}${word}"/>`
+    : plate(px, 0, ph, t.plate!, t.mark!) + `<path fill="${t.word}" d="${word}"/>`;
+  return svg(W, wy + wordHeight(W), body, "AUSDAUER – Ärmel vertikal");
+}
+/** Neck print: original logo + "TEAMWEAR · BETZDORF" (from 60 mm). */
+function neck(color: string) {
+  const W = 200, s = W / LOGO.vw, lh = LOGO.vh * s;
+  const logo = [LOGO.symbol, ...LOGO.letters].map((d) => tf(d, LOGO.vx, LOGO.vy, s, 0, 0)).join("");
+  const line = "TEAMWEAR · BETZDORF";
+  const track = 3;
+  let size = 10;
+  while (bounds(MONO, line, size + 0.1, track).width < W) size += 0.1;
+  const y = lh + 8 + bounds(MONO, line, size, track).height;
+  return svg(W, y + 1, `<path fill="${color}" d="${logo}${text(MONO, line, 0, y, size, track)}"/>`, "AUSDAUER TEAMWEAR – Nacken");
+}
+
 function icon(c: Colorway) {
   return svg(80, 64, plate(0, 0, 64, c.plate, c.mark), "Plakette");
 }
@@ -294,5 +384,14 @@ for (const b of SUBBRANDS) {
   }
   write(b.dir, `${b.file}-icon.svg`, icon(b.colorways[0]));
   write(b.dir, `${b.file}-icon-negativ.svg`, icon(b.colorways[1]));
+  if (b.id === "teamwear") {
+    write(b.dir, `${b.file}-claim-alt-farbig.svg`, horizontal(b, b.colorways[0], TEAMWEAR_ALT_CLAIM));
+    write(b.dir, `${b.file}-claim-alt-negativ.svg`, horizontal(b, b.colorways[1], TEAMWEAR_ALT_CLAIM));
+    for (const t of TEXTILE) {
+      write(b.dir, `textil-aermel-plakette-${t.name}.svg`, sleevePlate(t));
+      write(b.dir, `textil-aermel-vertikal-${t.name}.svg`, sleeveVertical(t));
+    }
+    for (const [n, c] of [["1c-schwarz", INK], ["1c-weiss", WHITE], ["1c-rot", RED]] as const) write(b.dir, `textil-nacken-${n}.svg`, neck(c));
+  }
 }
 console.log(written.map((f) => `wrote ${f}`).join("\n"));

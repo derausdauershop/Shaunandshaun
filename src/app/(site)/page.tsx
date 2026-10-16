@@ -15,19 +15,20 @@ import { StoreJsonLd } from "@/components/site/store-jsonld";
 import { Button } from "@/components/ui/button";
 import { ARTICLES } from "@/content/articles";
 import { CUP, CUP_RACES } from "@/content/cup";
-import { formatDate, upcomingEvents, EVENTS } from "@/content/events";
+import { formatDate, upcoming } from "@/lib/dates";
+import { AppStoreButtons } from "@/components/site/app-teaser";
 import { ANALYSIS_STEPS, REVIEWS } from "@/content/services";
-import { COMPANY } from "@/content/site";
+import { COMMUNITY_APP, COMPANY } from "@/content/site";
 import { STORES } from "@/content/stores";
 
-// Re-render daily so "next race" and the event list stay current.
+// Re-render daily so "next race" stays current.
 export const revalidate = 86400;
 
 export default function HomePage() {
   const now = new Date();
-  const nextEvents = upcomingEvents(EVENTS, now);
-  const nextRace = nextEvents.find((e) => e.href.startsWith("/ausdauer-cup/"));
-  const racesDone = CUP_RACES.filter((r) => !nextEvents.some((e) => e.href === `/ausdauer-cup/${r.slug}`)).map((r) => r.no);
+  const racesAhead = upcoming(CUP_RACES, now);
+  const nextRace = racesAhead[0];
+  const racesDone = CUP_RACES.filter((r) => !racesAhead.includes(r)).map((r) => r.no);
   const articles = ARTICLES.filter((a) => a.category !== "News").slice(0, 3);
   const jubilee = now.getFullYear() === COMPANY.founded + 40;
 
@@ -197,10 +198,12 @@ export default function HomePage() {
             {nextRace ? (
               <>
                 <p className="font-mono text-xs uppercase tracking-[0.2em] text-brand">Nächster Termin</p>
-                <p className="mt-3 font-display text-4xl font-black uppercase italic leading-none">{nextRace.title}</p>
+                <p className="mt-3 font-display text-4xl font-black uppercase italic leading-none">
+                  {nextRace.name} {nextRace.place}
+                </p>
                 <p className="mt-2 font-mono tabular">{formatDate(nextRace.date)}</p>
                 <Button asChild variant="brand" className="mt-6">
-                  <Link href={nextRace.href}>Infos & Anmeldung</Link>
+                  <Link href={`/ausdauer-cup/${nextRace.slug}`}>Infos & Anmeldung</Link>
                 </Button>
               </>
             ) : (
@@ -231,9 +234,13 @@ export default function HomePage() {
             Die Crown Town Runners treffen sich jede Woche am Store in Siegen: 5–7 km in der Gruppe, dazu Übungen für Rumpf und Oberkörper. Ohne
             Anmeldung, für jedes Tempo.
           </p>
-          <Button asChild variant="default" size="lg" className="mt-8">
-            <Link href="/community">Zur Community</Link>
-          </Button>
+          <p className="mt-5 max-w-lg text-muted-foreground">Alle Termine und Events findest du in der {COMMUNITY_APP.name} App.</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild variant="default" size="lg">
+              <Link href="/community">Zur Community</Link>
+            </Button>
+            <AppStoreButtons />
+          </div>
         </div>
       </section>
 

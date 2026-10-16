@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CUP, CUP_FINAL, CUP_RACES, CUP_RULES } from "@/content/cup";
-import { berlinDate, formatDate } from "@/content/events";
+import { berlinDate, formatDate } from "@/lib/dates";
 
 export const revalidate = 86400;
 
