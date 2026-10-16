@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "postbuild": "node scripts/write-htaccess.mts",
+    "start": "npx --yes serve@14 out",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",

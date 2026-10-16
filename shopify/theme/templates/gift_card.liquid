@@ -47,11 +47,7 @@
     <section class="gc-card{% if gift_card.expired or gift_card.enabled == false %} gc-card--off{% endif %}" aria-labelledby="gc-amount">
       <p class="gc-eyebrow">Geschenk-Gutschein</p>
       <p class="gc-amount" id="gc-amount">{{ balance }}</p>
-      {%- if gift_card.balance != gift_card.initial_value -%}
-        <p class="gc-sub">Restguthaben · ursprünglich {{ initial }}</p>
-      {%- else -%}
-        <p class="gc-sub">Einlösbar in Betzdorf, Siegen und online</p>
-      {%- endif -%}
+      <p class="gc-sub">Einlösbar in Betzdorf und Siegen</p>
       <p class="gc-headline">Deine nächsten <em>Kilometer.</em></p>
     </section>
 
@@ -85,8 +81,8 @@
       <h2 id="gc-steps-title">So löst du ein</h2>
       <ol>
         <li><span>01</span><p><strong>Im Laden:</strong> QR-Code an der Kasse zeigen oder Code nennen – in Betzdorf und Siegen.</p></li>
-        <li><span>02</span><p><strong>Online:</strong> Code in der Kasse von ausdauer.shop im Feld für Rabattcode/Gutschein eingeben.</p></li>
-        <li><span>03</span><p><strong>Restguthaben</strong> bleibt auf dem Gutschein. Du kannst ihn mehrmals verwenden.</p></li>
+        <li><span>02</span><p><strong>Komplett einlösen:</strong> Der Gutschein wird beim Einkauf vollständig eingelöst.</p></li>
+        <li><span>03</span><p><strong>Rest als Gutschrift:</strong> Kaufst du für weniger, bekommst du den Restbetrag als Gutschrift.</p></li>
       </ol>
     </section>
 

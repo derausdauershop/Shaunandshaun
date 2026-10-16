@@ -33,14 +33,7 @@ test.describe("website", () => {
     });
   }
 
-  test("old URLs redirect to the new pages", async ({ page }) => {
-    await page.goto("/blog/stretch-it-out");
-    await expect(page).toHaveURL(/\/magazin\/dehnuebungen-fuer-laeufer$/);
-    await page.goto("/eventleser/herdorfer-goetzelauf-2");
-    await expect(page).toHaveURL(/\/ausdauer-cup\/herdorfer-goetzelauf$/);
-    await page.goto("/events");
-    await expect(page).toHaveURL(/\/community#app$/);
-  });
+  // Old-URL redirects live in out/.htaccess (static hosting) – see src/lib/static-hosting.test.ts
 
   test("Absolute Run logo appears on the Siegen store but not on the Betzdorf store body", async ({ page }) => {
     await page.goto("/stores/siegen");
@@ -79,7 +72,7 @@ test("teamwear page shows the club crests and turns a jersey", async ({ page }) 
   await expect(page.getByRole("button", { name: "Vorderseite", exact: true }).first()).toHaveAttribute("aria-pressed", "true");
 });
 
-test("voucher page offers amounts and checks the gift fields on the server", async ({ page }) => {
+test("voucher page offers amounts and checks the gift fields", async ({ page }) => {
   await page.goto("/gutscheine");
   await expect(page.getByRole("radio", { name: "50 €", exact: true })).toBeChecked();
   await page.getByText("25 €", { exact: true }).click();
@@ -94,5 +87,19 @@ test("voucher page offers amounts and checks the gift fields on the server", asy
 
 test("voucher buttons point to the voucher page", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator("header").getByRole("link", { name: "Gutschein" })).toHaveAttribute("href", "/gutscheine");
+  await expect(page.locator("header").getByRole("link", { name: "Gutschein" })).toHaveAttribute("href", /^\/gutscheine\/?$/);
+});
+
+test("voucher purchase creates a Shopify cart from the browser and opens the checkout", async ({ page }) => {
+  let lines: unknown;
+  await page.route("**/api/2025-07/graphql.json", async (route) => {
+    lines = route.request().postDataJSON().variables.lines;
+    await route.fulfill({ json: { data: { cartCreate: { cart: { checkoutUrl: "https://checkout.example/cart/c/test" }, userErrors: [] } } } });
+  });
+  await page.route("https://checkout.example/**", (route) => route.fulfill({ body: "<h1>Kasse</h1>", contentType: "text/html" }));
+  await page.goto("/gutscheine");
+  await page.getByText("100 €", { exact: true }).click();
+  await page.getByRole("button", { name: /Jetzt kaufen · 100 €/ }).click();
+  await expect(page).toHaveURL("https://checkout.example/cart/c/test");
+  expect(lines).toEqual([{ merchandiseId: "gid://shopify/ProductVariant/58267034812803", quantity: 1, attributes: [] }]);
 });

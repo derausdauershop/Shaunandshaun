@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { CupLogo, SeriesTrack } from "@/components/brand/cup-logo";
+import { CupLogo } from "@/components/brand/cup-logo";
 import { DataOverlay } from "@/components/brand/data-overlay";
 import { KmMarker } from "@/components/brand/km-marker";
 import { PaceLines } from "@/components/brand/pace-lines";
@@ -14,23 +14,19 @@ import { SiteSection } from "@/components/site/section";
 import { StoreJsonLd } from "@/components/site/store-jsonld";
 import { Button } from "@/components/ui/button";
 import { ARTICLES } from "@/content/articles";
-import { CUP, CUP_RACES } from "@/content/cup";
-import { formatDate, upcoming } from "@/lib/dates";
+import { CUP } from "@/content/cup";
+import { berlinDate } from "@/lib/dates";
+import { CupNextRace, CupProgress } from "@/components/site/cup-status";
+import { JubileeBanner } from "@/components/site/jubilee-banner";
 import { AppStoreButtons } from "@/components/site/app-teaser";
 import { ANALYSIS_STEPS, REVIEWS } from "@/content/services";
 import { COMMUNITY_APP, COMPANY } from "@/content/site";
 import { STORES } from "@/content/stores";
 
-// Re-render daily so "next race" stays current.
-export const revalidate = 86400;
-
 export default function HomePage() {
-  const now = new Date();
-  const racesAhead = upcoming(CUP_RACES, now);
-  const nextRace = racesAhead[0];
-  const racesDone = CUP_RACES.filter((r) => !racesAhead.includes(r)).map((r) => r.no);
+  // Static export: the HTML shows the build day, the browser updates date-dependent parts.
+  const buildDay = berlinDate(new Date());
   const articles = ARTICLES.filter((a) => a.category !== "News").slice(0, 3);
-  const jubilee = now.getFullYear() === COMPANY.founded + 40;
 
   return (
     <>
@@ -69,17 +65,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {jubilee && (
-        <Link href="/magazin/40-jahre-ausdauer" className="group block bg-brand text-brand-foreground">
-          <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-4 sm:px-8">
-            <span className="font-display text-3xl font-black italic tabular">40</span>
-            <span className="font-display text-lg font-bold uppercase leading-tight">
-              Jahre AUSDAUER · Eine Vision. Zwei Menschen. 40 Jahre Ausdauer.
-            </span>
-            <ArrowRight className="ml-auto size-5 shrink-0 transition-transform group-hover:translate-x-1" />
-          </div>
-        </Link>
-      )}
+      <JubileeBanner buildDay={buildDay} />
 
       {/* Laufanalyse */}
       <SiteSection
@@ -188,34 +174,11 @@ export default function HomePage() {
               großer Abschlussfeier.
             </p>
             <div className="mt-6 max-w-lg">
-              <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                Saison {CUP.season} · {racesDone.length} von {CUP_RACES.length} Läufen gelaufen
-              </p>
-              <SeriesTrack total={CUP_RACES.length} done={racesDone} final />
+              <CupProgress buildDay={buildDay} prefix={`Saison ${CUP.season} · `} />
             </div>
           </div>
           <div className="rounded-sm bg-white p-6 ring-1 ring-border sm:p-8">
-            {nextRace ? (
-              <>
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-brand">Nächster Termin</p>
-                <p className="mt-3 font-display text-4xl font-black uppercase italic leading-none">
-                  {nextRace.name} {nextRace.place}
-                </p>
-                <p className="mt-2 font-mono tabular">{formatDate(nextRace.date)}</p>
-                <Button asChild variant="brand" className="mt-6">
-                  <Link href={`/ausdauer-cup/${nextRace.slug}`}>Infos & Anmeldung</Link>
-                </Button>
-              </>
-            ) : (
-              <>
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-brand">Saison {CUP.nextSeason}</p>
-                <p className="mt-3 font-display text-4xl font-black uppercase italic leading-none">Die Termine folgen.</p>
-                <p className="mt-2 text-muted-foreground">Der {CUP.edition + 1}. AUSDAUER CUP startet im Januar.</p>
-                <Button asChild variant="brand" className="mt-6">
-                  <Link href="/ausdauer-cup">Zum AUSDAUER CUP</Link>
-                </Button>
-              </>
-            )}
+            <CupNextRace buildDay={buildDay} />
           </div>
         </div>
       </SiteSection>

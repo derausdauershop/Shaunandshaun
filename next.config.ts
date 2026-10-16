@@ -1,52 +1,13 @@
 import type { NextConfig } from "next";
 
-/** Old ausdauer-shop.de URLs (Contao) → new pages, so search rankings and shared links keep working. */
-const LEGACY_REDIRECTS: Array<[string, string]> = [
-  ["/startseite", "/"],
-  ["/team", "/ueber-uns#team"],
-  ["/community-runs", "/community"],
-  ["/blog", "/magazin"],
-  ["/news", "/magazin"],
-  ["/anmeldung", "/ausdauer-cup#modus"],
-  ["/datenschutzerklaerung", "/datenschutz"],
-  ["/blog/zeit-fuer-deinen-neuen-schuh", "/magazin/zeit-fuer-deinen-neuen-schuh"],
-  ["/blog/das-tabu-laufschuhe-und-waschmaschine", "/magazin/laufschuhe-richtig-reinigen"],
-  ["/blog/gruener-wald-graue-strasse-oder-roter-tartan", "/magazin/laufuntergruende-im-ueberblick"],
-  ["/blog/stretch-it-out", "/magazin/dehnuebungen-fuer-laeufer"],
-  ["/blog/effektive-erholung", "/magazin/effektive-erholung-blackroll"],
-  ["/newsreader/40-jahre-ausdauer-shop", "/magazin/40-jahre-ausdauer"],
-  ["/newsreader/westerwaelder-firmenlauf-2", "/magazin/westerwaelder-firmenlauf-2026"],
-  ["/newsreader/zwischenstand-ausdauer-cup", "/ausdauer-cup"],
-  ["/eventleser/asdorflauf-wehbach-2", "/ausdauer-cup/asdorflauf-wehbach"],
-  ["/eventleser/foeschber-radweglauf-2", "/ausdauer-cup/foeschber-radweglauf"],
-  ["/eventleser/flecker-tunnellauf-2", "/ausdauer-cup/flecker-tunnellauf"],
-  ["/eventleser/deuzer-sparkassen-pfingst-lauf", "/ausdauer-cup/deuzer-sparkassen-pfingst-lauf"],
-  ["/eventleser/anzhaeuser-gueckellauf-2", "/ausdauer-cup/anzhaeuser-gueckellauf"],
-  ["/eventleser/wilnsdorfer-bahnlauf-2", "/ausdauer-cup/wilnsdorfer-bahnlauf"],
-  ["/eventleser/herdorfer-goetzelauf-2", "/ausdauer-cup/herdorfer-goetzelauf"],
-  ["/eventleser/suedsauerlandlauf-wenden-2", "/ausdauer-cup/suedsauerlandlauf-wenden"],
-  ["/eventleser/abschlussfeier-ausdauer-cup-2026", "/ausdauer-cup#abschlussfeier"],
-  ["/eventleser/:slug*", "/community#app"],
-  // Events now live in the Absolute Run Community App
-  ["/events", "/community#app"],
-  ["/newsreader/:slug*", "/magazin"],
-];
-
-/** Security headers (docs/production/security-headers.md). */
-const SECURITY_HEADERS = [
-  { key: "X-Frame-Options", value: "DENY" },
-  { key: "X-Content-Type-Options", value: "nosniff" },
-  { key: "Referrer-Policy", value: "origin-when-cross-origin" },
-  { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
-];
-
+/**
+ * Static export for STRATO webspace (no Node server): `npm run build` → out/.
+ * Redirects and security headers: src/lib/static-hosting.ts → out/.htaccess (scripts/write-htaccess.mts).
+ */
 const nextConfig: NextConfig = {
-  async headers() {
-    return [{ source: "/:path*", headers: SECURITY_HEADERS }];
-  },
-  async redirects() {
-    return LEGACY_REDIRECTS.map(([source, destination]) => ({ source, destination, permanent: true }));
-  },
+  output: "export",
+  trailingSlash: true,
+  images: { unoptimized: true },
 };
 
 export default nextConfig;

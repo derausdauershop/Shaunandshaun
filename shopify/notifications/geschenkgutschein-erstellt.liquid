@@ -4,7 +4,6 @@
   → Geschenkgutschein erstellt → Code bearbeiten. Betreff: siehe shopify/README.md
   Vorschau: npm run preview:shopify  →  shopify/preview/gutschein-mail.html
 {%- endcomment -%}
-{%- assign qr_service = 'https://ausdauer.shop/api/gift-qr' -%}
 {%- assign site_url = 'https://ausdauer.shop' -%}
 {%- assign c_red = '#E30110' -%}
 {%- assign c_ink = '#222222' -%}
@@ -37,7 +36,7 @@
   </style>
 </head>
 <body style="margin:0;padding:0;background:{{ c_paper }};">
-  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Dein Gutschein über {{ amount }} – einlösbar in Betzdorf, Siegen und online.</div>
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Dein Gutschein über {{ amount }} – einlösbar in Betzdorf und Siegen.</div>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:{{ c_paper }};">
     <tr>
       <td align="center" style="padding:24px 12px;">
@@ -78,16 +77,11 @@
             </td>
           </tr>
 
-          <!-- Code + QR -->
+          <!-- Code (QR code: on the gift card page, button "Gutschein ansehen") -->
           <tr>
             <td class="px" style="padding:36px 40px 8px 40px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:2px dashed {{ c_ink }};">
                 <tr>
-                  {%- if gift_card.qr_identifier != blank -%}
-                  <td class="col" width="200" align="center" valign="middle" style="padding:24px 8px 24px 24px;">
-                    <img src="{{ qr_service }}?id={{ gift_card.qr_identifier | url_encode }}" width="160" height="160" alt="QR-Code zum Einlösen" style="display:block;width:160px;height:160px;border:0;">
-                  </td>
-                  {%- endif -%}
                   <td class="col" valign="middle" style="padding:24px;">
                     <p style="margin:0;font-family:{{ f_mono }};font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#6B6862;">Dein Code</p>
                     {%- if gift_card.code != blank -%}<p class="code" style="margin:8px 0 0 0;font-family:{{ f_mono }};font-size:24px;line-height:1.3;font-weight:700;letter-spacing:2px;color:{{ c_ink }};">{{ gift_card.code | format_code }}</p>{%- else -%}<p style="margin:8px 0 0 0;font-family:{{ f_text }};font-size:16px;color:{{ c_ink }};">Code und QR-Code findest du über den Button „Gutschein ansehen“.</p>{%- endif -%}
@@ -126,9 +120,9 @@
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 {%- capture step_style -%}font-family:{{ f_text }};font-size:16px;line-height:1.5;color:{{ c_ink }};padding:10px 0;border-top:1px solid #D9D5CC;{%- endcapture -%}
                 {%- capture num_style -%}font-family:{{ f_mono }};font-size:14px;font-weight:700;color:{{ c_red }};padding:12px 12px 10px 0;border-top:1px solid #D9D5CC;vertical-align:top;{%- endcapture -%}
-                <tr><td width="36" style="{{ num_style }}">01</td><td style="{{ step_style }}"><strong>Im Laden:</strong> QR-Code an der Kasse zeigen oder Code nennen – in Betzdorf und Siegen.</td></tr>
-                <tr><td width="36" style="{{ num_style }}">02</td><td style="{{ step_style }}"><strong>Online:</strong> Code in der Kasse von ausdauer.shop im Feld für Rabattcode/Gutschein eingeben.</td></tr>
-                <tr><td width="36" style="{{ num_style }}">03</td><td style="{{ step_style }}"><strong>Restguthaben</strong> bleibt auf dem Gutschein. Du kannst ihn mehrmals verwenden.</td></tr>
+                <tr><td width="36" style="{{ num_style }}">01</td><td style="{{ step_style }}"><strong>Im Laden:</strong> Code nennen oder den QR-Code über „Gutschein ansehen“ an der Kasse zeigen – in Betzdorf und Siegen.</td></tr>
+                <tr><td width="36" style="{{ num_style }}">02</td><td style="{{ step_style }}"><strong>Komplett einlösen:</strong> Der Gutschein wird beim Einkauf vollständig eingelöst.</td></tr>
+                <tr><td width="36" style="{{ num_style }}">03</td><td style="{{ step_style }}"><strong>Rest als Gutschrift:</strong> Kaufst du für weniger, bekommst du den Restbetrag als Gutschrift.</td></tr>
               </table>
             </td>
           </tr>

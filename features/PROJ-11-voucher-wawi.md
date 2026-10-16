@@ -19,17 +19,17 @@ ausdauer.shop/gutscheine (Next.js) → Storefront API cartCreate → Kasse check
 Shopify erzeugt den Geschenkgutschein (Code) automatisch
         ├─ Bestellbestätigung (Shopify)
         └─ Gutschein-Mail (Shopify-Vorlage „Geschenkgutschein erstellt“, im AUSDAUER-Design)
-              Code + QR-Code + Link „Gutschein ansehen“ → checkout.ausdauer.shop/gift_cards/…
+              Code + Link „Gutschein ansehen“ (QR-Code dort) → checkout.ausdauer.shop/gift_cards/…
         ▼
-Einlösung im Laden: Shopify POS (iPad) – Code scannen oder eintippen, Teilbeträge möglich
-Einlösung online: Gutscheincode im Feld der Shopify-Kasse
+Einlösung nur im Laden: Shopify POS (iPad) – Code scannen oder eintippen,
+immer komplett; Rest als Gutschrift (Entscheidung 2026-10-16)
 ```
 - Das Gutschein-Produkt bleibt ein **Shopify-Geschenkgutschein** (Produkttyp „Geschenkgutschein“, Varianten 10–300 €). Über die Storefront API wird er wie jedes Produkt in den Warenkorb gelegt; Shopify stellt den Code nach der Zahlung aus.
-- **Zustellung:** Shopify verschickt die Gutschein-Mail automatisch. Die Mail-Vorlage gestalten wir im AUSDAUER-Design (Logo, Farben, Code groß in JetBrains Mono, QR-Code mit dem Gutscheincode, Hinweis „Einlösbar in Betzdorf, Siegen und online“).
+- **Zustellung:** Shopify verschickt die Gutschein-Mail automatisch. Die Mail-Vorlage gestalten wir im AUSDAUER-Design (Logo, Farben, Code groß in JetBrains Mono, Hinweis „Einlösbar in Betzdorf und Siegen“, „komplett einlösen, Rest als Gutschrift“).
 - **Gutschein-Seite:** Der Link in der Mail führt auf die Gutschein-Seite von Shopify (QR-Code, Restguthaben, Apple Wallet). Shopify liefert sie unter einer eigenen Shopify-Adresse aus (`/gift_cards/…`), nicht unter ausdauer.shop. Deshalb gilt:
   - Das Theme bleibt veröffentlicht. Die Vorlage `gift_card.liquid` ist im AUSDAUER-Design gestaltet.
   - Vorsorglich werden `/gift_cards/*` nicht auf die neue Webseite umgeleitet (Ausnahme in PROJ-10).
-- **QR-Inhalt:** `gift_card.qr_identifier` (`shopify-giftcard-v1-…`), dieselbe Kennung, die Shopify auf der Gutschein-Seite verwendet. In der Mail kommt das Bild von `ausdauer.shop/api/gift-qr`, weil Mails kein JavaScript ausführen.
+- **QR-Inhalt:** `gift_card.qr_identifier` (`shopify-giftcard-v1-…`), dieselbe Kennung, die Shopify auf der Gutschein-Seite verwendet. Nur auf der Gutschein-Seite. In der Mail entfällt das QR-Bild, weil Mails kein JavaScript ausführen und die statische Webseite (STRATO) keine Bilder erzeugen kann.
 - **Scannen in Shopify POS:** Ob der QR-Code aus Mail oder Gutschein-Seite direkt mit der iPad-Kamera bzw. dem Scanner gelesen wird, ist vor dem Livegang zu testen. Rückfall: Code eintippen (steht immer als Text daneben). Falls Scannen nicht klappt, gibt es POS-Apps zum Scannen (z. B. GiftCard Hero, Scan2Add) – erst prüfen, ob sie Gutscheine unterstützen.
 - **Bestehende Gutscheine** bleiben unverändert gültig, es gibt keine Migration.
 
@@ -115,10 +115,10 @@ Shopify-Webhook orders/paid ──(signiert)──▶  WaWi: Gutschein anlegen (
   - Phase 2: Die WaWi druckt Code und QR-Code direkt mit.
 
 ## Acceptance Criteria (Phase 1)
-- **Angenommen** jemand kauft auf ausdauer.shop einen 50-€-Gutschein, **dann** erstellt Shopify genau einen Geschenkgutschein über 50 €, **und** die kaufende Person bekommt die Gutschein-Mail im AUSDAUER-Design mit Code und QR-Code.
+- **Angenommen** jemand kauft auf ausdauer.shop einen 50-€-Gutschein, **dann** erstellt Shopify genau einen Geschenkgutschein über 50 €, **und** die kaufende Person bekommt die Gutschein-Mail im AUSDAUER-Design mit Code und Link zur Gutschein-Seite mit QR-Code.
 - **Angenommen** der Link „Gutschein ansehen“ in der Mail wird geöffnet, **dann** erscheint die Gutschein-Seite unter checkout.ausdauer.shop im AUSDAUER-Design (keine Weiterleitung auf die Webseite).
-- **Angenommen** der Gutschein wird im Laden in Shopify POS eingelöst (Scan oder Eingabe) über 30 €, **dann** beträgt das Restguthaben 20 €, sichtbar in Shopify und auf der Gutschein-Seite.
-- **Angenommen** der Code wird online in der Shopify-Kasse eingegeben, **dann** wird er wie bisher verrechnet.
+- **Angenommen** ein 50-€-Gutschein wird im Laden für einen Einkauf über 30 € eingelöst, **dann** wird er komplett eingelöst (Guthaben 0 €) **und** die Kundin oder der Kunde bekommt 20 € als Gutschrift.
+- Mail, Gutschein-Seite und Webseite nennen „komplett einlösen, Rest als Gutschrift“ und nur die beiden Stores.
 - Vor dem Livegang gekaufte Gutscheine bleiben gültig.
 
 ## Acceptance Criteria (Phase 2, Entwurf)
@@ -126,7 +126,8 @@ Shopify-Webhook orders/paid ──(signiert)──▶  WaWi: Gutschein anlegen (
 
 ## Open Questions
 - [x] Wo wird eingelöst? → Vorerst Shopify POS (iPads); WaWi-Kasse in Phase 2 (2026-10-16).
-- [ ] Liest Shopify POS den QR-Code aus der Gutschein-Mail per Kamera/Scanner? (Test mit einem echten Gutschein)
+- [ ] Liest Shopify POS den QR-Code von der Gutschein-Seite per Kamera/Scanner? (Test mit einem echten Gutschein)
+- [x] Teilbeträge? → Nein: komplett einlösen, Rest als Gutschrift (2026-10-16). Kassen-Ablauf in POS legt das Team fest (POS zieht von sich aus nur den Kaufbetrag ab).
 - [ ] Phase 2: Variante A (Shopify bleibt Konto, `giftCardDebit`) oder B (WaWi wird Konto)?
 - [ ] Phase 2: Technologie und Repository der WaWi, Scanner-Hardware.
 - [ ] Gültigkeit: Shopify-Einstellung prüfen (gesetzlich 3 Jahre zum Jahresende oder eigene Frist).
@@ -147,3 +148,12 @@ Shopify-Webhook orders/paid ──(signiert)──▶  WaWi: Gutschein anlegen (
 - `scripts/preview-shopify.mts` (`npm run preview:shopify`) rendert die Liquid-Vorlagen mit Beispieldaten per liquidjs nach `shopify/preview/`.
 - Einbau-Anleitung: `shopify/README.md`.
 - Offen: Einbau im Shopify-Admin, Test-Kauf, Scan-Test mit Shopify POS auf dem iPad.
+
+## Update 2026-10-16: Statische Webseite, Einlösung komplett im Store
+- **Entscheidung Kunde:** Der Gutschein wird im Store komplett eingelöst. Ein Rest wird als Gutschrift ausgegeben. Es gibt keine Online-Einlösung und kein Restguthaben auf dem Gutschein.
+- Texte angepasst:
+  - `src/content/voucher.ts` („In Betzdorf & Siegen“, „Rest als Gutschrift“), Seitenbeschreibung von `/gutscheine`
+  - `gift_card.liquid` (kein „Restguthaben“, kein „Online“)
+  - Mail-Vorlage (kein QR-Bild, Schritte 01–03 neu, Vorschautext)
+  - `shopify/README.md` (Testablauf, Hinweis zum Kassen-Ablauf in POS)
+- `/api/gift-qr`, `src/lib/gift-qr.ts` und der Test sind entfernt, weil die Webseite statisch auf STRATO läuft (PROJ-10).

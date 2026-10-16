@@ -3,18 +3,13 @@ import { PageHero } from "@/components/site/page-hero";
 import { SiteSection } from "@/components/site/section";
 import { VoucherForm } from "@/components/site/voucher-form";
 import { VOUCHER_FACTS } from "@/content/voucher";
-import { getVoucherProduct } from "@/lib/shopify";
 
 export const metadata: Metadata = {
   title: "Gutscheine",
-  description: "AUSDAUER Geschenk-Gutschein ab 10 € – sofort per E-Mail oder zum Wunschtermin an die beschenkte Person. Einlösbar in Betzdorf, Siegen und online.",
+  description: "AUSDAUER Geschenk-Gutschein ab 10 € – sofort per E-Mail oder zum Wunschtermin an die beschenkte Person. Einlösbar in Betzdorf und Siegen.",
 };
 
-// Amounts come from Shopify; refresh at most every 5 minutes.
-export const revalidate = 300;
-
-export default async function VoucherPage() {
-  const { product, live } = await getVoucherProduct();
+export default function VoucherPage() {
   return (
     <>
       <PageHero
@@ -27,7 +22,7 @@ export default async function VoucherPage() {
         intro="Für Laufschuhe, Laufanalyse, Einlagen, Outdoor oder den nächsten Lauftreff-Look: Der AUSDAUER Gutschein passt immer."
       />
       <SiteSection>
-        <VoucherForm product={product} live={live} />
+        <VoucherForm />
       </SiteSection>
       <SiteSection km={1} kicker="So funktioniert's" title="Kaufen, verschenken, einlösen." tone="white">
         <ul className="grid gap-6 md:grid-cols-3">

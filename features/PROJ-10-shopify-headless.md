@@ -18,12 +18,12 @@ Gutscheine und Kurse werden direkt auf der neuen Webseite verkauft, im AUSDAUER-
 
 ## Architektur
 ```
-ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Backend)
+ausdauer.shop (STRATO, statisch)                    Shopify (unverändert als Backend)
 ├─ /gutscheine ── Betrag wählen ──┐                 ├─ Produkte, Preise, Bestand (Kursplätze)
-├─ /run-academy/[kurs] ── buchen ─┼─ Server Action ─┼─ Storefront API: cartCreate
+├─ /run-academy/[kurs] ── buchen ─┼─ Browser ───────┼─ Storefront API: cartCreate
 │                                 │                 ├─ Kasse: checkout.ausdauer.shop
 │                                                   └─ Gutschein-Mail + Gutschein-Seite (Shopify, /gift_cards/…)
-└─ Produktdaten (Preis, Varianten, verfügbar?) ◀── Storefront API (alle 5 Min. aktualisiert)
+└─ Beträge (Varianten-IDs) als Datendatei src/content/voucher.ts
 ```
 - **Datenquelle:** Shopify Storefront API (GraphQL) mit öffentlichem Storefront-Token aus dem kostenlosen Sales-Channel „Headless“.
   - Server-seitig abgefragt, ISR alle 5 Minuten.
@@ -33,7 +33,8 @@ ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Ba
   - Ein Warenkorb lässt sich später ergänzen („Später mehr“).
 - **Kasse:** Die Shopify-Kasse läuft unter der Subdomain `checkout.ausdauer.shop`. Das sieht vertrauenswürdig aus und bleibt rechtssicher: AGB, Widerruf, Zahlarten und der Button „Zahlungspflichtig bestellen“ kommen von Shopify.
 - **Shopify-Storefront (Theme):** Wird bis auf die Gutschein-Seite nicht mehr gebraucht. Alle Theme-URLs leiten auf die neue Webseite um, **außer `/gift_cards/*`** (vorsorglich, Link aus der Gutschein-Mail, PROJ-11). Das Theme bleibt veröffentlicht. Gestaltet werden nur `gift_card.liquid` und die Benachrichtigungs-Mails.
-- **Konfiguration:** `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_STOREFRONT_TOKEN` (Vercel Environment Variables, nie im Repo).
+- **Konfiguration:** `NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN`, `NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN` (öffentlicher Token, in `.env.local` beim Build, nie im Repo).
+- **Hosting (seit 2026-10-16):** statischer Export auf dem STRATO-Webspace, kein Vercel. Siehe „Update: Statische Variante“.
 
 ## Neue/geänderte Seiten
 - `/gutscheine`:
@@ -186,6 +187,10 @@ Danke-Seite `/bestellung-abgeschlossen`: kurze Bestätigung, Hinweis auf die Gut
 | Varianten live aus Shopify, Revalidierung 5 Min. | Preise und Beträge pflegt das Team in Shopify, keine Doppelpflege | 2026-10-16 |
 | Empfänger, Nachricht und Versanddatum als Felder an der Warenkorb-Position | So erzeugt Shopify auch beim Theme-Kauf Empfänger-Gutscheine. Übernahme im Headless-Fall per Testkauf prüfen | 2026-10-16 |
 | Statische Ausweichdaten + Direktlink zur Shopify-Produktseite | Der Verkauf läuft weiter, auch wenn die Schnittstelle kurz ausfällt | 2026-10-16 |
+| **Statischer Export auf STRATO statt Vercel** (ersetzt Server Action und Live-Varianten) | Kunde: Vercel Pro (~20 €/Monat) lohnt sich für ein Feature nicht. STRATO-Webspace ist vorhanden | 2026-10-16 |
+| `cartCreate` direkt aus dem Browser mit dem öffentlichen Token | Der Storefront-Token ist für Browser gedacht (nur Lesen + Warenkorb), CORS von Shopify erlaubt | 2026-10-16 |
+| Beträge als Datendatei statt live | Ohne Server keine Live-Abfrage beim Seitenaufbau. Neuer Betrag in Shopify → Varianten-ID in `voucher.ts` ergänzen, neu bauen | 2026-10-16 |
+| Weiterleitungen + Sicherheits-Header per generierter `.htaccess` | Apache bei STRATO. Wird nach jedem Build aus `src/lib/static-hosting.ts` erzeugt, Unit-Test prüft die Regeln | 2026-10-16 |
 | Kursbuchung vorbereitet, aber deaktiviert | Einsteigerkurs startet im Frühjahr, Termine und Preis noch offen (PROJ-5) | 2026-10-16 |
 | Keine Datenbank, keine neuen Pakete | Die Seite speichert keine Daten. Zod und react-hook-form sind vorhanden | 2026-10-16 |
 
@@ -211,3 +216,26 @@ Danke-Seite `/bestellung-abgeschlossen`: kurze Bestätigung, Hinweis auf die Gut
 - Offen: echter Testkauf (Kunde). Dabei prüfen, ob der Gutschein an die beschenkte Person geht, inklusive Nachricht und Versanddatum.
 - Hinweis Entwicklungsumgebung (Cloud-Sitzung): Node greift hier nur mit `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt` auf Shopify zu. Ohne diese Variablen greift der Ausweichweg. Vercel betrifft das nicht.
 - Kurs-Einsteiger-Produkt `einsteiger-laufkurs` (130 €) existiert in Shopify, wird aber nicht verkauft, solange der Kurs „startet im Frühjahr“ ist.
+
+## Update: Statische Variante für STRATO (2026-10-16)
+**Entscheidung Kunde:** Kein Vercel. Die Seite wird statisch gebaut und auf dem STRATO-Webspace gehostet. Gutscheine werden im Store komplett eingelöst; ein Rest wird als Gutschrift ausgegeben (PROJ-11).
+
+**Umbau:**
+- `next.config.ts`: `output: "export"`, `trailingSlash: true`, `images.unoptimized: true`. `npm run build` erzeugt `out/` (ca. 39 MB).
+- Weiterleitungen alter Contao-URLs und Sicherheits-Header: `src/lib/static-hosting.ts`. `postbuild` schreibt daraus `out/.htaccess` (`scripts/write-htaccess.mts`):
+  - 301-Regeln, auch mit `.html` oder `/` am Ende, `NE` für Ziele mit `#`
+  - HTTPS-Zwang, Sicherheits-Header, Langzeit-Cache für `/_next/static/`, Kompression, eigene 404-Seite
+  - Mit einem echten Apache 2.4 getestet; Regeln zusätzlich per Unit-Test (`static-hosting.test.ts`)
+- Gutscheinkauf (`src/components/site/voucher-form.tsx`, `src/lib/shopify.ts`):
+  - Validierung mit Zod im Browser
+  - `cartCreate` direkt bei Shopify, Weiterleitung zur Kasse
+  - Bei Fehler: Shopify-Produktseite mit gewählter Variante
+  - Server Action `gutscheine/actions.ts` und `getVoucherProduct` entfallen.
+  - Ohne Server gibt es keine serverseitige Prüfung. Das ist unkritisch, weil die Shopify-Kasse Preis und Variante selbst festlegt.
+- Datumsabhängige Anzeigen werden im Browser berechnet (`src/hooks/use-today.ts`, `src/components/site/cup-status.tsx`, `jubilee-banner.tsx`):
+  - „x von 8 Läufen gelaufen“, „Nächster Termin“, Badge „Gelaufen“, 40-Jahre-Banner
+  - Das HTML zeigt den Stand vom Build-Tag.
+- `/api/gift-qr` entfällt (kein Server). In der Mail steht nur der Code, der QR-Code steht auf der Gutschein-Seite.
+- E2E: Weiterleitungstest durch Unit-Test ersetzt; neuer Test für den Kauf aus dem Browser mit gemockter Shopify-Antwort. 27 E2E- und 28 Unit-Tests grün.
+
+**Deployment:** `npm run build` → Inhalt von `out/` (inkl. `.htaccess`) per SFTP/FTP in das Webspace-Verzeichnis der (Sub-)Domain laden. Zum Testen eine Subdomain (z. B. `neu.ausdauer-shop.de`) auf einen eigenen Ordner zeigen lassen. Die Seite muss im Wurzelverzeichnis einer (Sub-)Domain liegen, nicht in einem Unterordner.

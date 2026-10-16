@@ -1,13 +1,15 @@
 /**
- * Shopify Storefront API (PROJ-10) – server side only.
- * Reads the gift card product and creates a one-line cart whose checkout URL we redirect to.
- * Config: SHOPIFY_STORE_DOMAIN, SHOPIFY_STOREFRONT_TOKEN (Vercel env, never in the repo).
+ * Shopify Storefront API (PROJ-10) – runs in the browser (static site on STRATO, no server).
+ * Creates a one-line cart for the gift card and returns the Shopify checkout URL.
+ * Config: NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN, NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN – the public Storefront token,
+ * made for browsers, baked in at build time (never in the repo).
  */
 import { z } from "zod";
-import { FALLBACK_VOUCHER, type VoucherProduct } from "@/content/voucher";
+import { FALLBACK_VOUCHER } from "@/content/voucher";
 
 const API_VERSION = "2025-07";
 export const VOUCHER_HANDLE = "geschenk-gutschein";
+const DEFAULT_DOMAIN = "der-ausdauer-shop.myshopify.com";
 
 /** Line attributes Shopify uses for gift cards sent to a recipient (same keys as the theme's recipient form). */
 export const RECIPIENT_KEYS = {
@@ -19,69 +21,14 @@ export const RECIPIENT_KEYS = {
 } as const;
 
 function config() {
-  const domain = process.env.SHOPIFY_STORE_DOMAIN;
-  const token = process.env.SHOPIFY_STOREFRONT_TOKEN;
+  const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
+  const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN;
   return domain && token ? { domain, token } : null;
-}
-
-async function storefront<T>(query: string, variables: Record<string, unknown>, revalidate: number | false): Promise<T> {
-  const cfg = config();
-  if (!cfg) throw new Error("Shopify is not configured");
-  const res = await fetch(`https://${cfg.domain}/api/${API_VERSION}/graphql.json`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-Shopify-Storefront-Access-Token": cfg.token },
-    body: JSON.stringify({ query, variables }),
-    ...(revalidate === false ? { cache: "no-store" as const } : { next: { revalidate } }),
-  });
-  if (!res.ok) throw new Error(`Shopify responded ${res.status}`);
-  const json = (await res.json()) as { data?: T; errors?: Array<{ message: string }> };
-  if (json.errors?.length || !json.data) throw new Error(json.errors?.[0]?.message ?? "Shopify returned no data");
-  return json.data;
-}
-
-const PRODUCT_QUERY = /* GraphQL */ `
-  query Voucher($handle: String!) {
-    product(handle: $handle) {
-      handle
-      title
-      availableForSale
-      variants(first: 50) {
-        nodes { id availableForSale price { amount } }
-      }
-    }
-  }
-`;
-
-type ProductResponse = {
-  product: null | {
-    handle: string;
-    title: string;
-    availableForSale: boolean;
-    variants: { nodes: Array<{ id: string; availableForSale: boolean; price: { amount: string } }> };
-  };
-};
-
-export type VoucherResult = { product: VoucherProduct; live: boolean };
-
-/** Gift card amounts, live from Shopify (cached 5 min). Falls back to the last known amounts. */
-export async function getVoucherProduct(): Promise<VoucherResult> {
-  try {
-    const { product } = await storefront<ProductResponse>(PRODUCT_QUERY, { handle: VOUCHER_HANDLE }, 300);
-    if (!product) throw new Error("Voucher product not found");
-    const variants = product.variants.nodes
-      .filter((v) => v.availableForSale)
-      .map((v) => ({ id: v.id, amount: Number(v.price.amount) }))
-      .sort((a, b) => a.amount - b.amount);
-    if (!variants.length) throw new Error("No voucher amounts available");
-    return { product: { handle: product.handle, variants }, live: true };
-  } catch {
-    return { product: FALLBACK_VOUCHER, live: false };
-  }
 }
 
 /** Shopify product page for one amount – used when the API is unavailable. */
 export function productUrl(variantId?: string) {
-  const domain = process.env.SHOPIFY_STORE_DOMAIN ?? "der-ausdauer-shop.myshopify.com";
+  const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN ?? DEFAULT_DOMAIN;
   const numeric = variantId?.split("/").pop();
   return `https://${domain}/products/${VOUCHER_HANDLE}${numeric ? `?variant=${numeric}` : ""}`;
 }
@@ -89,10 +36,11 @@ export function productUrl(variantId?: string) {
 // ---------- order form ----------
 
 const today = () => new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Berlin" }).format(new Date());
+const VARIANT_IDS: string[] = FALLBACK_VOUCHER.variants.map((v) => v.id);
 
 export const voucherOrderSchema = z
   .object({
-    variantId: z.string().regex(/^gid:\/\/shopify\/ProductVariant\/\d+$/, "Bitte wähle einen Betrag."),
+    variantId: z.string().refine((id) => VARIANT_IDS.includes(id), "Bitte wähle einen Betrag."),
     gift: z.boolean(),
     recipientName: z.string().trim().max(60, "Der Name ist zu lang.").optional(),
     recipientEmail: z.string().trim().optional(),
@@ -140,14 +88,29 @@ const CART_MUTATION = /* GraphQL */ `
 type CartResponse = { cartCreate: { cart: { checkoutUrl: string } | null; userErrors: Array<{ message: string }> } };
 
 /** Creates a cart with exactly one voucher and returns the Shopify checkout URL. */
-export async function createVoucherCheckout(order: VoucherOrder, allowedVariantIds: string[]): Promise<string> {
-  if (!allowedVariantIds.includes(order.variantId)) throw new Error("Unknown voucher amount");
-  const data = await storefront<CartResponse>(
-    CART_MUTATION,
-    { lines: [{ merchandiseId: order.variantId, quantity: 1, attributes: recipientAttributes(order) }] },
-    false,
-  );
-  const url = data.cartCreate.cart?.checkoutUrl;
-  if (!url) throw new Error(data.cartCreate.userErrors[0]?.message ?? "Checkout could not be created");
+export async function createVoucherCheckout(order: VoucherOrder): Promise<string> {
+  const cfg = config();
+  if (!cfg) throw new Error("Shopify is not configured");
+  const res = await fetch(`https://${cfg.domain}/api/${API_VERSION}/graphql.json`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Shopify-Storefront-Access-Token": cfg.token },
+    body: JSON.stringify({
+      query: CART_MUTATION,
+      variables: { lines: [{ merchandiseId: order.variantId, quantity: 1, attributes: recipientAttributes(order) }] },
+    }),
+  });
+  if (!res.ok) throw new Error(`Shopify responded ${res.status}`);
+  const json = (await res.json()) as { data?: CartResponse; errors?: Array<{ message: string }> };
+  const url = json.data?.cartCreate.cart?.checkoutUrl;
+  if (!url) throw new Error(json.errors?.[0]?.message ?? json.data?.cartCreate.userErrors[0]?.message ?? "Checkout could not be created");
   return url;
+}
+
+/** Checkout URL for an order – falls back to the Shopify product page if the API fails (recipient data is then entered there). */
+export async function voucherCheckoutUrl(order: VoucherOrder): Promise<string> {
+  try {
+    return await createVoucherCheckout(order);
+  } catch {
+    return productUrl(order.variantId);
+  }
 }

@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { CupLogo, SeriesTrack } from "@/components/brand/cup-logo";
+import { CupLogo } from "@/components/brand/cup-logo";
+import { CupProgress, CupRaceState } from "@/components/site/cup-status";
 import { PageHero } from "@/components/site/page-hero";
 import { SiteSection } from "@/components/site/section";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CUP, CUP_FINAL, CUP_RACES, CUP_RULES } from "@/content/cup";
 import { berlinDate, formatDate } from "@/lib/dates";
-
-export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: "AUSDAUER CUP",
@@ -18,8 +15,8 @@ export const metadata: Metadata = {
 };
 
 export default function CupPage() {
-  const today = berlinDate(new Date());
-  const done = CUP_RACES.filter((r) => r.date < today).map((r) => r.no);
+  // Static export: "gelaufen" is updated in the browser.
+  const buildDay = berlinDate(new Date());
 
   return (
     <>
@@ -37,15 +34,10 @@ export default function CupPage() {
 
       <SiteSection km={1} kicker="Termine" title={`Saison ${CUP.season}`}>
         <div className="mb-8 max-w-2xl">
-          <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            {done.length} von {CUP_RACES.length} Läufen gelaufen
-          </p>
-          <SeriesTrack total={CUP_RACES.length} done={done} final />
+          <CupProgress buildDay={buildDay} />
         </div>
         <ol className="divide-y divide-ink/10 border-y border-ink/10">
-          {CUP_RACES.map((r) => {
-            const past = r.date < today;
-            return (
+          {CUP_RACES.map((r) => (
               <li key={r.slug}>
                 <Link href={`/ausdauer-cup/${r.slug}`} className="group grid grid-cols-[3rem_1fr_auto] items-center gap-4 py-4 sm:grid-cols-[3rem_9rem_1fr_auto]">
                   <span className="font-display text-3xl font-black italic text-brand tabular">{String(r.no).padStart(2, "0")}</span>
@@ -57,14 +49,10 @@ export default function CupPage() {
                       <span className="sm:hidden"> · {formatDate(r.date)}</span>
                     </span>
                   </span>
-                  <span className="flex items-center gap-3">
-                    {past ? <Badge variant="secondary">Gelaufen</Badge> : r.provisional ? <Badge variant="outline">Termin unter Vorbehalt</Badge> : null}
-                    <ArrowRight className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
-                  </span>
+                  <CupRaceState buildDay={buildDay} date={r.date} provisional={r.provisional} />
                 </Link>
               </li>
-            );
-          })}
+          ))}
           <li id="abschlussfeier" className="grid scroll-mt-24 grid-cols-[3rem_1fr] gap-4 py-5 sm:grid-cols-[3rem_9rem_1fr]">
             <span aria-hidden className="mt-1 size-6 rounded-full bg-brand" />
             <span className="hidden font-mono tabular sm:block">{formatDate(CUP_FINAL.date)}</span>

@@ -1,4 +1,7 @@
-/** Gift card (PROJ-10). Amounts come live from Shopify; these are the last known ones (2026-10-16) as fallback. */
+/**
+ * Gift card (PROJ-10). Static site: the amounts are the Shopify variants of `geschenk-gutschein` (as of 2026-10-16).
+ * New amount in Shopify → add its variant ID here and rebuild.
+ */
 
 export interface VoucherProduct {
   handle: string;
@@ -27,8 +30,8 @@ export const FALLBACK_VOUCHER: VoucherProduct = {
 
 export const VOUCHER_FACTS = [
   { title: "Sofort per E-Mail", text: "Du bekommst den Gutschein direkt nach dem Kauf – oder wir schicken ihn zum Wunschtermin an die beschenkte Person." },
-  { title: "Betzdorf, Siegen & online", text: "Einlösbar in beiden Stores und online. QR-Code an der Kasse zeigen oder Code nennen." },
-  { title: "Restguthaben bleibt", text: "Du musst nicht alles auf einmal ausgeben. Der Rest bleibt auf dem Gutschein." },
+  { title: "In Betzdorf & Siegen", text: "Einlösbar in beiden Stores. Zeig den Gutschein an der Kasse oder nenn den Code." },
+  { title: "Rest als Gutschrift", text: "Der Gutschein wird beim Einkauf komplett eingelöst. Bleibt etwas übrig, bekommst du den Rest als Gutschrift." },
 ];
 
 export const formatEuro = (amount: number) =>

@@ -1,23 +1,22 @@
 "use client";
 
-import { useActionState, useState } from "react";
-import { useFormStatus } from "react-dom";
+import { useEffect, useState, type FormEvent } from "react";
 import { ChevronDown, Gift, Loader2 } from "lucide-react";
 import { InfinityMark } from "@/components/brand/infinity-mark";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { buyVoucher, type VoucherFormState } from "@/app/(site)/gutscheine/actions";
-import { formatEuro, type VoucherProduct } from "@/content/voucher";
+import { FALLBACK_VOUCHER, formatEuro } from "@/content/voucher";
+import { voucherCheckoutUrl, voucherOrderSchema } from "@/lib/shopify";
 import { cn } from "@/lib/utils";
 
 const MAX_MESSAGE = 200;
 
-function SubmitButton({ amount }: { amount?: number }) {
-  const { pending } = useFormStatus();
+type FieldErrors = Partial<Record<"variantId" | "recipientEmail" | "recipientName" | "message" | "sendOn", string>>;
+
+function SubmitButton({ amount, pending }: { amount?: number; pending: boolean }) {
   return (
     <Button type="submit" variant="brand" size="lg" disabled={pending || amount === undefined} className="w-full sm:w-auto">
       {pending ? (
@@ -49,15 +48,51 @@ function VoucherPreview({ amount, name }: { amount?: number; name?: string }) {
   );
 }
 
-export function VoucherForm({ product, live }: { product: VoucherProduct; live: boolean }) {
-  const [state, action] = useActionState<VoucherFormState, FormData>(buyVoucher, {});
+export function VoucherForm() {
+  const product = FALLBACK_VOUCHER;
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [pending, setPending] = useState(false);
   const defaultId = product.variants.find((v) => v.amount === 50)?.id ?? product.variants[0]?.id;
   const [variantId, setVariantId] = useState(defaultId);
   const [gift, setGift] = useState(false);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const amount = product.variants.find((v) => v.id === variantId)?.amount;
-  const e = state.errors ?? {};
+  const e = errors;
+
+  // Back from the Shopify checkout (page restored from cache): make the button usable again.
+  useEffect(() => {
+    const reset = (ev: PageTransitionEvent) => ev.persisted && setPending(false);
+    window.addEventListener("pageshow", reset);
+    return () => window.removeEventListener("pageshow", reset);
+  }, []);
+
+  /** Validates in the browser, creates the Shopify cart and sends the buyer to the Shopify checkout. */
+  async function onSubmit(ev: FormEvent<HTMLFormElement>) {
+    ev.preventDefault();
+    const data = new FormData(ev.currentTarget);
+    const text = (key: string) => {
+      const value = data.get(key);
+      return typeof value === "string" && value.trim() !== "" ? value : undefined;
+    };
+    const parsed = voucherOrderSchema.safeParse({
+      variantId: text("variantId") ?? "",
+      gift,
+      recipientName: text("recipientName"),
+      recipientEmail: text("recipientEmail"),
+      message: text("message"),
+      sendOn: text("sendOn"),
+    });
+    if (!parsed.success) {
+      const next: FieldErrors = {};
+      for (const issue of parsed.error.issues) next[String(issue.path[0]) as keyof FieldErrors] ??= issue.message;
+      setErrors(next);
+      return;
+    }
+    setErrors({});
+    setPending(true);
+    window.location.href = await voucherCheckoutUrl(parsed.data);
+  }
 
   return (
     <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-start">
@@ -65,7 +100,7 @@ export function VoucherForm({ product, live }: { product: VoucherProduct; live: 
         <VoucherPreview amount={amount} name={gift ? name.trim() : undefined} />
       </div>
 
-      <form action={action} className="space-y-8" noValidate>
+      <form onSubmit={onSubmit} className="space-y-8" noValidate>
         <fieldset>
           <legend className="font-display text-2xl font-black uppercase">1 · Betrag wählen</legend>
           <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4">
@@ -87,7 +122,6 @@ export function VoucherForm({ product, live }: { product: VoucherProduct; live: 
         </fieldset>
 
         <Collapsible open={gift} onOpenChange={setGift}>
-          <input type="hidden" name="gift" value={gift ? "on" : ""} />
           <CollapsibleTrigger asChild>
             <button
               type="button"
@@ -134,18 +168,9 @@ export function VoucherForm({ product, live }: { product: VoucherProduct; live: 
           </CollapsibleContent>
         </Collapsible>
 
-        {!live && (
-          <Alert>
-            <AlertDescription>
-              Der Shop ist gerade nur eingeschränkt erreichbar. Du wirst direkt zur Shopify-Produktseite geleitet – dort kannst du den Gutschein wie
-              gewohnt kaufen.
-            </AlertDescription>
-          </Alert>
-        )}
-        {e.form && <p className="text-sm text-destructive">{e.form}</p>}
 
         <div className="space-y-3">
-          <SubmitButton amount={amount} />
+          <SubmitButton amount={amount} pending={pending} />
           <p className="text-sm text-muted-foreground">Bezahlung sicher in der Shopify-Kasse. Den Gutschein bekommst du per E-Mail.</p>
         </div>
       </form>

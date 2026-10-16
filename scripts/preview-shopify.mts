@@ -66,14 +66,11 @@ async function main() {
   const liquid = await engine(card.qr_identifier);
   const shop = { name: "AUSDAUER", email_logo_url: dataUri(readFileSync(join(SHOPIFY, "email/ausdauer-logo-email@2x.png")), ".png") };
 
-  // E-Mail: the QR image comes from https://ausdauer.shop/api/gift-qr in production.
-  const qrPng = await QRCode.toDataURL(card.qr_identifier, { width: 480, margin: 2, color: { dark: "#222222", light: "#FFFFFF" } });
-  let mail = await liquid.renderFile("notifications/geschenkgutschein-erstellt", { gift_card: card, shop });
-  mail = mail.replace(/https:\/\/ausdauer\.shop\/api\/gift-qr\?id=[^"]+/, qrPng);
+  const mail = await liquid.renderFile("notifications/geschenkgutschein-erstellt", { gift_card: card, shop });
   writeFileSync(join(OUT, "gutschein-mail.html"), mail);
 
   const pages = {
-    "gutschein-seite.html": giftCard({ balance: 2000, expires_on: "2029-12-31" }),
+    "gutschein-seite.html": giftCard({ expires_on: "2029-12-31" }),
     "gutschein-seite-abgelaufen.html": giftCard({ expired: true, expires_on: "2025-12-31", pass_url: null }),
   };
   for (const [file, gift_card] of Object.entries(pages)) {

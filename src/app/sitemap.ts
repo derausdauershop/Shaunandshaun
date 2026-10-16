@@ -5,6 +5,8 @@ import { CUP_RACES } from "@/content/cup";
 import { COMPANY } from "@/content/site";
 import { STORES } from "@/content/stores";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "/",
