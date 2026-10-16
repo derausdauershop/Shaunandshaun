@@ -1,0 +1,173 @@
+{%- comment -%}
+  AUSDAUER – Shopify-Benachrichtigung „Geschenkgutschein erstellt“ (PROJ-11)
+  Einfügen unter: Shopify-Admin → Einstellungen → Benachrichtigungen → Kundenbenachrichtigungen
+  → Geschenkgutschein erstellt → Code bearbeiten. Betreff: siehe shopify/README.md
+  Vorschau: npm run preview:shopify  →  shopify/preview/gutschein-mail.html
+{%- endcomment -%}
+{%- assign qr_service = 'https://ausdauer.shop/api/gift-qr' -%}
+{%- assign site_url = 'https://ausdauer.shop' -%}
+{%- assign c_red = '#E30110' -%}
+{%- assign c_ink = '#222222' -%}
+{%- assign c_paper = '#F4F2ED' -%}
+{%- assign f_display = "'Barlow Condensed','Arial Narrow','Helvetica Neue',Arial,sans-serif" -%}
+{%- assign f_text = "Barlow,'Helvetica Neue',Arial,sans-serif" -%}
+{%- assign f_mono = "'JetBrains Mono',Menlo,Consolas,'Courier New',monospace" -%}
+{%- if gift_card.expires_on -%}{%- assign expiry = gift_card.expires_on | date: '%d.%m.%Y' -%}{%- endif -%}
+{%- assign amount = gift_card.initial_value | money_without_trailing_zeros -%}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>Dein AUSDAUER Gutschein über {{ amount }}</title>
+  <style>
+    body { margin: 0; padding: 0; background: {{ c_paper }}; }
+    a { color: {{ c_red }}; }
+    @media (max-width: 620px) {
+      .wrap { width: 100% !important; }
+      .px { padding-left: 20px !important; padding-right: 20px !important; }
+      .amount { font-size: 72px !important; }
+      .headline { font-size: 40px !important; }
+      .code { font-size: 20px !important; letter-spacing: 1px !important; }
+      .col { display: block !important; width: 100% !important; box-sizing: border-box !important; }
+      .foot td { display: block !important; text-align: left !important; padding: 4px 0 !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background:{{ c_paper }};">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Dein Gutschein über {{ amount }} – einlösbar in Betzdorf, Siegen und online.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:{{ c_paper }};">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+        <table role="presentation" class="wrap" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:#FFFFFF;">
+
+          <!-- Kopf: Logo + rote Linie -->
+          <tr>
+            <td class="px" style="padding:28px 40px 22px 40px;">
+              <a href="{{ site_url }}" style="text-decoration:none;">
+                {%- if shop.email_logo_url != blank -%}
+                  <img src="{{ shop.email_logo_url }}" width="200" alt="AUSDAUER" style="display:block;width:200px;max-width:200px;height:auto;border:0;">
+                {%- else -%}
+                  <span style="font-family:{{ f_display }};font-size:30px;font-weight:900;font-style:italic;letter-spacing:1px;color:{{ c_red }};">AUSDAUER</span>
+                {%- endif -%}
+              </a>
+            </td>
+          </tr>
+          <tr><td style="height:6px;line-height:6px;font-size:0;background:{{ c_red }};">&nbsp;</td></tr>
+
+          <!-- Hero: Betrag -->
+          <tr>
+            <td class="px" style="background:{{ c_ink }};padding:36px 40px 40px 40px;">
+              <p style="margin:0;font-family:{{ f_mono }};font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#BDB8AE;">Geschenk-Gutschein</p>
+              <p class="amount" style="margin:10px 0 0 0;font-family:{{ f_display }};font-size:96px;line-height:0.9;font-weight:900;font-style:italic;color:#FFFFFF;">{{ amount }}</p>
+              <p class="headline" style="margin:14px 0 0 0;font-family:{{ f_display }};font-size:48px;line-height:0.95;font-weight:900;text-transform:uppercase;color:#FFFFFF;">
+                {%- if gift_card.customer.first_name != blank -%}{{ gift_card.customer.first_name }}, deine<br>{%- else -%}Deine<br>{%- endif -%}
+                <span style="color:{{ c_red }};font-style:italic;">nächsten Kilometer.</span>
+              </p>
+              {%- if gift_card.message != blank -%}
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:26px;">
+                <tr>
+                  <td style="border-left:4px solid {{ c_red }};padding:4px 0 4px 16px;font-family:{{ f_text }};font-size:17px;line-height:1.5;color:#FFFFFF;">
+                    „{{ gift_card.message | escape | newline_to_br }}“
+                  </td>
+                </tr>
+              </table>
+              {%- endif -%}
+            </td>
+          </tr>
+
+          <!-- Code + QR -->
+          <tr>
+            <td class="px" style="padding:36px 40px 8px 40px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:2px dashed {{ c_ink }};">
+                <tr>
+                  {%- if gift_card.qr_identifier != blank -%}
+                  <td class="col" width="200" align="center" valign="middle" style="padding:24px 8px 24px 24px;">
+                    <img src="{{ qr_service }}?id={{ gift_card.qr_identifier | url_encode }}" width="160" height="160" alt="QR-Code zum Einlösen" style="display:block;width:160px;height:160px;border:0;">
+                  </td>
+                  {%- endif -%}
+                  <td class="col" valign="middle" style="padding:24px;">
+                    <p style="margin:0;font-family:{{ f_mono }};font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#6B6862;">Dein Code</p>
+                    {%- if gift_card.code != blank -%}<p class="code" style="margin:8px 0 0 0;font-family:{{ f_mono }};font-size:24px;line-height:1.3;font-weight:700;letter-spacing:2px;color:{{ c_ink }};">{{ gift_card.code | format_code }}</p>{%- else -%}<p style="margin:8px 0 0 0;font-family:{{ f_text }};font-size:16px;color:{{ c_ink }};">Code und QR-Code findest du über den Button „Gutschein ansehen“.</p>{%- endif -%}
+                    <p style="margin:16px 0 0 0;font-family:{{ f_text }};font-size:15px;line-height:1.5;color:{{ c_ink }};">
+                      Wert: <strong>{{ amount }}</strong>
+                      {%- if expiry %}<br>Gültig bis: <strong>{{ expiry }}</strong>{% endif %}
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Buttons -->
+          <tr>
+            <td class="px" style="padding:24px 40px 8px 40px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="background:{{ c_red }};">
+                    <a href="{{ gift_card.url }}" style="display:inline-block;padding:16px 28px;font-family:{{ f_display }};font-size:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#FFFFFF;text-decoration:none;">Gutschein ansehen &amp; drucken</a>
+                  </td>
+                </tr>
+              </table>
+              {%- if gift_card.pass_url != blank -%}
+              <p style="margin:14px 0 0 0;font-family:{{ f_text }};font-size:15px;">
+                <a href="{{ gift_card.pass_url }}" style="color:{{ c_ink }};font-weight:600;">Zu Apple Wallet hinzufügen →</a>
+              </p>
+              {%- endif -%}
+            </td>
+          </tr>
+
+          <!-- So löst du ein -->
+          <tr>
+            <td class="px" style="padding:32px 40px 8px 40px;">
+              <p style="margin:0 0 14px 0;font-family:{{ f_display }};font-size:28px;font-weight:900;text-transform:uppercase;color:{{ c_ink }};">So löst du ein</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                {%- capture step_style -%}font-family:{{ f_text }};font-size:16px;line-height:1.5;color:{{ c_ink }};padding:10px 0;border-top:1px solid #D9D5CC;{%- endcapture -%}
+                {%- capture num_style -%}font-family:{{ f_mono }};font-size:14px;font-weight:700;color:{{ c_red }};padding:12px 12px 10px 0;border-top:1px solid #D9D5CC;vertical-align:top;{%- endcapture -%}
+                <tr><td width="36" style="{{ num_style }}">01</td><td style="{{ step_style }}"><strong>Im Laden:</strong> QR-Code an der Kasse zeigen oder Code nennen – in Betzdorf und Siegen.</td></tr>
+                <tr><td width="36" style="{{ num_style }}">02</td><td style="{{ step_style }}"><strong>Online:</strong> Code in der Kasse von ausdauer.shop im Feld für Rabattcode/Gutschein eingeben.</td></tr>
+                <tr><td width="36" style="{{ num_style }}">03</td><td style="{{ step_style }}"><strong>Restguthaben</strong> bleibt auf dem Gutschein. Du kannst ihn mehrmals verwenden.</td></tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Stores -->
+          <tr>
+            <td class="px" style="padding:24px 40px 36px 40px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:{{ c_paper }};">
+                <tr>
+                  <td class="col" width="50%" valign="top" style="padding:20px;font-family:{{ f_text }};font-size:14px;line-height:1.5;color:{{ c_ink }};">
+                    <span style="font-family:{{ f_display }};font-size:18px;font-weight:700;text-transform:uppercase;">AUSDAUER Betzdorf</span><br>
+                    Wilhelmstraße 16<br>57518 Betzdorf<br>02741 4372
+                  </td>
+                  <td class="col" width="50%" valign="top" style="padding:20px;font-family:{{ f_text }};font-size:14px;line-height:1.5;color:{{ c_ink }};">
+                    <span style="font-family:{{ f_display }};font-size:18px;font-weight:700;text-transform:uppercase;">Absolute Run Ausdauer Siegen</span><br>
+                    Koblenzer Straße 40<br>57072 Siegen<br>0271 77005090
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Fuß -->
+          <tr>
+            <td class="px" style="background:{{ c_ink }};padding:22px 40px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="foot">
+                <tr>
+                  <td style="font-family:{{ f_display }};font-size:20px;font-weight:900;font-style:italic;text-transform:uppercase;color:#FFFFFF;">Wir leben Sport.</td>
+                  <td align="right" style="font-family:{{ f_mono }};font-size:12px;letter-spacing:1px;color:#BDB8AE;">
+                    <a href="{{ site_url }}" style="color:#FFFFFF;text-decoration:none;">ausdauer.shop</a> · <a href="https://www.instagram.com/ausdauer.shop/" style="color:#FFFFFF;text-decoration:none;">@ausdauer.shop</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <p style="margin:16px 0 0 0;font-family:{{ f_text }};font-size:12px;line-height:1.5;color:#6B6862;">Der Ausdauer-Shop GmbH &amp; Co. KG · Wilhelmstraße 16 · 57518 Betzdorf</p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

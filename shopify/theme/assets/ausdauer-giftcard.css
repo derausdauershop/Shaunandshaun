@@ -1,0 +1,99 @@
+/* AUSDAUER – Gutschein-Seite (PROJ-11). Tokens wie src/app/globals.css */
+:root {
+  --red: #e30110;
+  --ink: #222222;
+  --paper: #f4f2ed;
+  --stone: #d9d5cc;
+  --stone-dark: #6b6862;
+  --display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --text: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.5 var(--text); }
+a { color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+
+.gc-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; background: var(--ink); border-bottom: 6px solid var(--red); color: #fff; }
+.gc-top__logo img { width: 160px; }
+.gc-top__claim { font: italic 900 18px/1 var(--display); text-transform: uppercase; }
+
+.gc-main { max-width: 760px; margin: 0 auto; padding: 32px 16px 48px; }
+
+.gc-alert { margin: 0 0 20px; padding: 14px 16px; background: #fff; border-left: 6px solid var(--red); font-weight: 600; }
+
+.gc-card { position: relative; overflow: hidden; padding: 28px 28px 32px; background: var(--red); color: #fff; clip-path: polygon(2.5% 0, 100% 0, 97.5% 100%, 0 100%); }
+.gc-card::after { content: ""; position: absolute; right: -14%; top: 8%; width: 78%; aspect-ratio: 63.29 / 28.35; background-position: center; background-size: contain; background-repeat: no-repeat; opacity: 0.22; pointer-events: none; }
+.gc-card > * { position: relative; z-index: 1; }
+.gc-card--off { background: var(--stone-dark); }
+.gc-redeem--off .gc-qr, .gc-redeem--off [data-copy] { display: none; }
+.gc-redeem--off { grid-template-columns: 1fr !important; }
+.gc-eyebrow, .gc-label, .gc-hint, .gc-facts dt { margin: 0; font: 500 12px/1.4 var(--mono); letter-spacing: 0.25em; text-transform: uppercase; }
+.gc-eyebrow { color: rgba(255, 255, 255, 0.85); }
+.gc-amount { margin: 6px 0 0; font: italic 900 clamp(72px, 20vw, 136px)/0.85 var(--display); font-variant-numeric: tabular-nums; }
+.gc-sub { margin: 10px 0 0; font: 500 13px/1.4 var(--mono); letter-spacing: 0.08em; }
+.gc-headline { margin: 28px 0 0; font: 700 clamp(30px, 8vw, 46px)/0.95 var(--display); text-transform: uppercase; }
+.gc-headline em { font-weight: 900; }
+
+.gc-redeem { display: grid; gap: 0; margin-top: 20px; background: #fff; border: 2px dashed var(--ink); }
+.gc-qr { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 24px; border-bottom: 2px dashed var(--ink); }
+.gc-qr #gc-qr { width: 176px; height: 176px; }
+.gc-qr #gc-qr img, .gc-qr #gc-qr canvas, .gc-qr #gc-qr svg { width: 176px; height: 176px; }
+.gc-hint { color: var(--stone-dark); letter-spacing: 0.15em; }
+.gc-code { padding: 24px; }
+.gc-label { color: var(--stone-dark); }
+.gc-code__value { margin: 8px 0 14px; font: 500 clamp(19px, 5.4vw, 26px)/1.3 var(--mono); letter-spacing: 0.06em; word-break: break-word; }
+.gc-facts { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 20px 0 0; padding-top: 16px; border-top: 1px solid var(--stone); }
+.gc-facts dt { color: var(--stone-dark); letter-spacing: 0.15em; }
+.gc-facts dd { margin: 2px 0 0; font: 700 22px/1.1 var(--display); }
+
+.gc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 20px; }
+.gc-btn { appearance: none; border: 0; border-radius: 0; padding: 14px 24px; min-height: 48px; background: var(--red); color: #fff; font: 700 19px/1 var(--display); letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; }
+.gc-btn:hover { background: #c20010; }
+.gc-btn:focus-visible, .gc-wallet:focus-visible, a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.gc-btn--ghost { padding: 10px 16px; min-height: 40px; background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); font-size: 16px; }
+.gc-btn--ghost:hover { background: var(--ink); color: #fff; }
+
+.gc-steps { margin-top: 40px; }
+.gc-steps h2 { margin: 0 0 12px; font: 900 30px/1 var(--display); text-transform: uppercase; }
+.gc-steps ol { margin: 0; padding: 0; list-style: none; }
+.gc-steps li { display: flex; gap: 14px; padding: 12px 0; border-top: 1px solid var(--stone); }
+.gc-steps li span { flex: none; width: 28px; padding-top: 2px; font: 500 14px/1.5 var(--mono); color: var(--red); }
+.gc-steps li p { margin: 0; }
+
+.gc-stores { display: grid; gap: 2px; margin-top: 28px; }
+.gc-stores address { padding: 18px 20px; background: #fff; font-style: normal; font-size: 15px; }
+.gc-stores strong { display: block; margin-bottom: 4px; font: 700 19px/1.1 var(--display); text-transform: uppercase; }
+
+.gc-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 20px; background: var(--ink); color: #bdb8ae; font: 500 12px/1.4 var(--mono); letter-spacing: 0.06em; }
+.gc-foot a { color: #fff; text-decoration: none; }
+
+@media (min-width: 640px) {
+  .gc-main { padding-top: 48px; }
+  .gc-card { padding: 36px 48px 40px; }
+  .gc-redeem { grid-template-columns: 240px 1fr; }
+  .gc-qr { justify-content: center; border-bottom: 0; border-right: 2px dashed var(--ink); }
+  .gc-code { padding: 28px 32px; }
+  .gc-stores { grid-template-columns: 1fr 1fr; }
+  .gc-top { padding: 20px 32px; }
+  .gc-top__logo img { width: 180px; }
+}
+
+@media print {
+  @page { size: A4; margin: 14mm; }
+  body { background: #fff; font-size: 12pt; }
+  .gc-top { background: #fff; color: var(--ink); border-bottom-width: 4px; }
+  .gc-top__logo img { filter: invert(1); }
+  .gc-main { padding: 16px 0 0; max-width: none; }
+  .gc-card, .gc-top { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .gc-actions, .gc-btn, .gc-alert, .gc-foot { display: none !important; }
+  .gc-redeem { grid-template-columns: 240px 1fr; break-inside: avoid; }
+  .gc-qr { border-bottom: 0; border-right: 2px dashed var(--ink); }
+  .gc-stores { grid-template-columns: 1fr 1fr; margin-top: 14px; break-inside: avoid; }
+  .gc-stores address { padding: 10px 0; }
+  .gc-amount { font-size: 96px; }
+  .gc-headline { margin-top: 16px; }
+  .gc-steps { margin-top: 20px; break-inside: avoid; }
+  .gc-steps li { padding: 6px 0; }
+}

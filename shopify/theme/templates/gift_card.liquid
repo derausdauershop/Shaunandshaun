@@ -1,0 +1,132 @@
+{%- comment -%}
+  AUSDAUER – Gutschein-Seite (PROJ-11)
+  Ersetzt templates/gift_card.liquid im veröffentlichten Shopify-Theme.
+  Benötigte Theme-Assets: shopify/theme/assets/* (CSS, Schriften, SVGs).
+  Vorschau: npm run preview:shopify  →  shopify/preview/gutschein-seite.html
+{%- endcomment -%}
+{%- layout none -%}
+{%- assign site_url = 'https://ausdauer.shop' -%}
+{%- assign balance = gift_card.balance | money_without_trailing_zeros -%}
+{%- assign initial = gift_card.initial_value | money_without_trailing_zeros -%}
+{%- if gift_card.expires_on -%}{%- assign expiry = gift_card.expires_on | date: '%d.%m.%Y' -%}{%- endif -%}
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#222222">
+  <title>Dein AUSDAUER Gutschein · {{ balance }}</title>
+  <style>
+    @font-face { font-family: "Barlow Condensed"; font-weight: 900; font-style: italic; font-display: swap; src: url("{{ 'barlow-condensed-latin-900-italic.woff2' | asset_url }}") format("woff2"); }
+    @font-face { font-family: "Barlow Condensed"; font-weight: 700; font-style: normal; font-display: swap; src: url("{{ 'barlow-condensed-latin-700-normal.woff2' | asset_url }}") format("woff2"); }
+    @font-face { font-family: "Barlow"; font-weight: 400; font-style: normal; font-display: swap; src: url("{{ 'barlow-latin-400-normal.woff2' | asset_url }}") format("woff2"); }
+    @font-face { font-family: "Barlow"; font-weight: 600; font-style: normal; font-display: swap; src: url("{{ 'barlow-latin-600-normal.woff2' | asset_url }}") format("woff2"); }
+    @font-face { font-family: "JetBrains Mono"; font-weight: 500; font-style: normal; font-display: swap; src: url("{{ 'jetbrains-mono-latin-500-normal.woff2' | asset_url }}") format("woff2"); }
+    .gc-card::after { background-image: url("{{ 'ausdauer-infinity-weiss.svg' | asset_url }}"); }
+  </style>
+  {{ 'ausdauer-giftcard.css' | asset_url | stylesheet_tag }}
+  {{ 'vendor/qrcode.js' | shopify_asset_url | script_tag }}
+  {{ content_for_header }}
+</head>
+<body>
+  <header class="gc-top">
+    <a href="{{ site_url }}" class="gc-top__logo"><img src="{{ 'ausdauer-logo-weiss.svg' | asset_url }}" alt="AUSDAUER" width="180" height="25"></a>
+    <span class="gc-top__claim">Wir leben Sport.</span>
+  </header>
+
+  <main class="gc-main">
+    {%- if gift_card.expired or gift_card.enabled == false -%}
+      <p class="gc-alert" role="status">
+        {% if gift_card.expired %}Dieser Gutschein ist am {{ expiry }} abgelaufen.{% else %}Dieser Gutschein ist deaktiviert.{% endif %}
+        Fragen? Ruf uns an – wir helfen dir gern.
+      </p>
+    {%- endif -%}
+
+    <section class="gc-card{% if gift_card.expired or gift_card.enabled == false %} gc-card--off{% endif %}" aria-labelledby="gc-amount">
+      <p class="gc-eyebrow">Geschenk-Gutschein</p>
+      <p class="gc-amount" id="gc-amount">{{ balance }}</p>
+      {%- if gift_card.balance != gift_card.initial_value -%}
+        <p class="gc-sub">Restguthaben · ursprünglich {{ initial }}</p>
+      {%- else -%}
+        <p class="gc-sub">Einlösbar in Betzdorf, Siegen und online</p>
+      {%- endif -%}
+      <p class="gc-headline">Deine nächsten <em>Kilometer.</em></p>
+    </section>
+
+    <section class="gc-redeem{% if gift_card.expired or gift_card.enabled == false %} gc-redeem--off{% endif %}" aria-label="Code und QR-Code">
+      <div class="gc-qr">
+        <div id="gc-qr" data-identifier="{{ gift_card.qr_identifier }}" role="img" aria-label="QR-Code zum Einlösen an der Kasse"></div>
+        <p class="gc-hint">An der Kasse scannen lassen</p>
+      </div>
+      <div class="gc-code">
+        <p class="gc-label">Dein Code</p>
+        <p class="gc-code__value" id="gc-code">{{ gift_card.code | format_code }}</p>
+        <button type="button" class="gc-btn gc-btn--ghost" data-copy="{{ gift_card.code }}">Code kopieren</button>
+        <dl class="gc-facts">
+          <div><dt>Wert</dt><dd>{{ initial }}</dd></div>
+          <div><dt>Guthaben</dt><dd>{{ balance }}</dd></div>
+          {%- if expiry -%}<div><dt>Gültig bis</dt><dd>{{ expiry }}</dd></div>{%- endif -%}
+        </dl>
+      </div>
+    </section>
+
+    {%- unless gift_card.expired or gift_card.enabled == false -%}
+    <div class="gc-actions">
+      <button type="button" class="gc-btn" onclick="window.print()">Gutschein drucken</button>
+      {%- if gift_card.pass_url -%}
+        <a href="{{ gift_card.pass_url }}" class="gc-wallet"><img src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" alt="Zu Apple Wallet hinzufügen" width="120" height="40"></a>
+      {%- endif -%}
+    </div>
+    {%- endunless -%}
+
+    <section class="gc-steps" aria-labelledby="gc-steps-title">
+      <h2 id="gc-steps-title">So löst du ein</h2>
+      <ol>
+        <li><span>01</span><p><strong>Im Laden:</strong> QR-Code an der Kasse zeigen oder Code nennen – in Betzdorf und Siegen.</p></li>
+        <li><span>02</span><p><strong>Online:</strong> Code in der Kasse von ausdauer.shop im Feld für Rabattcode/Gutschein eingeben.</p></li>
+        <li><span>03</span><p><strong>Restguthaben</strong> bleibt auf dem Gutschein. Du kannst ihn mehrmals verwenden.</p></li>
+      </ol>
+    </section>
+
+    <section class="gc-stores" aria-label="Stores">
+      <address>
+        <strong>AUSDAUER Betzdorf</strong>
+        Wilhelmstraße 16, 57518 Betzdorf<br>
+        <a href="tel:+4927414372">02741 4372</a>
+      </address>
+      <address>
+        <strong>Absolute Run Ausdauer Siegen</strong>
+        Koblenzer Straße 40, 57072 Siegen<br>
+        <a href="tel:+4927177005090">0271 77005090</a>
+      </address>
+    </section>
+  </main>
+
+  <footer class="gc-foot">
+    <a href="{{ site_url }}">ausdauer.shop</a>
+    <span>Der Ausdauer-Shop GmbH &amp; Co. KG</span>
+  </footer>
+
+  <script>
+    (function () {
+      var el = document.getElementById('gc-qr');
+      if (el && el.dataset.identifier && window.QRCode) {
+        new QRCode(el, { text: el.dataset.identifier, width: 176, height: 176, colorDark: '#222222', colorLight: '#FFFFFF' });
+      }
+      var btn = document.querySelector('[data-copy]');
+      if (btn && navigator.clipboard) {
+        btn.addEventListener('click', function () {
+          navigator.clipboard.writeText(btn.getAttribute('data-copy')).then(function () {
+            btn.textContent = 'Kopiert ✓';
+            setTimeout(function () { btn.textContent = 'Code kopieren'; }, 2000);
+          });
+        });
+      } else if (btn) {
+        btn.hidden = true;
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -22,7 +22,7 @@ ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Ba
 ├─ /gutscheine ── Betrag wählen ──┐                 ├─ Produkte, Preise, Bestand (Kursplätze)
 ├─ /run-academy/[kurs] ── buchen ─┼─ Server Action ─┼─ Storefront API: cartCreate
 │                                 │                 ├─ Kasse: checkout.ausdauer.shop
-│                                                   └─ Gutschein-Mail + Gutschein-Seite (checkout.ausdauer.shop/gift_cards/…)
+│                                                   └─ Gutschein-Mail + Gutschein-Seite (Shopify, /gift_cards/…)
 └─ Produktdaten (Preis, Varianten, verfügbar?) ◀── Storefront API (alle 5 Min. aktualisiert)
 ```
 - **Datenquelle:** Shopify Storefront API (GraphQL) mit öffentlichem Storefront-Token aus dem kostenlosen Sales-Channel „Headless“.
@@ -32,7 +32,7 @@ ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Ba
   - Zunächst gibt es keinen eigenen Warenkorb, weil pro Bestellung meist nur ein Gutschein oder Kurs gekauft wird.
   - Ein Warenkorb lässt sich später ergänzen („Später mehr“).
 - **Kasse:** Die Shopify-Kasse läuft unter der Subdomain `checkout.ausdauer.shop`. Das sieht vertrauenswürdig aus und bleibt rechtssicher: AGB, Widerruf, Zahlarten und der Button „Zahlungspflichtig bestellen“ kommen von Shopify.
-- **Shopify-Storefront (Theme):** Wird bis auf die Gutschein-Seite nicht mehr gebraucht. Alle Theme-URLs leiten auf die neue Webseite um, **außer `/gift_cards/*`** (Link aus der Gutschein-Mail, PROJ-11). Der Onlineshop-Kanal bleibt dafür aktiv, ohne Passwortschutz. Gestaltet werden nur `gift_card.liquid` und die Benachrichtigungs-Mails.
+- **Shopify-Storefront (Theme):** Wird bis auf die Gutschein-Seite nicht mehr gebraucht. Alle Theme-URLs leiten auf die neue Webseite um, **außer `/gift_cards/*`** (vorsorglich, Link aus der Gutschein-Mail, PROJ-11). Das Theme bleibt veröffentlicht. Gestaltet werden nur `gift_card.liquid` und die Benachrichtigungs-Mails.
 - **Konfiguration:** `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_STOREFRONT_TOKEN` (Vercel Environment Variables, nie im Repo).
 
 ## Neue/geänderte Seiten
@@ -68,7 +68,7 @@ ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Ba
 ## Aufgaben beim Kunden (Shopify-Admin, ca. 15 Min.)
 1. Den Sales-Channel **Headless** installieren (kostenlos, von Shopify), einen Storefront erstellen und den **öffentlichen Zugriffstoken** kopieren.
 2. Gutschein bleibt **Shopify-Geschenkgutschein** (nichts umstellen). Prüfen, dass er im Headless-Kanal verfügbar ist.
-3. Mail-Vorlagen „Geschenkgutschein erstellt“ und „Bestellbestätigung“ im AUSDAUER-Design übernehmen (Vorlagen liefern wir, PROJ-11).
+3. Mail-Vorlage „Geschenkgutschein erstellt“ und Gutschein-Seite im AUSDAUER-Design einbauen (Vorlagen und Anleitung in `shopify/`, PROJ-11).
 4. Unter **Domains**: `checkout.ausdauer.shop` verbinden und `ausdauer.shop` erst nach dem Livegang der neuen Seite entfernen.
 5. AGB, Widerrufsbelehrung und Datenschutz in Shopify prüfen (Rechtstexte).
 6. **STRATO (DNS)**, erst zum Livegang:

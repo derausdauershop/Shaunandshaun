@@ -1,6 +1,6 @@
 # PROJ-11: Gutscheine mit QR-Code – Ausgabe online, Einlösung in Shopify POS, später WaWi-Kasse
 
-**Status:** Planned · **Priorität:** P0 · **Erstellt:** 2026-10-16 · **Abhängigkeiten:** PROJ-10 (Shop-Integration), eigene Warenwirtschaft (WaWi, in Entwicklung)
+**Status:** In Progress · **Priorität:** P0 · **Erstellt:** 2026-10-16 · **Abhängigkeiten:** PROJ-10 (Shop-Integration), eigene Warenwirtschaft (WaWi, in Entwicklung)
 
 ## Ausgangslage
 - Online-Gutscheine werden heute in Shopify verkauft und über **Shopify POS** eingelöst.
@@ -26,10 +26,10 @@ Einlösung online: Gutscheincode im Feld der Shopify-Kasse
 ```
 - Das Gutschein-Produkt bleibt ein **Shopify-Geschenkgutschein** (Produkttyp „Geschenkgutschein“, Varianten 10–300 €). Über die Storefront API wird er wie jedes Produkt in den Warenkorb gelegt; Shopify stellt den Code nach der Zahlung aus.
 - **Zustellung:** Shopify verschickt die Gutschein-Mail automatisch. Die Mail-Vorlage gestalten wir im AUSDAUER-Design (Logo, Farben, Code groß in JetBrains Mono, QR-Code mit dem Gutscheincode, Hinweis „Einlösbar in Betzdorf, Siegen und online“).
-- **Gutschein-Seite:** Der Link in der Mail führt auf die Gutschein-Seite des Shopify-Onlineshops (mit QR-Code, Restguthaben, Apple-Wallet). Deshalb gilt:
-  - Der Onlineshop-Kanal bleibt aktiv, mit `checkout.ausdauer.shop` als Shopify-Domain. **Kein** Passwortschutz.
-  - Die Theme-Vorlage `gift_card.liquid` wird im AUSDAUER-Design gestaltet.
-  - Die Pfade `/gift_cards/*` werden **nicht** auf die neue Webseite umgeleitet (Ausnahme in PROJ-10).
+- **Gutschein-Seite:** Der Link in der Mail führt auf die Gutschein-Seite von Shopify (QR-Code, Restguthaben, Apple Wallet). Shopify liefert sie unter einer eigenen Shopify-Adresse aus (`/gift_cards/…`), nicht unter ausdauer.shop. Deshalb gilt:
+  - Das Theme bleibt veröffentlicht. Die Vorlage `gift_card.liquid` ist im AUSDAUER-Design gestaltet.
+  - Vorsorglich werden `/gift_cards/*` nicht auf die neue Webseite umgeleitet (Ausnahme in PROJ-10).
+- **QR-Inhalt:** `gift_card.qr_identifier` (`shopify-giftcard-v1-…`), dieselbe Kennung, die Shopify auf der Gutschein-Seite verwendet. In der Mail kommt das Bild von `ausdauer.shop/api/gift-qr`, weil Mails kein JavaScript ausführen.
 - **Scannen in Shopify POS:** Ob der QR-Code aus Mail oder Gutschein-Seite direkt mit der iPad-Kamera bzw. dem Scanner gelesen wird, ist vor dem Livegang zu testen. Rückfall: Code eintippen (steht immer als Text daneben). Falls Scannen nicht klappt, gibt es POS-Apps zum Scannen (z. B. GiftCard Hero, Scan2Add) – erst prüfen, ob sie Gutscheine unterstützen.
 - **Bestehende Gutscheine** bleiben unverändert gültig, es gibt keine Migration.
 
@@ -130,3 +130,20 @@ Shopify-Webhook orders/paid ──(signiert)──▶  WaWi: Gutschein anlegen (
 - [ ] Phase 2: Variante A (Shopify bleibt Konto, `giftCardDebit`) oder B (WaWi wird Konto)?
 - [ ] Phase 2: Technologie und Repository der WaWi, Scanner-Hardware.
 - [ ] Gültigkeit: Shopify-Einstellung prüfen (gesetzlich 3 Jahre zum Jahresende oder eigene Frist).
+
+## Implementation Notes (Phase 1, 2026-10-16)
+- `shopify/notifications/geschenkgutschein-erstellt.liquid`:
+  - Gutschein-Mail im AUSDAUER-Design, tabellenbasiert und mobil getestet bei 375 px.
+  - Inhalt: Betrag, persönliche Nachricht, Code, QR-Code, Buttons „Gutschein ansehen“ und Apple Wallet, „So löst du ein“, beide Stores.
+- `shopify/theme/templates/gift_card.liquid` und `shopify/theme/assets/*`:
+  - Gutschein-Seite mit Restguthaben, QR-Code über Shopifys `vendor/qrcode.js`, „Code kopieren“, Druckansicht auf einer A4-Seite.
+  - Zustände abgelaufen und deaktiviert.
+  - Schriften selbst gehostet.
+- `shopify/email/ausdauer-logo-email@2x.png`: Logo für die Mail-Einstellungen.
+- `src/app/api/gift-qr/route.ts`:
+  - liefert ein PNG mit QR-Code für die Mail
+  - akzeptiert nur `shopify-giftcard-v1-…` (`src/lib/gift-qr.ts`, mit Unit-Test)
+  - `noindex`, kein CDN-Cache, `/api` in robots gesperrt
+- `scripts/preview-shopify.mts` (`npm run preview:shopify`) rendert die Liquid-Vorlagen mit Beispieldaten per liquidjs nach `shopify/preview/`.
+- Einbau-Anleitung: `shopify/README.md`.
+- Offen: Einbau im Shopify-Admin, Test-Kauf, Scan-Test mit Shopify POS auf dem iPad.
