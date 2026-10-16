@@ -12,7 +12,12 @@
   - iOS: https://apps.apple.com/de/app/absolute-run-community/id6808254762
   - Android: https://play.google.com/store/apps/details?id=shop.ausdauer.absoluterun
 - Bestellshop (Beta): **noch nicht verlinken**, nur der Hinweis „Vereinszugang folgt“.
-- Referenzen **mit Wappen**: SG 06 Betzdorf, TuS Weitefeld, JSG Weitefeld-Neunkhausen, VfB Niederdreisbach.
+- Referenzen **mit Wappen** (Dateien in `public/images/vereine/`):
+  - SG 06 Betzdorf
+  - TuS Weitefeld (Wolf-Wappen „Westerwald“, bestätigt)
+  - JSG Weitefeld-Neunkhausen (eigener Verein)
+  - VfB Niederdreisbach
+  - Sportfreunde Daaden: Wappen fehlt noch, bis dahin als Namenskachel.
 
 ## Seite /teamwear (geplant)
 Aufbau:
@@ -49,4 +54,5 @@ Inhalte kommen aus `src/content/teamwear.ts`. Der Menüpunkt „Teamwear“ komm
 - [x] JAKO: offizieller JAKO Teamwear Partner, Logo darf gezeigt werden. Originaldatei bzw. Partner-Badge liefert der Kunde.
 - [ ] Mindestmengen, Lieferzeiten.
 - [ ] Statt Fotos: Mockups aus Druckfreigaben (Upload durch den Kunden) als drehbare Trikot-Ansicht. Ansatz siehe Chat 2026-10-16.
-- [ ] Sportfreunde Daaden als eigene Referenz? Geliefert wurde die JSG Weitefeld-Neunkhausen, Daaden gehört zur JSG.
+- [x] Wolf-Wappen = TuS Weitefeld. JSG Weitefeld-Neunkhausen ist ein eigener Verein (2026-10-16).
+- [ ] Wappen Sportfreunde Daaden nachliefern.

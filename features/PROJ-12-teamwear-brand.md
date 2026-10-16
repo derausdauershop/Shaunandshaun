@@ -4,7 +4,7 @@
 
 ## Ausgangslage
 - AUSDAUER betreibt eine kleine Textildruckerei für Firmen und Sportvereine (Flextransfer, DTF).
-- Die Ausstattung läuft über JAKO. Referenzen: SG 06 Betzdorf, TuS Weitefeld, JSG Weitefeld-Neunkhausen, VfB Niederdreisbach.
+- Die Ausstattung läuft über JAKO. Referenzen: SG 06 Betzdorf, TuS Weitefeld, JSG Weitefeld-Neunkhausen, Sportfreunde Daaden, VfB Niederdreisbach.
 - Vereine bestellen über einen eigenen Bestellshop (Beta).
 - Arbeitstitel war „Ausdauer Custom Teamwear“.
 - Problem: Das lange, flache AUSDAUER-Logo (ca. 7 : 1) ist auf dem Ärmel schlecht lesbar.
