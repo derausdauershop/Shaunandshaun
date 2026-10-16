@@ -1,9 +1,11 @@
 # PROJ-10: Shop-Integration (Headless Shopify) & Domain ausdauer.shop
 
-**Status:** Planned · **Priorität:** P0 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-4, PROJ-5
+**Status:** Planned · **Priorität:** P0 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-4, PROJ-5, PROJ-11
 
 ## Ausgangslage
 - Shopify (`der-ausdauer-shop.myshopify.com`) verkauft nur zwei Produkte: Geschenk-Gutschein (10–300 €) und Einsteiger-Laufkurs (130 €).
+- Online-Gutscheine werden heute über **Shopify POS** im Laden eingelöst. Künftig übernimmt die eigene WaWi-Kasse die Einlösung per QR-Code (→ PROJ-11).
+- Die Domains ausdauer.shop und ausdauer-shop.de liegen bei **STRATO**.
 - Der Shop belegt die Domain **ausdauer.shop**, die künftig die Hauptadresse der Marke AUSDAUER werden soll.
 
 ## Ziel
@@ -12,14 +14,15 @@ Gutscheine und Kurse werden direkt auf der neuen Webseite verkauft, im AUSDAUER-
 ## User Stories
 - Als Schenkende:r möchte ich auf ausdauer.shop einen Gutschein-Betrag wählen und direkt bezahlen, ohne auf eine fremd aussehende Seite zu wechseln.
 - Als Einsteiger:in möchte ich den Laufkurs auf der Kursseite buchen und sehen, ob noch Plätze frei sind.
-- Als Team möchte ich Gutscheine, Kurse, Preise und Bestellungen weiter wie gewohnt in Shopify verwalten.
+- Als Team möchte ich Kurse, Preise und Bestellungen weiter wie gewohnt in Shopify verwalten. Gutschein-Codes und Salden führt die WaWi (PROJ-11).
 
 ## Architektur
 ```
 ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Backend)
 ├─ /gutscheine ── Betrag wählen ──┐                 ├─ Produkte, Preise, Bestand (Kursplätze)
 ├─ /run-academy/[kurs] ── buchen ─┼─ Server Action ─┼─ Storefront API: cartCreate
-│                                 │                 └─ Kasse: checkout.ausdauer.shop
+│                                 │                 ├─ Kasse: checkout.ausdauer.shop
+├─ /g/[code] ── Restguthaben ◀── WaWi-API          └─ Webhook orders/paid ──▶ WaWi (Gutschein anlegen, PROJ-11)
 └─ Produktdaten (Preis, Varianten, verfügbar?) ◀── Storefront API (alle 5 Min. aktualisiert)
 ```
 - **Datenquelle:** Shopify Storefront API (GraphQL) mit öffentlichem Storefront-Token aus dem kostenlosen Sales-Channel „Headless“.
@@ -37,6 +40,7 @@ ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Ba
   - Betragskacheln aus den Shopify-Varianten, Vorschau des Gutscheins im AUSDAUER-Design, Hinweise („digital per E-Mail, in Betzdorf & Siegen einlösbar“) und Kaufen-Button.
   - Der Gutschein-Button im Header zeigt künftig hierhin statt zu Shopify.
 - `/run-academy/[slug]`: Preis und Verfügbarkeit kommen live aus Shopify, dazu der Button „Jetzt buchen“. Später lassen sich Kurstermine als Varianten mit Platzanzahl (Bestand) abbilden, mit Anzeige „Noch X Plätze“ bzw. „Ausgebucht“.
+- `/g/[code]`: Ziel des Gutschein-QR-Codes. Zeigt nur Restguthaben, Gültigkeit und Status (serverseitig aus der WaWi-API, rate-limitiert, `noindex`). Siehe PROJ-11.
 - `/bestellung-abgeschlossen`: Danke-Seite nach dem Kauf (Rückleitung aus der Kasse, optional).
 - Footer: Links zu AGB, Widerrufsbelehrung und Zahlung & Versand (Shopify-Richtlinien).
 
@@ -64,10 +68,15 @@ ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Ba
 
 ## Aufgaben beim Kunden (Shopify-Admin, ca. 15 Min.)
 1. Den Sales-Channel **Headless** installieren (kostenlos, von Shopify), einen Storefront erstellen und den **öffentlichen Zugriffstoken** kopieren.
-2. Prüfen, ob der Gutschein ein echter Shopify-**Geschenkgutschein** ist (automatischer Code per Mail) oder ein normales Produkt.
-3. Klären, wie Gutscheine im Laden eingelöst werden: mit Shopify POS oder manuell?
+2. Gutschein auf ein **normales digitales Produkt** umstellen (kein Shopify-Geschenkgutschein mehr), sobald die WaWi bereit ist (PROJ-11).
+3. Webhook `orders/paid` auf den WaWi-Endpunkt einrichten (PROJ-11).
 4. Unter **Domains**: `checkout.ausdauer.shop` verbinden und `ausdauer.shop` erst nach dem Livegang der neuen Seite entfernen.
 5. AGB, Widerrufsbelehrung und Datenschutz in Shopify prüfen (Rechtstexte).
+6. **STRATO (DNS)**, erst zum Livegang:
+   - `ausdauer.shop`: A-Record `@` und CNAME `www` nach Vorgabe von Vercel (typisch `76.76.21.21` bzw. `cname.vercel-dns.com`; die exakten Werte zeigt Vercel beim Hinzufügen der Domain).
+   - CNAME `checkout` → `shops.myshopify.com`.
+   - `ausdauer-shop.de` + `www` ebenfalls auf Vercel zeigen lassen; die 301-Weiterleitung mit Pfad macht Vercel (nicht die STRATO-Weiterleitung, die den Pfad verliert).
+   - **MX-, SPF- und DKIM-Einträge nicht anfassen**, sonst fällt die E-Mail aus.
 
 ## Umsetzungsschritte (Entwicklung)
 1. `src/lib/shopify.ts`: Storefront-Client (fetch + GraphQL), Abfragen für Produkt nach Handle und `cartCreate`. Unit-Tests mit gemockten Antworten.
@@ -91,10 +100,11 @@ ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Ba
 ## Product Decisions
 - Hauptdomain wird **ausdauer.shop** (Kundenentscheidung 2026-10-15).
 - Eigene Seiten mit Shopify-Kasse statt Buy Button: Das sieht aus wie die Marke, die Seite bleibt cookiefrei und schnell. Die Kasse bleibt rechtssicher bei Shopify.
+- Gutschein-Konto liegt in der WaWi, Shopify kassiert nur (Kundenentscheidung-Vorschlag 2026-10-16, PROJ-11).
 - Kein eigener Warenkorb im ersten Schritt: Für Einzelkäufe wie Gutschein oder Kurs ist „Jetzt kaufen“ der kürzeste Weg.
 
 ## Open Questions
-- [ ] Ist der Gutschein ein nativer Shopify-Geschenkgutschein?
-- [ ] Wie werden Gutscheine im Store eingelöst (Shopify POS oder Kassensystem)?
-- [ ] Wer verwaltet die DNS von ausdauer.shop und ausdauer-shop.de (Provider, Zugang)?
+- [x] Wie werden Gutscheine im Store eingelöst? → Heute Shopify POS; künftig WaWi-Kasse per QR (PROJ-11).
+- [x] Gutschein-Typ → wird normales digitales Produkt, Codes erzeugt die WaWi (PROJ-11).
+- [x] DNS-Provider → STRATO (2026-10-16).
 - [ ] Sollen Kurstermine als Varianten mit Platzanzahl in Shopify gepflegt werden?
