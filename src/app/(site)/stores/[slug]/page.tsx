@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { ANALYSIS_STEPS } from "@/content/services";
 import { STORES, mapsUrl, storeBySlug } from "@/content/stores";
 import { TeamCard } from "@/components/site/team-card";
-import { advisorsFor } from "@/content/team";
+import { teamFor } from "@/content/team";
 import { summarize } from "@/lib/opening-hours";
 
 export function generateStaticParams() {
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function StorePage({ params }: { params: Promise<{ slug: string }> }) {
   const s = storeBySlug((await params).slug);
   if (!s) notFound();
-  const team = advisorsFor(s.slug);
+  const team = teamFor(s.slug);
 
   return (
     <>

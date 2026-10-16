@@ -10,9 +10,9 @@ const photo = (slug: string) => `/images/team/${slug}.webp`;
 
 export const LEADERSHIP: TeamMember[] = [
   { name: "Michael Stern", role: "Gründer & Inhaber", stores: [], photo: photo("michael-stern") },
-  { name: "Bettina Stern", role: "Geschäftsführung", stores: [], photo: photo("bettina-stern") },
-  { name: "Laura Stern-Bätzing", role: "Geschäftsführung", stores: [], photo: photo("laura-stern-baetzing") },
-  { name: "Daniel Bätzing", role: "Geschäftsführung", stores: [], photo: photo("daniel-baetzing") },
+  { name: "Bettina Stern", role: "Geschäftsführung", stores: ["betzdorf"], photo: photo("bettina-stern") },
+  { name: "Laura Stern-Bätzing", role: "Geschäftsführung", stores: ["betzdorf"], photo: photo("laura-stern-baetzing") },
+  { name: "Daniel Bätzing", role: "Geschäftsführung", stores: ["siegen"], photo: photo("daniel-baetzing") },
 ];
 
 export const ADVISORS: TeamMember[] = [
@@ -31,4 +31,5 @@ export const ADVISORS: TeamMember[] = [
   { name: "Fabian Huesmann", role: "Fachberater", stores: ["siegen"] },
 ];
 
-export const advisorsFor = (store: "betzdorf" | "siegen") => ADVISORS.filter((m) => m.stores.includes(store));
+/** Store team: management working in this store first, then the advisors. */
+export const teamFor = (store: "betzdorf" | "siegen") => [...LEADERSHIP, ...ADVISORS].filter((m) => m.stores.includes(store));
