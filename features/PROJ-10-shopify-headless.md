@@ -85,11 +85,25 @@ ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Ba
 5. Weiterleitungen für alte Shopify-URLs (`/products/*`, `/collections/*`, `/cart`).
 6. `COMPANY.url`/`metadataBase` auf `https://ausdauer.shop`, Sitemap und Canonicals anpassen.
 7. E2E-Test mit gemockter Storefront API: Betrag wählen, dann Weiterleitung zur Kasse.
-8. Livegang-Reihenfolge:
-   - neue Seite auf Vercel unter ausdauer.shop-Vorschau testen
-   - `checkout.ausdauer.shop` in Shopify verbinden
-   - DNS von ausdauer.shop auf Vercel umstellen
-   - ausdauer-shop.de per 301 weiterleiten
+8. Livegang ohne Verkaufspause (Grundsatz: Bis zur Umstellung bleibt der heutige Shop unter ausdauer.shop unverändert live):
+   - **Jetzt, unabhängig von der Domain:** Gutschein-Mail und Gutschein-Seite (PROJ-11) im bestehenden Shop einbauen. Den QR-Code in der Mail so lange ausschalten, bis ausdauer.shop auf Vercel läuft.
+   - **Vorbereitung parallel:**
+     - Neue Seite unter der Vercel-Vorschauadresse (`*.vercel.app`) bauen und abnehmen.
+     - Den Headless-Kanal installieren und einen Testkauf über die Vorschauseite machen. Die Kasse läuft dabei noch über die Shopify-Domain.
+   - **1–2 Tage vorher:**
+     - TTL der DNS-Einträge bei STRATO senken, falls möglich.
+     - CNAME `checkout` → `shops.myshopify.com` anlegen und `checkout.ausdauer.shop` in Shopify verbinden. ausdauer.shop bleibt dabei Hauptdomain, beide Adressen funktionieren.
+   - **Umstellungstag:**
+     1. ausdauer.shop in Vercel hinzufügen.
+     2. In Shopify `checkout.ausdauer.shop` zur Hauptdomain machen.
+     3. Bei STRATO A-Record `@` und `www` auf Vercel umstellen.
+     4. Testkauf über die neue Seite, Gutschein-Mail prüfen, QR-Code in der Mail einschalten.
+     - Während der DNS-Umstellung sehen manche Besucher noch den alten Shop. Auch dort funktioniert der Kauf, es gibt also keine Lücke.
+   - **Rückweg:** Falls etwas nicht klappt, die DNS-Einträge bei STRATO zurückstellen. Dann läuft wieder der alte Shop.
+   - **Danach:**
+     - ausdauer-shop.de per 301 weiterleiten.
+     - Die Theme-Weiterleitungen und das Entfernen von ausdauer.shop aus Shopify erst, wenn die neue Seite einige Tage stabil läuft.
+     - E-Mail-Einträge (MX/SPF/DKIM) von **beiden** Domains nicht verändern.
 
 ## Out of Scope
 - Eigener Warenkorb mit mehreren Artikeln (vorbereitet, später).

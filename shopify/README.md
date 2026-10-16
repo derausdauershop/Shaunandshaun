@@ -9,6 +9,8 @@ Gutschein-Mail und Gutschein-Seite im AUSDAUER-Design, für die Gutscheine aus S
 | `theme/assets/*` | Gleiches Theme → `assets/` → „Neues Asset hinzufügen“ (alle 8 Dateien) |
 | `email/ausdauer-logo-email@2x.png` | Einstellungen → Benachrichtigungen → **E-Mail-Vorlagen anpassen** → Logo, Breite **200 px** |
 
+**Unabhängig von der Domain:** Die Vorlagen können sofort im bestehenden Shop eingebaut werden. Der Gutschein-Verkauf unter ausdauer.shop läuft dabei unverändert weiter. Nur der QR-Code in der Mail bleibt bis zum Livegang der neuen Seite aus (siehe „Gut zu wissen“).
+
 Vorschau mit Beispieldaten: `npm run preview:shopify` → `shopify/preview/*.html`.
 
 ## Schritt für Schritt (ca. 20 Min.)
