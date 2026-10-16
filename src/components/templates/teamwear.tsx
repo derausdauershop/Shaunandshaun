@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- print artboards use plain <img> so exports embed the original files */
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { CLUB_SWATCHES, TEXTILE_RULES, textileMark, type TextileMark } from "@/lib/brand/teamwear";
+import { CLUB_SWATCHES, TEXTILE_RULES, textileMark } from "@/lib/brand/teamwear";
 import { cn } from "@/lib/utils";
 import { Artboard } from "./artboard";
 
@@ -11,11 +11,13 @@ const SIZES = [
   { mm: 60, w: "w-[60mm]" },
 ] as const;
 
-type Row = { label: string; note: string; src: string; min: number; mark?: TextileMark };
-const ROWS: Row[] = [
-  { label: "Heute", note: "Langes AUSDAUER-Logo", src: "/brand/logos/ausdauer.svg", min: 60 },
-  ...TEXTILE_RULES.map((r) => ({ label: r.label, note: `${r.where} · ab ${r.min} mm`, src: textileMark(r.mark, r.mark === "nacken" ? "1c-schwarz" : "farbig"), min: r.min, mark: r.mark })),
-];
+type Row = { label: string; note: string; src: string; min: number };
+const ROWS: Row[] = TEXTILE_RULES.map((r) => ({
+  label: r.label,
+  note: `${r.where.split(" – ")[0]} · ab ${r.min} mm`,
+  src: textileMark(r.mark, r.mark === "aermel-plakette" ? "farbig" : "1c-schwarz"),
+  min: r.min,
+}));
 
 /** A4 sheet, printed at 100 %: every mark at its real width, to hold against a shirt. */
 export function TeamwearTestSheet() {
@@ -87,7 +89,7 @@ export function TeamwearTestSheet() {
             ))}
           </div>
           <p className="mt-[4mm] border-t-[0.2mm] border-stone pt-[2mm] text-[2.3mm] leading-snug text-stone-dark">
-            Flex: Linien mind. 1 mm, 1-farbige Dateien sind ein Pfad mit ausgespartem ∞ (plotterfertig). DTF: Dateien „farbig“ (helle Textilien) und „negativ“ (dunkle Textilien). Dateien: public/brand/teamwear/
+            Flex: Linien mind. 1 mm, 1-farbige Dateien sind ein Pfad mit ausgespartem ∞ (plotterfertig). DTF: Datei „farbig“ (rote Plakette, weißes ∞). Das Original-Logo bleibt immer komplett: ∞ vor dem Schriftzug. Dateien: public/brand/teamwear/
           </p>
         </div>
       </div>

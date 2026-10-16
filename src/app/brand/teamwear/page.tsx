@@ -73,22 +73,22 @@ export default function TeamwearBrandPage() {
           km={1}
           kicker="Problem"
           title="Das lange Logo ist für den Ärmel zu flach."
-          intro="Das AUSDAUER-Logo ist gut siebenmal so breit wie hoch. Auf einem Ärmel stehen 50–60 mm Breite zur Verfügung, dann sind die Buchstaben gerade 6 mm hoch. Die Lösung lässt das Logo unverändert und stellt nur seine Teile anders zusammen."
+          intro="Das AUSDAUER-Logo ist gut siebenmal so breit wie hoch. Auf einem Ärmel stehen 50–60 mm Breite zur Verfügung, dann sind die Buchstaben gerade 6 mm hoch. Deshalb kommt auf den Ärmel die Plakette und das komplette Logo dorthin, wo Platz ist."
         >
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2">
             <figure className="flex min-h-44 flex-col items-center justify-center gap-4 rounded-sm bg-white p-8 ring-1 ring-border">
               <img src="/brand/logos/ausdauer.svg" alt="AUSDAUER Logo" className="h-auto w-[60%]" />
-              <figcaption className="text-center font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Heute · gleiche Breite · Buchstaben ~6 mm</figcaption>
+              <figcaption className="text-center font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Original-Logo · auf 50 mm Ärmel nur ~6 mm hoch</figcaption>
             </figure>
             <figure className="flex min-h-44 flex-col items-center justify-center gap-4 rounded-sm bg-white p-8 ring-1 ring-border">
-              <img src={textileMark("aermel-vertikal", "farbig")} alt="Ärmel vertikal" className="h-auto w-[60%]" />
-              <figcaption className="text-center font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Ärmel vertikal · Buchstaben ~12 mm</figcaption>
-            </figure>
-            <figure className="flex min-h-44 flex-col items-center justify-center gap-4 rounded-sm bg-white p-8 ring-1 ring-border">
-              <img src={textileMark("aermel-plakette", "farbig")} alt="Ärmel-Plakette" className="h-auto w-[34%]" />
+              <img src={textileMark("aermel-plakette", "farbig")} alt="Ärmel-Plakette" className="h-auto w-[24%]" />
               <figcaption className="text-center font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">Ärmel-Plakette · ab 25 mm</figcaption>
             </figure>
           </div>
+          <p className="mt-6 max-w-3xl text-muted-foreground">
+            Das Signet wird nie vom Schriftzug getrennt: Das Original-Logo bleibt immer komplett, ∞ vor AUSDAUER. Wo es zu klein würde, steht
+            die Plakette allein, so wie bei Run Academy und CUP.
+          </p>
           <p className="mt-6 text-sm text-muted-foreground">
             Zum Prüfen am echten Shirt:{" "}
             <Link href="/brand/vorlagen/teamwear-testbogen" className="underline underline-offset-4">
@@ -125,37 +125,28 @@ export default function TeamwearBrandPage() {
               </figure>
             ))}
           </div>
-          <div className="mt-10">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Claim zur Wahl</p>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
-              <figure className="rounded-sm bg-white p-8 ring-1 ring-border">
-                <img src={teamwearLogo("", "farbig")} alt="Claim Bedruckt in Betzdorf" className="h-12 w-auto max-w-full" />
-                <figcaption className="mt-4 text-sm text-ink/70">A · „Bedruckt in Betzdorf“: Herkunft und Handwerk, lokal.</figcaption>
-              </figure>
-              <figure className="rounded-sm bg-white p-8 ring-1 ring-border">
-                <img src={teamwearLogo("claim-alt-", "farbig")} alt="Claim Für Vereine und Firmen" className="h-12 w-auto max-w-full" />
-                <figcaption className="mt-4 text-sm text-ink/70">B · „Für Vereine & Firmen“: sagt sofort, für wen.</figcaption>
-              </figure>
-            </div>
-          </div>
+          <p className="mt-8 max-w-3xl text-muted-foreground">
+            Claim „Bedruckt in Betzdorf“: Die Kleidung kommt von JAKO, veredelt wird bei uns. Genau das sagt der Claim. „Made in Betzdorf“
+            würde behaupten, die Ware sei in Betzdorf hergestellt.
+          </p>
         </Section>
 
         <Section
           id="textil"
           km={3}
           kicker="Textil-Marken"
-          title="Drei Marken für Trikot, Hoodie und Kappe."
-          intro="Die Textil-Marken tragen AUSDAUER, nicht „Teamwear“: Auf dem Vereinstrikot sind wir der Absender. Alle 1-farbigen Dateien sind ein einziger Pfad mit ausgespartem ∞. Der Plotter schneidet sie in einem Stück, im Flex erscheint dort die Textilfarbe."
+          title="Plakette am Ärmel, Logo wo Platz ist."
+          intro="Auf dem Vereinstrikot ist AUSDAUER der Absender, nicht „Teamwear“. Die 1-farbige Plakette ist ein einziger Pfad mit ausgespartem ∞. Der Plotter schneidet sie in einem Stück, im Flex erscheint dort die Textilfarbe."
         >
           <div className="grid gap-4 md:grid-cols-3">
             {TEXTILE_RULES.map((r) => (
               <figure key={r.mark} className="flex flex-col overflow-hidden rounded-sm ring-1 ring-border">
                 <div className="grid flex-1 grid-cols-2">
                   <div className="flex min-h-40 items-center justify-center bg-white p-5">
-                    <img src={textileMark(r.mark, r.mark === "nacken" ? "1c-schwarz" : "farbig")} alt={`${r.label} auf hell`} className="h-auto w-[80%]" />
+                    <img src={textileMark(r.mark, r.mark === "aermel-plakette" ? "farbig" : "1c-schwarz")} alt={`${r.label} auf hell`} className={cn("h-auto", r.mark === "aermel-plakette" ? "w-[45%]" : "w-[85%]")} />
                   </div>
                   <div className="flex min-h-40 items-center justify-center bg-ink p-5">
-                    <img src={textileMark(r.mark, r.mark === "nacken" ? "1c-weiss" : "negativ")} alt={`${r.label} auf dunkel`} className="h-auto w-[80%]" />
+                    <img src={textileMark(r.mark, r.mark === "aermel-plakette" ? "farbig" : "1c-weiss")} alt={`${r.label} auf dunkel`} className={cn("h-auto", r.mark === "aermel-plakette" ? "w-[45%]" : "w-[85%]")} />
                   </div>
                 </div>
                 <figcaption className="bg-card p-5">
@@ -191,9 +182,9 @@ export default function TeamwearBrandPage() {
 
         <Section id="platzierung" km={4} kicker="Platzierung" title="Der Verein vorn, wir am Ärmel." dark>
           <div className="grid gap-10 md:grid-cols-3">
-            <Jersey color="fill-white" mark={textileMark("aermel-plakette", "farbig")} neck={textileMark("nacken", "1c-schwarz")} label="Heimtrikot weiß · DTF farbig" />
-            <Jersey color="fill-[#C8102E]" mark={textileMark("aermel-plakette", "1c-weiss")} neck={textileMark("nacken", "1c-weiss")} label="Rot · Flex weiß" />
-            <Jersey color="fill-[#1D4FA0]" mark={textileMark("aermel-vertikal", "1c-weiss")} neck={textileMark("nacken", "1c-weiss")} label="Royalblau · Ärmel vertikal" />
+            <Jersey color="fill-white" mark={textileMark("aermel-plakette", "farbig")} neck={textileMark("logo", "1c-schwarz")} label="Heimtrikot weiß · DTF farbig" />
+            <Jersey color="fill-[#C8102E]" mark={textileMark("aermel-plakette", "1c-weiss")} neck={textileMark("logo", "1c-weiss")} label="Rot · Flex weiß" />
+            <Jersey color="fill-[#1D4FA0]" mark={textileMark("aermel-plakette", "1c-weiss")} neck={textileMark("logo", "1c-weiss")} label="Royalblau · Flex weiß" />
           </div>
           <div className="mt-12 grid gap-8 lg:grid-cols-2">
             <ul className="space-y-3">
@@ -202,9 +193,9 @@ export default function TeamwearBrandPage() {
               <Rule kind="do">Auf Vereinsfarben 1-farbig in Weiß oder Schwarz, je nachdem, was mehr Kontrast hat. Rot nur auf Weiß, Grau oder Schwarz.</Rule>
             </ul>
             <ul className="space-y-3">
-              <Rule kind="dont">Das lange Logo auf dem Ärmel unter 60 mm Breite.</Rule>
+              <Rule kind="dont">Das Original-Logo unter 60 mm Breite, auseinandergenommen oder ohne ∞ vor dem Schriftzug.</Rule>
               <Rule kind="dont">Vereinswappen, JAKO- oder Sponsorlogos umfärben oder mit der Plakette verbinden.</Rule>
-              <Rule kind="dont">Rote Plakette auf rotem Trikot. Claim oder „TEAMWEAR“ auf dem Vereinstrikot.</Rule>
+              <Rule kind="dont">Rote Plakette auf rotem Trikot. Claim, „TEAMWEAR“ oder Innendruck außen auf dem Vereinstrikot.</Rule>
             </ul>
           </div>
         </Section>
@@ -221,19 +212,24 @@ export default function TeamwearBrandPage() {
               </thead>
               <tbody className="[&_td]:py-3 [&_td]:pr-4 [&_tr]:border-b [&_tr]:border-border">
                 <tr>
-                  <td className="font-mono text-xs">textil-*-1c-weiss / -1c-schwarz / -1c-rot</td>
+                  <td className="font-mono text-xs">textil-aermel-plakette-1c-*</td>
                   <td>Flex</td>
                   <td>Ein Pfad, ∞ ausgespart, plotterfertig. Spiegeln macht die Plottersoftware.</td>
                 </tr>
                 <tr>
-                  <td className="font-mono text-xs">textil-*-farbig</td>
+                  <td className="font-mono text-xs">textil-aermel-plakette-farbig</td>
                   <td>DTF</td>
-                  <td>Helle Textilien: rote Plakette, weißes ∞, Schrift in Ink.</td>
+                  <td>Rote Plakette, weißes ∞ – auf hellen und dunklen Textilien.</td>
                 </tr>
                 <tr>
-                  <td className="font-mono text-xs">textil-*-negativ</td>
-                  <td>DTF</td>
-                  <td>Dunkle Textilien: rote Plakette, Schrift in Weiß.</td>
+                  <td className="font-mono text-xs">textil-logo-1c-*</td>
+                  <td>Flex / DTF</td>
+                  <td>Original-Logo unverändert, 1-farbig: Nacken, Rücken unten, längs am Langarm.</td>
+                </tr>
+                <tr>
+                  <td className="font-mono text-xs">textil-innendruck-1c-*</td>
+                  <td>Flex / DTF</td>
+                  <td>Innen im Nacken statt Etikett, nur eigene Produktion.</td>
                 </tr>
                 <tr>
                   <td className="font-mono text-xs">ausdauer-teamwear-*</td>

@@ -6,20 +6,27 @@ Textildruck für Vereine und Firmen (Flex, DTF), Ausstattung über JAKO. Unterma
 | Datei | Einsatz |
 |---|---|
 | `ausdauer-teamwear-*.svg` | Standard mit Claim „Bedruckt in Betzdorf“ |
-| `ausdauer-teamwear-claim-alt-*.svg` | Alternative mit Claim „Für Vereine & Firmen“ (zur Entscheidung) |
 | `ausdauer-teamwear-gestapelt-*.svg` | Hangtag, Verpackung, Hochformat |
 | `ausdauer-teamwear-icon*.svg` | ∞-Plakette allein |
 
 ## Textil-Marken (auf Vereins- und Firmenkleidung)
+**Grundregel:** Das Original-Logo bleibt immer komplett, das ∞ steht vor dem Schriftzug. Wo es zu klein würde, steht die Plakette allein.
+
 | Datei | Mindestbreite | Ideal | Einsatz |
 |---|---|---|---|
 | `textil-aermel-plakette-*` | 25 mm | 30–40 mm | Ärmel, Hosenbein, Kappe, Stutzen |
-| `textil-aermel-vertikal-*` | 40 mm | 50–60 mm | Ärmel ab Größe S, Hoodie, Jacke |
-| `textil-nacken-*` | 60 mm | 70–80 mm | Nacken außen, Rücken unten, Innendruck |
+| `textil-logo-*` | 60 mm | 70–90 mm | Original-Logo unverändert: Nacken, Rücken unten, längs am Langarm/Hosenbein |
+| `textil-innendruck-*` | 40 mm | 50 mm | Innen im Nacken statt Etikett, nur eigene Produktion |
 
-- `1c-weiss`, `1c-schwarz`, `1c-rot`: **Flex**. Ein einziger Pfad mit ausgespartem ∞, plotterfertig. Das Spiegeln übernimmt die Plottersoftware.
-- `farbig`: **DTF** auf hellen Textilien.
-- `negativ`: **DTF** auf dunklen Textilien.
-- `pdf/`: dieselben Marken als Vektor-PDF in empfohlener Breite.
+- `aermel-plakette-1c-weiss`, `-1c-schwarz`, `-1c-rot`: **Flex**. Ein einziger Pfad mit ausgespartem ∞, plotterfertig. Das Spiegeln übernimmt die Plottersoftware.
+- `aermel-plakette-farbig`: **DTF**, rote Plakette mit weißem ∞, für helle und dunkle Textilien.
+- `logo-*`, `innendruck-*`: 1-farbig für Flex oder DTF.
+- `pdf/`: alle Marken als Vektor-PDF in empfohlener Breite.
 
-Regeln: Linien im Flex mind. 1 mm. Rote Plakette nie auf rotem Textil. Auf dem Vereinstrikot kein Claim und kein „TEAMWEAR“, dort ist AUSDAUER der Absender. Lesbarkeitstest zum Ausdrucken: Brand Guide → Vorlagen → „Teamwear Lesbarkeitstest“.
+Regeln:
+- Linien im Flex mind. 1 mm.
+- Rote Plakette nie auf rotem Textil.
+- Auf dem Vereinstrikot außen kein Claim, kein „TEAMWEAR“, kein Innendruck.
+- Das Logo nie auseinandernehmen.
+
+Lesbarkeitstest zum Ausdrucken: `public/brand/vorlagen-export/teamwear-testbogen.pdf`.

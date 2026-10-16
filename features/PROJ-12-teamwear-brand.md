@@ -12,31 +12,31 @@
 ## Entscheidungen
 - Name: **AUSDAUER TEAMWEAR** (Kunde, 2026-10-16).
 - Untermarke nach dem Bauplan von Run Academy und CUP: rote ∞-Plakette, Name, Claim.
-- Claim zur Wahl:
-  - A „Bedruckt in Betzdorf“ (Standard)
-  - B „Für Vereine & Firmen“
+- Claim: **„Bedruckt in Betzdorf“** (Kunde, 2026-10-16). „Made in Betzdorf“ wurde verworfen: Die Ware kommt von JAKO, in Betzdorf wird veredelt. Eine Herkunftsangabe „Made in“ wäre irreführend.
 - Auf Vereinskleidung steht **AUSDAUER** als Absender, nicht „Teamwear“. Dafür gibt es eigene Textil-Marken.
-- Das Ausdauer-Logo bleibt unverändert. Die Textil-Marken verwenden nur seine Originalteile, also das ∞ in der Plakette und die Original-Buchstaben, neu angeordnet.
+- **Das Original-Logo wird nie getrennt** (Kunde, 2026-10-16): Das ∞ bleibt vor dem Schriftzug. Die Variante „Ärmel vertikal“ (Plakette über dem Schriftzug ohne ∞) ist verworfen. Auf dem Ärmel steht die Plakette allein, das komplette Logo kommt dorthin, wo mindestens 60 mm Platz sind.
+- JAKO: offizieller **JAKO Teamwear Partner**. Das Logo darf genannt werden, die Originaldatei kommt vom Kunden.
 
 ## Textil-Marken
 | Marke | Mindestbreite | Ideal | Einsatz |
 |---|---|---|---|
 | Ärmel-Plakette | 25 mm | 30–40 mm | Ärmel, Hosenbein, Kappe, Stutzen |
-| Ärmel vertikal (Plakette über Original-Schriftzug) | 40 mm | 50–60 mm | Ärmel, Hoodie, Jacke |
-| Nacken-Print (Original-Logo + „TEAMWEAR · BETZDORF“) | 60 mm | 70–80 mm | Nacken, Rücken unten, Innendruck |
+| Original-Logo (unverändert) | 60 mm | 70–90 mm | Nacken, Rücken unten, längs am Langarm/Hosenbein |
+| Innendruck (Logo + „TEAMWEAR · BETZDORF“) | 40 mm | 50 mm | innen statt Etikett, nur eigene Produktion |
 
 Farbvarianten:
-- 1-farbig für Flex: weiß, schwarz, rot. Jeweils ein Pfad mit ausgespartem ∞, plotterfertig.
-- `farbig` für DTF auf hellen Textilien.
-- `negativ` für DTF auf dunklen Textilien.
+- Plakette 1-farbig (weiß/schwarz/rot) als plotterfertiger Knockout-Pfad für Flex.
+- Plakette `farbig` für DTF.
+- Logo und Innendruck 1-farbig.
 
 ## Acceptance Criteria
-- [x] Untermarke horizontal und gestapelt in 4 Farbstellungen, Icon, Claim-Alternative (SVG, Schrift in Pfaden).
-- [x] Textil-Marken in 5 Farbvarianten, 1-farbig als ein Knockout-Pfad.
+- [x] Untermarke horizontal und gestapelt in 4 Farbstellungen, Icon (SVG, Schrift in Pfaden).
+- [x] Textil-Marken: Plakette (Flex 1-farbig als Knockout-Pfad, DTF farbig), Original-Logo und Innendruck 1-farbig.
 - [x] Vektor-PDFs der Textil-Marken in empfohlener Breite.
 - [x] Lesbarkeitstest A4 zum 1:1-Druck.
 - [x] Brand-Guide-Seite `/brand/teamwear`, verlinkt in der Markenarchitektur.
-- [ ] Freigabe durch den Kunden: Logo, Claim A oder B, Test am echten Shirt.
+- [x] Claim gewählt (A).
+- [ ] Freigabe durch den Kunden nach Test am echten Shirt.
 
 ## Implementation Notes (2026-10-16)
 - `scripts/generate-subbrand-logos.mts`: TEAMWEAR als dritte Untermarke.
@@ -47,3 +47,4 @@ Farbvarianten:
 - `src/app/brand/teamwear/page.tsx`: Problem, Untermarke, Textil-Marken, Platzierung auf dem Trikot, Dateien.
 - `src/components/templates/teamwear.tsx`: Lesbarkeitstest A4 (Registry-ID `teamwear-testbogen`), Export unter `public/brand/vorlagen-export/teamwear-testbogen.pdf`.
 - Vereinswappen für PROJ-13 abgelegt unter `public/images/vereine/*.png` (aus den gelieferten PDF/SVG, freigestellt, 480 px).
+- Änderung 2026-10-16: „Ärmel vertikal“ und die Claim-Alternative entfernt. Neu sind `textil-logo-*` (Original-Logo) und `textil-innendruck-*` (vorher „Nacken-Print“, jetzt nur innen).

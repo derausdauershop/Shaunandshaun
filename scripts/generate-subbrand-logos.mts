@@ -8,8 +8,9 @@
  * Run: npm run brand:subbrands -- [cup season] [cup races] [cup edition]
  *   e.g. npm run brand:subbrands -- 2027 8 39
  * The series line shows one dot per race plus a red final dot (Abschlussfeier / overall ranking).
- * TEAMWEAR additionally gets textile marks (sleeve, neck) – one-colour versions are single
- * knock-out paths so Flex plotters cut them as one piece.
+ * TEAMWEAR additionally gets textile marks: the sleeve plate (one-colour versions are single
+ * knock-out paths so Flex plotters cut them as one piece), the unchanged original logo and an inside print.
+ * The original logo is never split up – the ∞ always stays in front of the lettering.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -183,8 +184,6 @@ const SUBBRANDS: SubBrand[] = [
     ],
   },
 ];
-/** Second claim, shown next to the first one in the brand guide for the decision. */
-const TEAMWEAR_ALT_CLAIM = "FÜR VEREINE & FIRMEN";
 
 const NAME_SIZE = 50;
 const CLAIM_SIZE = 11;
@@ -287,23 +286,12 @@ function seal(b: SubBrand, c: Colorway, ring: "places" | "claim") {
 }
 
 // ---------- TEAMWEAR textile marks ----------
-/** The original AUSDAUER logo: path 0 is the ∞, paths 1–8 are the letters (unchanged, only re-positioned). */
+/** The original AUSDAUER logo: path 0 is the ∞, paths 1–8 are the letters. */
 const LOGO = (() => {
   const s = fs.readFileSync(path.join(ROOT, "public", "brand", "logos", "ausdauer.svg"), "utf8");
   const [vx, vy, vw, vh] = s.match(/viewBox="([^"]+)"/)![1].split(/\s+/).map(Number);
   const ds = [...s.matchAll(/ d="([^"]+)"/g)].map((m) => m[1]);
   return { vx, vy, vw, vh, symbol: ds[0], letters: ds.slice(1) };
-})();
-const WORD = (() => {
-  // bbox of the letters only
-  let x1 = Infinity, x2 = -Infinity;
-  for (const d of LOGO.letters) {
-    svgpath(d).abs().iterate((seg) => {
-      const n = seg.length;
-      if (n >= 3) { x1 = Math.min(x1, seg[n - 2] as number); x2 = Math.max(x2, seg[n - 2] as number); }
-    });
-  }
-  return { x1, x2, w: x2 - x1 };
 })();
 const tf = (d: string, ox: number, oy: number, s: number, dx: number, dy: number) =>
   svgpath(d).translate(-ox, -oy).scale(s).translate(dx, dy).round(2).toString();
@@ -314,17 +302,10 @@ function plateKnockout(x: number, y: number, h: number) {
   const poly = `M${r(x + 5.6 * s)} ${r(y)}H${r(x + 80 * s)}L${r(x + 74.4 * s)} ${r(y + h)}H${r(x)}Z`;
   return poly + tf(LOGO.symbol, SYMBOL.vx, SYMBOL.vy, 0.85 * s, x + 13.1 * s, y + 19.95 * s);
 }
-/** Letters of the original logo, scaled to width w, top-left at (x, y). */
-function wordmark(x: number, y: number, w: number) {
-  const s = w / WORD.w;
-  return LOGO.letters.map((d) => tf(d, WORD.x1, LOGO.vy, s, x, y)).join("");
-}
-const wordHeight = (w: number) => (LOGO.vh / WORD.w) * w;
 
-type Textile = { name: string; plate?: string; mark?: string; word?: string; one?: string };
+type Textile = { name: string; plate?: string; mark?: string; one?: string };
 const TEXTILE: Textile[] = [
-  { name: "farbig", plate: RED, mark: WHITE, word: INK }, // DTF on light textiles
-  { name: "negativ", plate: RED, mark: WHITE, word: WHITE }, // DTF on dark textiles
+  { name: "farbig", plate: RED, mark: WHITE }, // DTF: red plate, white ∞ – works on light and dark textiles
   { name: "1c-weiss", one: WHITE }, // Flex, one colour, ∞ = textile colour
   { name: "1c-schwarz", one: INK },
   { name: "1c-rot", one: RED },
@@ -335,17 +316,13 @@ function sleevePlate(t: Textile) {
   const body = t.one ? `<path fill="${t.one}" fill-rule="evenodd" d="${plateKnockout(0, 0, 64)}"/>` : plate(0, 0, 64, t.plate!, t.mark!);
   return svg(80, 64, body, "AUSDAUER – Ärmel-Plakette");
 }
-/** Sleeve from 40 mm: plate above, original lettering below – about twice the letter height of the long logo at the same width. */
-function sleeveVertical(t: Textile) {
-  const W = 120, ph = 64, gap = 9, wy = ph + gap;
-  const px = (W - plateWidth(ph)) / 2;
-  const word = wordmark(0, wy, W);
-  const body = t.one
-    ? `<path fill="${t.one}" fill-rule="evenodd" d="${plateKnockout(px, 0, ph)}${word}"/>`
-    : plate(px, 0, ph, t.plate!, t.mark!) + `<path fill="${t.word}" d="${word}"/>`;
-  return svg(W, wy + wordHeight(W), body, "AUSDAUER – Ärmel vertikal");
+/** Original AUSDAUER logo, unchanged (∞ + lettering), one colour – neck, back, lengthwise on long sleeves (from 60 mm). */
+function originalLogo(color: string) {
+  const s = 200 / LOGO.vw;
+  const d = [LOGO.symbol, ...LOGO.letters].map((p) => tf(p, LOGO.vx, LOGO.vy, s, 0, 0)).join("");
+  return svg(200, LOGO.vh * s, `<path fill="${color}" d="${d}"/>`, "AUSDAUER");
 }
-/** Neck print: original logo + "TEAMWEAR · BETZDORF" (from 60 mm). */
+/** Inside print (replaces the neck label on our own production): original logo + "TEAMWEAR · BETZDORF". Not for the outside of club kit. */
 function neck(color: string) {
   const W = 200, s = W / LOGO.vw, lh = LOGO.vh * s;
   const logo = [LOGO.symbol, ...LOGO.letters].map((d) => tf(d, LOGO.vx, LOGO.vy, s, 0, 0)).join("");
@@ -354,7 +331,7 @@ function neck(color: string) {
   let size = 10;
   while (bounds(MONO, line, size + 0.1, track).width < W) size += 0.1;
   const y = lh + 8 + bounds(MONO, line, size, track).height;
-  return svg(W, y + 1, `<path fill="${color}" d="${logo}${text(MONO, line, 0, y, size, track)}"/>`, "AUSDAUER TEAMWEAR – Nacken");
+  return svg(W, y + 1, `<path fill="${color}" d="${logo}${text(MONO, line, 0, y, size, track)}"/>`, "AUSDAUER TEAMWEAR – Innendruck");
 }
 
 function icon(c: Colorway) {
@@ -385,13 +362,13 @@ for (const b of SUBBRANDS) {
   write(b.dir, `${b.file}-icon.svg`, icon(b.colorways[0]));
   write(b.dir, `${b.file}-icon-negativ.svg`, icon(b.colorways[1]));
   if (b.id === "teamwear") {
-    write(b.dir, `${b.file}-claim-alt-farbig.svg`, horizontal(b, b.colorways[0], TEAMWEAR_ALT_CLAIM));
-    write(b.dir, `${b.file}-claim-alt-negativ.svg`, horizontal(b, b.colorways[1], TEAMWEAR_ALT_CLAIM));
     for (const t of TEXTILE) {
       write(b.dir, `textil-aermel-plakette-${t.name}.svg`, sleevePlate(t));
-      write(b.dir, `textil-aermel-vertikal-${t.name}.svg`, sleeveVertical(t));
     }
-    for (const [n, c] of [["1c-schwarz", INK], ["1c-weiss", WHITE], ["1c-rot", RED]] as const) write(b.dir, `textil-nacken-${n}.svg`, neck(c));
+    for (const [n, c] of [["1c-schwarz", INK], ["1c-weiss", WHITE], ["1c-rot", RED]] as const) {
+      write(b.dir, `textil-logo-${n}.svg`, originalLogo(c));
+      write(b.dir, `textil-innendruck-${n}.svg`, neck(c));
+    }
   }
 }
 console.log(written.map((f) => `wrote ${f}`).join("\n"));

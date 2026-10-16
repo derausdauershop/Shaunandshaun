@@ -46,6 +46,7 @@ Inhalte kommen aus `src/content/teamwear.ts`. Der Menüpunkt „Teamwear“ komm
 - E2E-Test „events point to the community app“ ergänzt.
 
 ## Offene Fragen
-- [ ] JAKO: offizieller Teampartner, darf das JAKO-Logo gezeigt werden?
-- [ ] Mindestmengen, Lieferzeiten, Fotos von Trikots und Werkstatt.
+- [x] JAKO: offizieller JAKO Teamwear Partner, Logo darf gezeigt werden. Originaldatei bzw. Partner-Badge liefert der Kunde.
+- [ ] Mindestmengen, Lieferzeiten.
+- [ ] Statt Fotos: Mockups aus Druckfreigaben (Upload durch den Kunden) als drehbare Trikot-Ansicht. Ansatz siehe Chat 2026-10-16.
 - [ ] Sportfreunde Daaden als eigene Referenz? Geliefert wurde die JSG Weitefeld-Neunkhausen, Daaden gehört zur JSG.
