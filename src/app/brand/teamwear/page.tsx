@@ -62,7 +62,7 @@ export default function TeamwearBrandPage() {
           <p className="mt-12 font-mono text-xs uppercase tracking-[0.25em] text-brand">Logo-Entwurf · Textildruck für Vereine & Firmen</p>
           <img src={teamwearLogo("", "negativ")} alt="AUSDAUER TEAMWEAR – Bedruckt in Betzdorf" className="mt-8 h-auto w-full max-w-2xl" />
           <p className="mt-10 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            Flex und DTF für Vereine und Firmen, ausgestattet über JAKO. Das lange AUSDAUER-Logo ist auf dem Ärmel zu flach. Deshalb
+            Flex und DTF für Vereine und Firmen, auf Teamwear von JAKO, erima und adidas. Das lange AUSDAUER-Logo ist auf dem Ärmel zu flach. Deshalb
             sitzt dort ab jetzt die rote ∞-Plakette, kompakt, auch mit 25 mm noch erkennbar.
           </p>
         </div>
@@ -127,7 +127,7 @@ export default function TeamwearBrandPage() {
             ))}
           </div>
           <p className="mt-8 max-w-3xl text-muted-foreground">
-            Claim „Bedruckt in Betzdorf“: Die Kleidung kommt von JAKO, veredelt wird bei uns. Genau das sagt der Claim. „Made in Betzdorf“
+            Claim „Bedruckt in Betzdorf“: Die Kleidung kommt von JAKO, erima oder adidas, veredelt wird bei uns. Genau das sagt der Claim. „Made in Betzdorf“
             würde behaupten, die Ware sei in Betzdorf hergestellt.
           </p>
         </Section>
@@ -189,13 +189,13 @@ export default function TeamwearBrandPage() {
           </div>
           <div className="mt-12 grid gap-8 lg:grid-cols-2">
             <ul className="space-y-3">
-              <Rule kind="do">Rangfolge auf dem Trikot: Vereinswappen und Sponsor vorn, JAKO laut Ausrüster-Vorgabe, AUSDAUER am linken Ärmel oder im Nacken.</Rule>
+              <Rule kind="do">Rangfolge auf dem Trikot: Vereinswappen und Sponsor vorn, Herstellerlogo wie geliefert, AUSDAUER am linken Ärmel oder im Nacken.</Rule>
               <Rule kind="do">Ärmel: Plakette 3–4 cm unter der Schulternaht, mittig auf der Ärmelachse. Nacken: 2 cm unter dem Kragen.</Rule>
               <Rule kind="do">Auf Vereinsfarben 1-farbig in Weiß oder Schwarz, je nachdem, was mehr Kontrast hat. Rot nur auf Weiß, Grau oder Schwarz.</Rule>
             </ul>
             <ul className="space-y-3">
               <Rule kind="dont">Das Original-Logo unter 60 mm Breite, auseinandergenommen oder ohne ∞ vor dem Schriftzug.</Rule>
-              <Rule kind="dont">Vereinswappen, JAKO- oder Sponsorlogos umfärben oder mit der Plakette verbinden.</Rule>
+              <Rule kind="dont">Vereinswappen, Hersteller- oder Sponsorlogos umfärben oder mit der Plakette verbinden.</Rule>
               <Rule kind="dont">Rote Plakette auf rotem Trikot. Claim oder Innendruck außen auf dem Vereinstrikot. „TEAMWEAR“ nur im Ärmel-Badge, nie als lose Zeile.</Rule>
             </ul>
           </div>

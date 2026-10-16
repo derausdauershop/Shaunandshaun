@@ -1,6 +1,6 @@
 # AUSDAUER TEAMWEAR – Logo- und Textil-Dateien
 
-Textildruck für Vereine und Firmen (Flex, DTF), Ausstattung über JAKO. Untermarke nach dem Bauplan von Run Academy und AUSDAUER CUP: ∞-Plakette, Name und Claim. Erzeugt mit `npm run brand:subbrands`, PDFs mit `npm run brand:teamwear-pdf`. Alle Schriften sind in Pfade umgewandelt.
+Textildruck für Vereine und Firmen (Flex, DTF) auf Teamwear von JAKO, erima und adidas. Untermarke nach dem Bauplan von Run Academy und AUSDAUER CUP: ∞-Plakette, Name und Claim. Erzeugt mit `npm run brand:subbrands`, PDFs mit `npm run brand:teamwear-pdf`. Alle Schriften sind in Pfade umgewandelt.
 
 ## Untermarke (Print, Web, Hangtag, Fahrzeug)
 | Datei | Einsatz |

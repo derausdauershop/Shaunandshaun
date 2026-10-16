@@ -4,7 +4,7 @@
 
 ## Ausgangslage
 - AUSDAUER betreibt eine kleine Textildruckerei für Firmen und Sportvereine (Flextransfer, DTF).
-- Die Ausstattung läuft über JAKO. Referenzen: SG 06 Betzdorf, TuS Weitefeld, JSG Weitefeld-Neunkhausen, Sportfreunde Daaden, VfB Niederdreisbach.
+- Geliefert werden die führenden Teamwear-Marken JAKO, erima und adidas. Referenzen: SG 06 Betzdorf, TuS Weitefeld, JSG Weitefeld-Neunkhausen, Sportfreunde Daaden, VfB Niederdreisbach.
 - Vereine bestellen über einen eigenen Bestellshop (Beta).
 - Arbeitstitel war „Ausdauer Custom Teamwear“.
 - Problem: Das lange, flache AUSDAUER-Logo (ca. 7 : 1) ist auf dem Ärmel schlecht lesbar.
@@ -12,10 +12,10 @@
 ## Entscheidungen
 - Name: **AUSDAUER TEAMWEAR** (Kunde, 2026-10-16).
 - Untermarke nach dem Bauplan von Run Academy und CUP: rote ∞-Plakette, Name, Claim.
-- Claim: **„Bedruckt in Betzdorf“** (Kunde, 2026-10-16). „Made in Betzdorf“ wurde verworfen: Die Ware kommt von JAKO, in Betzdorf wird veredelt. Eine Herkunftsangabe „Made in“ wäre irreführend.
+- Claim: **„Bedruckt in Betzdorf“** (Kunde, 2026-10-16). „Made in Betzdorf“ wurde verworfen: Die Ware kommt von JAKO, erima oder adidas, in Betzdorf wird veredelt. Eine Herkunftsangabe „Made in“ wäre irreführend.
 - Auf Vereinskleidung ist die Plakette der Absender. Vorschlag des Kunden (2026-10-16): **„TEAMWEAR“ unter der Plakette am Ärmel**, umgesetzt als Ärmel-Badge. Das ist die kompakte Form der Untermarke, nach dem Bauplan von RUN ACADEMY. „TEAMWEAR“ steht nie als lose Zeile.
 - **Das Original-Logo wird nie getrennt** (Kunde, 2026-10-16): Das ∞ bleibt vor dem Schriftzug. Die Variante „Ärmel vertikal“ (Plakette über dem Schriftzug ohne ∞) ist verworfen. Auf dem Ärmel steht die Plakette allein, das komplette Logo kommt dorthin, wo mindestens 60 mm Platz sind.
-- JAKO: offizieller **JAKO Teamwear Partner**. Das Logo darf genannt werden, die Originaldatei kommt vom Kunden.
+- Marken: JAKO, erima und adidas werden als Text genannt, ohne Partner-Hinweis und ohne Herstellerlogos (Kunde, 2026-10-16).
 
 ## Textil-Marken
 | Marke | Mindestbreite | Ideal | Einsatz |

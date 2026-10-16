@@ -24,7 +24,7 @@ Aufbau:
 - Hero mit Trikot-Mockup und Ärmel-Plakette
 - Für Vereine / Für Firmen
 - Flex und DTF im Vergleich
-- JAKO als Ausrüster
+- Marken JAKO, erima und adidas (als Text)
 - Referenzwappen
 - Ablauf: Anfrage → Muster/Größenprobe → Freigabe → Druck → Übergabe
 - FAQ
@@ -40,7 +40,8 @@ Inhalte kommen aus `src/content/teamwear.ts`. Der Menüpunkt „Teamwear“ komm
 - [x] Referenzwappen sichtbar, mit Alt-Text (5 Vereine).
 - [x] Menü enthält „Teamwear“.
 - [x] Trikot-Galerie aus Druckfreigaben, Vorder-/Rückseite per Tippen drehbar (CSS 3D, `prefers-reduced-motion` beachtet).
-- [ ] JAKO-Logo (Originaldatei, Freigabe durch JAKO-Marketing).
+- [x] Marken JAKO, erima, adidas als Text, kein Partner-Hinweis, keine Herstellerlogos.
+- [x] FAQ: keine Mindestmenge, Lieferzeit ca. 4 Wochen je nach Auftragslage.
 
 ## Implementation Notes (2026-10-16, Teil Events)
 - Entfernt:
@@ -53,13 +54,13 @@ Inhalte kommen aus `src/content/teamwear.ts`. Der Menüpunkt „Teamwear“ komm
 - E2E-Test „events point to the community app“ ergänzt.
 
 ## Offene Fragen
-- [x] JAKO: offizieller JAKO Teamwear Partner, Logo darf gezeigt werden. Originaldatei bzw. Partner-Badge liefert der Kunde.
-- [ ] Mindestmengen, Lieferzeiten.
+- [x] Kein „JAKO Teamwear Partner“-Hinweis. Stattdessen werden JAKO, erima und adidas als führende Marken genannt (Kunde, 2026-10-16).
+- [x] Mindestmengen: keine. Lieferzeit: ca. 4 Wochen.
 - [ ] Statt Fotos: Mockups aus Druckfreigaben (Upload durch den Kunden) als drehbare Trikot-Ansicht. Ansatz siehe Chat 2026-10-16.
 - [x] Wolf-Wappen = TuS Weitefeld. JSG Weitefeld-Neunkhausen ist ein eigener Verein (2026-10-16).
 - [x] Wappen Sportfreunde Daaden geliefert.
-- [ ] Daaden-Trikot (adidas) in der Galerie zeigen? Konflikt mit der JAKO-Partnerschaft möglich, deshalb vorerst nicht gezeigt.
-- [ ] Okay von Vereinen und Sponsoren (adesso, Schleyer) für die Galerie.
+- [x] Daaden-Trikot (adidas) wird in der Galerie gezeigt.
+- [x] Vereine sind mit Wappen und Trikots auf der Seite einverstanden (2026-10-16).
 
 ## Implementation Notes (2026-10-16, Teil Teamwear)
 - Inhalte in `src/content/teamwear.ts`: Zielgruppen, Verfahren, Vereine, Trikots, Ablauf, FAQ. Die FAQ-Texte bitte prüfen, Mindestmengen und Lieferzeiten sind bewusst offen formuliert.
@@ -68,9 +69,5 @@ Inhalte kommen aus `src/content/teamwear.ts`. Der Menüpunkt „Teamwear“ komm
   - aus den Druckfreigaben-PDFs zugeschnitten nach `public/images/teamwear/*.webp`
   - Spielername auf der SG-06-Rückseite entfernt
 - Vereinswappen in `public/images/vereine/` (5 Stück).
-- JAKO:
-  - CI 2026 beachtet: nur Originallogo, keine Umfärbung, mind. 2 cm, Schutzraum.
-  - Werbemittel mit JAKO-Logo nur nach Freigabe durch das JAKO-Marketing.
-  - „JAKO Corporate Teamwear“-Logo nur im Firmen-Kontext.
-  - Bis dahin steht JAKO nur als Text im Logo-Feld.
+- Marken: JAKO, erima und adidas nur als Text, da keine Herstellerlogos freigegeben sind. Den JAKO-CI-Guide 2026 beachten, falls doch Logos kommen: Originaldatei, keine Umfärbung, mind. 2 cm, Freigabe durch das JAKO-Marketing.
 - Menü (`MAIN_NAV`), Sitemap und E2E-Test „teamwear page shows the club crests and turns a jersey“ ergänzt.

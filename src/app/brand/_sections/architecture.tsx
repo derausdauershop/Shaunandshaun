@@ -64,7 +64,7 @@ export function Architecture() {
             {/* eslint-disable-next-line @next/next/no-img-element -- static vector logo */}
             <img src="/brand/teamwear/ausdauer-teamwear-farbig.svg" alt="AUSDAUER TEAMWEAR" className="h-12 w-auto max-w-full" />
             <p className="mt-3 text-sm text-muted-foreground">
-              Flex & DTF, Ausstattung über JAKO. <a href="/brand/teamwear" className="underline underline-offset-4">Logo & Textil-Marken →</a>
+              Flex & DTF auf JAKO, erima und adidas. <a href="/brand/teamwear" className="underline underline-offset-4">Logo & Textil-Marken →</a>
             </p>
           </Node>
           <div className="flex items-center gap-3 rounded-sm bg-ink p-5 text-paper">

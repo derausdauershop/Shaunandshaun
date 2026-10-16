@@ -15,7 +15,7 @@ import { AUDIENCES, CLUBS, FAQ, KITS, METHODS, STEPS, TEAMWEAR } from "@/content
 export const metadata: Metadata = {
   title: "Teamwear – Textildruck für Vereine & Firmen",
   description:
-    "AUSDAUER TEAMWEAR: Trikots, Trainingskleidung und Firmenkleidung von JAKO, bedruckt in Betzdorf mit Flex und DTF. Offizieller JAKO Teamwear Partner.",
+    "AUSDAUER TEAMWEAR: Trikots, Trainingskleidung und Firmenkleidung von JAKO, erima und adidas – bedruckt in Betzdorf mit Flex und DTF, ohne Mindestmenge.",
 };
 
 export default function TeamwearPage() {
@@ -28,14 +28,14 @@ export default function TeamwearPage() {
             Euer Trikot. <span className="italic text-brand">Unser Druck.</span>
           </>
         }
-        intro="Wir statten Vereine und Firmen mit JAKO aus und bedrucken alles selbst in unserer Werkstatt in Betzdorf – Wappen, Sponsoren, Namen und Nummern."
+        intro="Wir statten Vereine und Firmen mit JAKO, erima und adidas aus und bedrucken alles selbst in unserer Werkstatt in Betzdorf – Wappen, Sponsoren, Namen und Nummern."
       >
         <div className="flex flex-wrap items-center gap-4">
           <Button asChild variant="brand" size="lg">
             <a href={COMPANY.phoneHref}>Anfrage: {COMPANY.phone}</a>
           </Button>
           <Badge variant="outline" className="border-paper/30 font-mono text-xs uppercase tracking-[0.15em] text-paper">
-            {TEAMWEAR.partner}
+            Ohne Mindestmenge · ca. 4 Wochen
           </Badge>
         </div>
       </PageHero>
@@ -65,7 +65,7 @@ export default function TeamwearPage() {
         title="Echte Druckfreigaben."
         intro="So sieht eine Druckfreigabe bei uns aus. Tipp auf ein Trikot, um es umzudrehen."
       >
-        <div className="grid gap-10 md:grid-cols-2">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           {KITS.map((k) => (
             <KitViewer key={k.club} kit={k} />
           ))}
@@ -107,22 +107,23 @@ export default function TeamwearPage() {
         </ul>
       </SiteSection>
 
-      <SiteSection km={5} kicker="Ausrüster" title="Offizieller JAKO Teamwear Partner." tone="ink">
-        <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
-          <div className="flex min-h-40 items-center justify-center rounded-sm bg-white p-10" data-slot="jako-logo">
-            {/* JAKO logo: original file only, after approval by JAKO marketing (CI 2026). Until then the name as text. */}
-            <p className="font-display text-4xl font-black uppercase text-ink">JAKO</p>
-          </div>
-          <div>
-            <p className="max-w-xl text-lg text-paper/85">
-              Als offizieller Partner bekommt ihr bei uns das komplette JAKO-Teamsortiment – vom Trikot bis zur Regenjacke, für Firmen auch die
-              JAKO Corporate Teamwear. Muster und Größen könnt ihr im Store in Betzdorf anprobieren.
-            </p>
-          </div>
+      <SiteSection km={5} kicker="Marken" title="Die führenden Teamwear-Marken." tone="ink">
+        <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+          <ul className="grid grid-cols-3 gap-3">
+            {TEAMWEAR.brands.map((b) => (
+              <li key={b} className="flex min-h-28 items-center justify-center rounded-sm border border-paper/20 px-4">
+                <span className="font-display text-3xl font-black uppercase italic sm:text-4xl">{b}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="max-w-xl text-lg text-paper/85">
+            JAKO, erima und adidas liefern wir dir direkt – vom Trikotsatz bis zur Regenjacke. Muster und Größen kannst du im Store in Betzdorf
+            anprobieren. Bedruckt wird alles bei uns.
+          </p>
         </div>
       </SiteSection>
 
-      <SiteSection km={6} kicker="Ablauf" title="In fünf Schritten zum Trikot." tone="white">
+      <SiteSection km={6} kicker="Ablauf" title="In fünf Schritten zum Trikot." intro="Von der Anfrage bis zur Übergabe dauert es etwa vier Wochen, je nach Auftragslage." tone="white">
         <ol className="grid gap-6 md:grid-cols-5">
           {STEPS.map((s, i) => (
             <li key={s.title} className="border-t-4 border-brand pt-4">

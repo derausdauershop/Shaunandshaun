@@ -3,7 +3,8 @@
 export const TEAMWEAR = {
   name: "AUSDAUER TEAMWEAR",
   claim: "Bedruckt in Betzdorf",
-  partner: "Offizieller JAKO Teamwear Partner",
+  /** Leading teamwear brands we supply – named as text only, no brand logos. */
+  brands: ["JAKO", "erima", "adidas"],
   /** Order shop for clubs is still in beta – not linked yet. */
   clubShopLive: false,
 } as const;
@@ -17,13 +18,13 @@ export interface Audience {
 export const AUDIENCES: Audience[] = [
   {
     title: "Für Vereine",
-    text: "Vom Trikotsatz der Ersten bis zur Trainingsjacke der Bambini: Wir statten euren Verein mit JAKO aus und bedrucken alles bei uns in Betzdorf.",
+    text: "Vom Trikotsatz der Ersten bis zur Trainingsjacke der Bambini: Wir statten euren Verein mit JAKO, erima oder adidas aus und bedrucken alles bei uns in Betzdorf.",
     points: ["Trikots, Hosen, Stutzen, Trainingsanzüge", "Wappen, Sponsor, Namen und Nummern", "Nachbestellungen für neue Spieler:innen"],
   },
   {
     title: "Für Firmen",
     text: "Einheitliche Kleidung fürs Team, den Firmenlauf oder den Messestand: Shirts, Polos, Softshells und Hoodies mit eurem Logo.",
-    points: ["JAKO Corporate Teamwear", "Logo auf Brust, Rücken oder Ärmel", "Kleine und große Stückzahlen"],
+    points: ["Shirts, Polos, Softshells, Hoodies", "Logo auf Brust, Rücken oder Ärmel", "Ab einem Stück – ohne Mindestmenge"],
   },
 ];
 
@@ -54,7 +55,7 @@ export interface Club {
   crest: string;
 }
 
-/** References – crests used with the clubs' permission. */
+/** References – crests and kits shown with the clubs' permission (2026-10-16). */
 export const CLUBS: Club[] = [
   { name: "SG 06 Betzdorf", crest: "/images/vereine/sg-06-betzdorf.png" },
   { name: "TuS Weitefeld", crest: "/images/vereine/tus-weitefeld.png" },
@@ -88,11 +89,18 @@ export const KITS: Kit[] = [
     back: "/images/teamwear/tus-weitefeld-hinten.webp",
     prints: ["Wappen ca. 80 mm", "Sponsor ca. 250 mm", "Nummer ca. 240 mm"],
   },
+  {
+    club: "Sportfreunde Daaden",
+    title: "Spielertrikot",
+    front: "/images/teamwear/sportfreunde-daaden-vorne.webp",
+    back: "/images/teamwear/sportfreunde-daaden-hinten.webp",
+    prints: ["Wappen ca. 85 mm", "Sponsor ca. 250 mm", "Schriftzug ca. 275 mm", "Nummer ca. 240 mm"],
+  },
 ];
 
 export const STEPS = [
   { title: "Anfrage", text: "Ruf an, schreib uns oder komm in Betzdorf vorbei. Sag uns, was ihr braucht und wie viele." },
-  { title: "Muster & Größen", text: "Wir zeigen dir die passenden JAKO-Modelle. Größen könnt ihr bei uns anprobieren." },
+  { title: "Muster & Größen", text: "Wir zeigen dir die passenden Modelle von JAKO, erima und adidas. Größen könnt ihr bei uns anprobieren." },
   { title: "Druckfreigabe", text: "Du bekommst eine Ansicht von vorn und hinten mit allen Maßen – so wie auf dieser Seite." },
   { title: "Druck", text: "Nach deiner Freigabe drucken wir in unserer Werkstatt in Betzdorf." },
   { title: "Übergabe", text: "Abholung im Store oder Lieferung an den Verein." },
@@ -101,11 +109,11 @@ export const STEPS = [
 export const FAQ = [
   {
     q: "Gibt es eine Mindestmenge?",
-    a: "Sprich uns an – wir drucken für ganze Vereine genauso wie für ein einzelnes Team. Den Preis bekommst du mit dem Angebot.",
+    a: "Nein. Wir drucken für ganze Vereine genauso wie ein einzelnes Trikot für den Neuzugang.",
   },
   {
     q: "Wie lange dauert es?",
-    a: "Das hängt von der Verfügbarkeit bei JAKO und vom Umfang ab. Den Termin nennen wir dir mit dem Angebot.",
+    a: "Rechne mit etwa vier Wochen, je nach Auftragslage. Den genauen Termin nennen wir dir mit dem Angebot.",
   },
   {
     q: "Welche Druckdaten braucht ihr?",
