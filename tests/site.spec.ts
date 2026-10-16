@@ -12,6 +12,7 @@ const ROUTES = [
   "/ausdauer-cup/herdorfer-goetzelauf",
   "/community",
   "/teamwear",
+  "/gutscheine",
   "/magazin",
   "/magazin/dehnuebungen-fuer-laeufer",
   "/ueber-uns",
@@ -76,4 +77,22 @@ test("teamwear page shows the club crests and turns a jersey", async ({ page }) 
   await page.getByRole("button", { name: "Rückseite", exact: true }).first().click();
   // the toggle now offers the front again and reports its pressed state
   await expect(page.getByRole("button", { name: "Vorderseite", exact: true }).first()).toHaveAttribute("aria-pressed", "true");
+});
+
+test("voucher page offers amounts and checks the gift fields on the server", async ({ page }) => {
+  await page.goto("/gutscheine");
+  await expect(page.getByRole("radio", { name: "50 €", exact: true })).toBeChecked();
+  await page.getByText("25 €", { exact: true }).click();
+  await expect(page.getByRole("button", { name: /Jetzt kaufen · 25 €/ })).toBeVisible();
+  await page.getByRole("button", { name: /Direkt verschenken/ }).click();
+  await page.getByLabel("Name der beschenkten Person").fill("Lena");
+  await expect(page.getByText("Für Lena")).toBeVisible();
+  await page.getByLabel("E-Mail der beschenkten Person *").fill("keine-adresse");
+  await page.getByRole("button", { name: /Jetzt kaufen/ }).click();
+  await expect(page.getByText("Bitte gib eine gültige E-Mail-Adresse der beschenkten Person an.")).toBeVisible();
+});
+
+test("voucher buttons point to the voucher page", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("header").getByRole("link", { name: "Gutschein" })).toHaveAttribute("href", "/gutscheine");
 });

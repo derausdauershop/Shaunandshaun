@@ -1,6 +1,6 @@
 # PROJ-10: Shop-Integration (Headless Shopify) & Domain ausdauer.shop
 
-**Status:** Architected · **Priorität:** P0 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-4, PROJ-5, PROJ-11
+**Status:** In Progress · **Priorität:** P0 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-4, PROJ-5, PROJ-11
 
 ## Ausgangslage
 - Shopify (`der-ausdauer-shop.myshopify.com`) verkauft nur zwei Produkte: Geschenk-Gutschein (10–300 €) und Einsteiger-Laufkurs (130 €).
@@ -122,7 +122,7 @@ ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Ba
 - [x] DNS-Provider → STRATO (2026-10-16).
 - [ ] Sollen Kurstermine als Varianten mit Platzanzahl in Shopify gepflegt werden? (Erst relevant, wenn der Einsteigerkurs im Frühjahr buchbar wird.)
 - [ ] Werden die Empfängerfelder (Name, E-Mail, Nachricht, Versanddatum) aus dem Headless-Warenkorb von Shopify übernommen und an die beschenkte Person geschickt? Klärt der erste Testkauf.
-- [ ] Storefront-Token aus dem Headless-Kanal hinterlegen (Kunde).
+- [x] Storefront-Token aus dem Headless-Kanal geliefert (2026-10-16). Lokal in `.env.local` (nicht im Repo). Für den Livegang in Vercel als Umgebungsvariable eintragen.
 
 ## Tech Design (Solution Architect, 2026-10-16)
 
@@ -188,3 +188,26 @@ Danke-Seite `/bestellung-abgeschlossen`: kurze Bestätigung, Hinweis auf die Gut
 | Statische Ausweichdaten + Direktlink zur Shopify-Produktseite | Der Verkauf läuft weiter, auch wenn die Schnittstelle kurz ausfällt | 2026-10-16 |
 | Kursbuchung vorbereitet, aber deaktiviert | Einsteigerkurs startet im Frühjahr, Termine und Preis noch offen (PROJ-5) | 2026-10-16 |
 | Keine Datenbank, keine neuen Pakete | Die Seite speichert keine Daten. Zod und react-hook-form sind vorhanden | 2026-10-16 |
+
+## Implementation Notes (2026-10-16, Gutscheinkauf)
+- `src/lib/shopify.ts`:
+  - Storefront-Client (API-Version 2025-07)
+  - `getVoucherProduct` (Varianten live, 5 Min. Cache, Ausweichdaten)
+  - `voucherOrderSchema` (Zod, serverseitig)
+  - `recipientAttributes`
+  - `createVoucherCheckout` (`cartCreate`, nur erlaubte Gutschein-Varianten)
+  - 7 Unit-Tests mit gemockten Antworten
+- `src/content/voucher.ts`: Ausweichbeträge 10–300 € mit Varianten-IDs, Stand 2026-10-16.
+- Seiten:
+  - `/gutscheine`: Vorschau, Betragskacheln, „Direkt verschenken“ (Name, E-Mail, Nachricht ≤ 200 Zeichen, Versanddatum), Server Action `buyVoucher` mit Weiterleitung zur Shopify-Kasse
+  - `/bestellung-abgeschlossen`: noindex
+- Ist Shopify nicht erreichbar, erscheint ein Hinweis und die Weiterleitung geht auf die Shopify-Produktseite mit der gewählten Variante.
+- Alle Gutschein-Buttons (`COMPANY.voucher`) zeigen auf `/gutscheine`, Sitemap ergänzt, `.env.local.example` angelegt.
+- Geprüft mit dem echten Token:
+  - Der Gutschein ist ein nativer Geschenkgutschein (`isGiftCard`).
+  - `cartCreate` übernimmt die Empfänger-Attribute.
+  - Die Weiterleitung führt in die Shopify-Kasse.
+  - Der Bezahlschritt wurde nicht ausgeführt.
+- Offen: echter Testkauf (Kunde). Dabei prüfen, ob der Gutschein an die beschenkte Person geht, inklusive Nachricht und Versanddatum.
+- Hinweis Entwicklungsumgebung (Cloud-Sitzung): Node greift hier nur mit `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt` auf Shopify zu. Ohne diese Variablen greift der Ausweichweg. Vercel betrifft das nicht.
+- Kurs-Einsteiger-Produkt `einsteiger-laufkurs` (130 €) existiert in Shopify, wird aber nicht verkauft, solange der Kurs „startet im Frühjahr“ ist.

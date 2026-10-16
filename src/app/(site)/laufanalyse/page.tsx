@@ -84,9 +84,9 @@ export default function AnalysisPage() {
             <Link href="/stores">Store finden</Link>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <a href={COMPANY.voucher} target="_blank" rel="noreferrer">
+            <Link href={COMPANY.voucher}>
               Gutschein kaufen
-            </a>
+            </Link>
           </Button>
         </div>
       </SiteSection>

@@ -26,9 +26,9 @@ export function SiteHeader() {
           </ul>
         </nav>
         <Button asChild variant="brand" size="sm" className="ml-auto hidden sm:inline-flex lg:ml-0">
-          <a href={COMPANY.voucher} target="_blank" rel="noreferrer">
+          <Link href={COMPANY.voucher}>
             Gutschein
-          </a>
+          </Link>
         </Button>
         <MobileNav />
       </div>

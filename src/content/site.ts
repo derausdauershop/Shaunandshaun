@@ -13,7 +13,8 @@ export const COMPANY = {
   instagram: "https://www.instagram.com/ausdauer.shop/",
   facebook: "https://www.facebook.com/ausdauershop",
   shop: "https://der-ausdauer-shop.myshopify.com",
-  voucher: "https://der-ausdauer-shop.myshopify.com/products/geschenk-gutschein",
+  /** Voucher page on the website (PROJ-10); checkout runs in Shopify */
+  voucher: "/gutscheine",
   url: "https://www.ausdauer-shop.de",
 } as const;
 

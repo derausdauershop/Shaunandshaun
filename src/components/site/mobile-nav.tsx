@@ -43,9 +43,9 @@ export function MobileNav() {
           </ul>
         </nav>
         <Button asChild variant="brand" className="mt-auto">
-          <a href={COMPANY.voucher} target="_blank" rel="noreferrer">
+          <Link href={COMPANY.voucher} onClick={() => setOpen(false)}>
             Gutschein verschenken
-          </a>
+          </Link>
         </Button>
       </SheetContent>
     </Sheet>

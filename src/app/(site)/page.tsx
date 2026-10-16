@@ -286,9 +286,9 @@ export default function HomePage() {
             <p className="mt-3 max-w-lg text-lg text-white/85">Geschenk-Gutscheine ab 10 € – online gekauft, sofort per E-Mail verschickt, in beiden Stores einlösbar.</p>
           </div>
           <Button asChild size="lg" className="bg-white text-ink hover:bg-paper">
-            <a href={COMPANY.voucher} target="_blank" rel="noreferrer">
+            <Link href={COMPANY.voucher}>
               Gutschein kaufen
-            </a>
+            </Link>
           </Button>
         </div>
       </section>
