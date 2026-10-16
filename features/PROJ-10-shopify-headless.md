@@ -1,6 +1,6 @@
 # PROJ-10: Shop-Integration (Headless Shopify) & Domain ausdauer.shop
 
-**Status:** Planned · **Priorität:** P0 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-4, PROJ-5, PROJ-11
+**Status:** Architected · **Priorität:** P0 · **Erstellt:** 2026-10-15 · **Abhängigkeiten:** PROJ-4, PROJ-5, PROJ-11
 
 ## Ausgangslage
 - Shopify (`der-ausdauer-shop.myshopify.com`) verkauft nur zwei Produkte: Geschenk-Gutschein (10–300 €) und Einsteiger-Laufkurs (130 €).
@@ -120,4 +120,71 @@ ausdauer.shop (Vercel, Next.js)                     Shopify (unverändert als Ba
 - [x] Wie werden Gutscheine im Store eingelöst? → Shopify POS (iPads); WaWi-Kasse erst in PROJ-11 Phase 2.
 - [x] Gutschein-Typ → bleibt nativer Shopify-Geschenkgutschein, Einlösung in Shopify POS (2026-10-16).
 - [x] DNS-Provider → STRATO (2026-10-16).
-- [ ] Sollen Kurstermine als Varianten mit Platzanzahl in Shopify gepflegt werden?
+- [ ] Sollen Kurstermine als Varianten mit Platzanzahl in Shopify gepflegt werden? (Erst relevant, wenn der Einsteigerkurs im Frühjahr buchbar wird.)
+- [ ] Werden die Empfängerfelder (Name, E-Mail, Nachricht, Versanddatum) aus dem Headless-Warenkorb von Shopify übernommen und an die beschenkte Person geschickt? Klärt der erste Testkauf.
+- [ ] Storefront-Token aus dem Headless-Kanal hinterlegen (Kunde).
+
+## Tech Design (Solution Architect, 2026-10-16)
+
+### Umfang dieser Ausbaustufe
+- **Jetzt:** Gutscheine auf der eigenen Seite kaufen, Bezahlung in der Shopify-Kasse.
+- **Vorbereitet, aber noch aus:** Kursbuchung. Der Einsteigerkurs „startet im Frühjahr“ und ist noch nicht buchbar (PROJ-5). Sobald Termine feststehen, wird nur ein Schalter in den Kursdaten umgelegt.
+- **Nicht in dieser Stufe:** Domain-Umzug. Er folgt erst nach Freigabe der Seite (Livegang-Plan oben).
+
+### Seitenaufbau `/gutscheine`
+```
+Gutscheine-Seite
++-- Kopfbereich: „Verschenk Kilometer.“ + Gutschein-Vorschau im AUSDAUER-Design
+|   (zeigt live den gewählten Betrag)
++-- Betragsauswahl: Kacheln aus den Shopify-Varianten (z. B. 10 / 25 / 50 / 75 / 100 … 300 €)
++-- Verschenken an … (aufklappbar, optional)
+|   +-- Name der beschenkten Person
+|   +-- E-Mail der beschenkten Person
+|   +-- Persönliche Nachricht (max. 200 Zeichen, Zeichenzähler)
+|   +-- Versanddatum (heute oder später)
++-- „Jetzt kaufen“ → Weiterleitung in die Shopify-Kasse
++-- So funktioniert's: per E-Mail · einlösbar in Betzdorf, Siegen und online · Restguthaben bleibt
++-- Hinweis bei Störung: „Shop gerade nicht erreichbar“ + Link direkt zur Shopify-Kasse
+```
+Danke-Seite `/bestellung-abgeschlossen`: kurze Bestätigung, Hinweis auf die Gutschein-Mail, Link zurück zur Startseite.
+
+### Daten (was woher kommt)
+- **Aus Shopify (nur lesen):** Gutschein-Produkt mit seinen Varianten (Betrag, verfügbar ja/nein). Abgefragt über die Storefront-Schnittstelle mit dem öffentlichen Token. Zwischengespeichert 5 Minuten.
+- **Auf der Webseite gespeichert:** nichts. Es gibt keine Datenbank, kein Kundenkonto und kein Cookie.
+- **Weitergabe an Shopify beim Kauf:** gewählte Variante, Menge 1, optionale Empfängerangaben. Die Empfängerangaben gehen als Felder an der Warenkorb-Position mit, so wie im Shopify-Theme.
+- **Ausweichdaten:** Ist Shopify nicht erreichbar, zeigt die Seite die zuletzt bekannten Beträge aus einer kleinen Datei im Projekt und verlinkt direkt die Shopify-Produktseite.
+
+### Ablauf beim Kauf
+1. Betrag wählen, optional Empfänger eintragen.
+2. „Jetzt kaufen“: Der Server der Webseite prüft die Eingaben (Betrag existiert, E-Mail gültig, Nachricht nicht zu lang). Dann legt er bei Shopify einen Warenkorb mit genau diesem Gutschein an.
+3. Die Kundin landet in der Shopify-Kasse (heute unter der Shopify-Adresse, nach dem Umzug unter checkout.ausdauer.shop). Dort laufen Zahlung, AGB und Widerruf.
+4. Shopify stellt den Gutschein aus und verschickt die Gutschein-Mail aus PROJ-11.
+
+### Technische Entscheidungen (verständlich erklärt)
+- **Server-Aktion statt Shopify-Skript im Browser:** Kein Shopify-Code und kein Cookie auf der Webseite. Sie bleibt schnell und datenschutzfreundlich, und der Token liegt nur auf dem Server.
+- **Kein eigener Warenkorb:** Wer einen Gutschein kauft, kauft meist genau einen. Das spart Bauaufwand und Fehlerquellen.
+- **Beträge live aus Shopify:** Ändert ihr Preise oder Varianten im Shopify-Admin, erscheinen sie spätestens nach 5 Minuten auf der Seite, ohne Entwickler.
+- **Prüfung der Eingaben auf dem Server:** Niemand kann über manipulierte Anfragen fremde Produkte oder Preise in den Warenkorb legen.
+- **Tests ohne echten Shop:** Automatische Tests verwenden nachgebaute Shopify-Antworten. So läuft die Entwicklung schon jetzt, der echte Testkauf folgt mit dem Token.
+
+### Bausteine
+- Vorhandene shadcn-Komponenten: Button, Card, Input, Textarea, Label, Form (react-hook-form + Zod), Collapsible, Alert.
+- Vorhandene Marken-Bausteine: Gutschein-Vorschau aus den Print-Vorlagen, Startnummer, Pace-Lines.
+- Neue Pakete: keine. Die Shopify-Anbindung läuft über einfache Web-Anfragen, react-hook-form und Zod sind schon im Projekt.
+
+### Umstellungen auf der bestehenden Seite
+- **Gutschein-Buttons:** Die Buttons in Kopfzeile, mobilem Menü, Startseite und Laufanalyse zeigen auf `/gutscheine` statt auf den alten Shopify-Shop.
+- **Weiterleitungen:** Die alten Shopify-Adressen (`/products/geschenk-gutschein`, `/collections/*`, `/cart`) leiten erst ab dem Domain-Umzug weiter.
+- **Konfiguration:** `SHOPIFY_STORE_DOMAIN` und `SHOPIFY_STOREFRONT_TOKEN` stehen als Umgebungsvariablen in Vercel, nie im Code. Die Werte sind in `.env.local.example` dokumentiert.
+
+## Decision Log
+### Technical Decisions
+| Decision | Rationale | Date |
+|---|---|---|
+| Storefront API + Server Action `cartCreate` statt Buy-Button-Skript | Kein Fremd-Skript und kein Cookie auf der Seite, Token bleibt auf dem Server, volles AUSDAUER-Design | 2026-10-16 |
+| Kein eigener Warenkorb, „Jetzt kaufen“ mit genau einer Position | Gutscheinkauf ist ein Einzelkauf, weniger Aufwand und weniger Fehler | 2026-10-16 |
+| Varianten live aus Shopify, Revalidierung 5 Min. | Preise und Beträge pflegt das Team in Shopify, keine Doppelpflege | 2026-10-16 |
+| Empfänger, Nachricht und Versanddatum als Felder an der Warenkorb-Position | So erzeugt Shopify auch beim Theme-Kauf Empfänger-Gutscheine. Übernahme im Headless-Fall per Testkauf prüfen | 2026-10-16 |
+| Statische Ausweichdaten + Direktlink zur Shopify-Produktseite | Der Verkauf läuft weiter, auch wenn die Schnittstelle kurz ausfällt | 2026-10-16 |
+| Kursbuchung vorbereitet, aber deaktiviert | Einsteigerkurs startet im Frühjahr, Termine und Preis noch offen (PROJ-5) | 2026-10-16 |
+| Keine Datenbank, keine neuen Pakete | Die Seite speichert keine Daten. Zod und react-hook-form sind vorhanden | 2026-10-16 |

@@ -40,7 +40,7 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 | P1 | PROJ-7 Magazin & Jobs | In Progress |
 | P1 | PROJ-8 Print-Vorlagen (Flyer, Plakat, Geschäftsausstattung) | In Progress |
 | P1 | PROJ-9 Social-Media-Vorlagen | In Progress |
-| P0 | PROJ-10 Shop-Integration (Headless Shopify) & Domain ausdauer.shop | Planned |
+| P0 | PROJ-10 Shop-Integration (Headless Shopify) & Domain ausdauer.shop | Architected |
 | P0 | PROJ-11 Gutscheine mit QR – Shopify-Gutschein + POS, später WaWi-Kasse | In Progress |
 | P1 | PROJ-12 AUSDAUER TEAMWEAR – Logo & Textil-Marken | In Progress |
 | P1 | PROJ-13 Teamwear-Bereich Webseite & Wegfall Events (Events in der Absolute Run Community App) | In Progress |
