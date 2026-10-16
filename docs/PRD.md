@@ -41,7 +41,7 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 | P1 | PROJ-8 Print-Vorlagen (Flyer, Plakat, Geschäftsausstattung) | In Progress |
 | P1 | PROJ-9 Social-Media-Vorlagen | In Progress |
 | P0 | PROJ-10 Shop-Integration (Headless Shopify) & Domain ausdauer.shop | Planned |
-| P0 | PROJ-11 Gutscheine mit QR – Ausgabe online, Einlösung über die WaWi-Kasse | Planned |
+| P0 | PROJ-11 Gutscheine mit QR – Shopify-Gutschein + POS, später WaWi-Kasse | Planned |
 
 ## Success Metrics
 - Einheitlicher Auftritt über alle Touchpoints (Brand-Guide-Abnahme durch GF).
@@ -53,7 +53,7 @@ Das Rebranding umfasst Design-System (Schriften, Farben, Grafik-Kit), einen Live
 - Ausdauer-Logo, Absolute-Run-Logo (Sport-2000-Format), Crown-Town-Runners- und Firmenlauf-Logo dürfen nicht verändert werden.
 - Fonts müssen frei für Web + Print lizenziert sein (OFL) und DSGVO-konform selbst gehostet werden.
 - Shopify bleibt Backend für Bezahlung von Gutscheinen/Kursen (Headless, Kasse unter checkout.ausdauer.shop); Hauptdomain wird ausdauer.shop. Domains liegen bei STRATO.
-- Gutschein-Konto (Codes, Salden, Einlösung) führt die eigene WaWi; Shopify meldet Käufe per Webhook (PROJ-11).
+- Gutscheine bleiben vorerst native Shopify-Geschenkgutscheine, Einlösung in Shopify POS (iPads); Anbindung der eigenen WaWi-Kasse später (PROJ-11, Phase 2).
 - Kleines Team → Inhalte als einfach pflegbare Datendateien.
 
 ## Non-Goals
