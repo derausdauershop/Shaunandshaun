@@ -11,6 +11,7 @@ const ROUTES = [
   "/ausdauer-cup",
   "/ausdauer-cup/herdorfer-goetzelauf",
   "/community",
+  "/teamwear",
   "/magazin",
   "/magazin/dehnuebungen-fuer-laeufer",
   "/ueber-uns",
@@ -63,4 +64,14 @@ test("events point to the community app", async ({ page }) => {
   await expect(page.locator("#app").getByRole("link", { name: "App Store" })).toHaveAttribute("href", /apps\.apple\.com/);
   await expect(page.locator("#app").getByRole("link", { name: "Google Play" })).toHaveAttribute("href", /play\.google\.com/);
   await expect(page.getByRole("navigation").getByRole("link", { name: "Events" })).toHaveCount(0);
+});
+
+test("teamwear page shows the club crests and turns a jersey", async ({ page }) => {
+  await page.goto("/teamwear");
+  for (const club of ["SG 06 Betzdorf", "TuS Weitefeld", "JSG Weitefeld-Neunkhausen", "Sportfreunde Daaden", "VfB Niederdreisbach"]) {
+    await expect(page.getByRole("img", { name: `Wappen ${club}` })).toBeVisible();
+  }
+  await page.getByRole("button", { name: "Rückseite", exact: true }).first().click();
+  // the toggle now offers the front again and reports its pressed state
+  await expect(page.getByRole("button", { name: "Vorderseite", exact: true }).first()).toHaveAttribute("aria-pressed", "true");
 });

@@ -36,9 +36,11 @@ Inhalte kommen aus `src/content/teamwear.ts`. Der Menüpunkt „Teamwear“ komm
 - [x] Kein Menüeintrag und keine Seite „Events“ mehr. `/events` leitet auf `/community#app` um.
 - [x] Community-Seite und Startseite verlinken die App (App Store, Google Play).
 - [x] „Nächster Lauf“ auf der Startseite kommt direkt aus den Cup-Daten.
-- [ ] `/teamwear` mit allen Abschnitten, mobil ohne horizontales Scrollen.
-- [ ] Referenzwappen sichtbar, mit Alt-Text.
-- [ ] Menü enthält „Teamwear“.
+- [x] `/teamwear` mit allen Abschnitten, mobil ohne horizontales Scrollen.
+- [x] Referenzwappen sichtbar, mit Alt-Text (5 Vereine).
+- [x] Menü enthält „Teamwear“.
+- [x] Trikot-Galerie aus Druckfreigaben, Vorder-/Rückseite per Tippen drehbar (CSS 3D, `prefers-reduced-motion` beachtet).
+- [ ] JAKO-Logo (Originaldatei, Freigabe durch JAKO-Marketing).
 
 ## Implementation Notes (2026-10-16, Teil Events)
 - Entfernt:
@@ -55,4 +57,20 @@ Inhalte kommen aus `src/content/teamwear.ts`. Der Menüpunkt „Teamwear“ komm
 - [ ] Mindestmengen, Lieferzeiten.
 - [ ] Statt Fotos: Mockups aus Druckfreigaben (Upload durch den Kunden) als drehbare Trikot-Ansicht. Ansatz siehe Chat 2026-10-16.
 - [x] Wolf-Wappen = TuS Weitefeld. JSG Weitefeld-Neunkhausen ist ein eigener Verein (2026-10-16).
-- [ ] Wappen Sportfreunde Daaden nachliefern.
+- [x] Wappen Sportfreunde Daaden geliefert.
+- [ ] Daaden-Trikot (adidas) in der Galerie zeigen? Konflikt mit der JAKO-Partnerschaft möglich, deshalb vorerst nicht gezeigt.
+- [ ] Okay von Vereinen und Sponsoren (adesso, Schleyer) für die Galerie.
+
+## Implementation Notes (2026-10-16, Teil Teamwear)
+- Inhalte in `src/content/teamwear.ts`: Zielgruppen, Verfahren, Vereine, Trikots, Ablauf, FAQ. Die FAQ-Texte bitte prüfen, Mindestmengen und Lieferzeiten sind bewusst offen formuliert.
+- Seite `src/app/(site)/teamwear/page.tsx`, Komponente `src/components/site/kit-viewer.tsx` (Client, drehbar, Button mit `aria-pressed`).
+- Mockups:
+  - aus den Druckfreigaben-PDFs zugeschnitten nach `public/images/teamwear/*.webp`
+  - Spielername auf der SG-06-Rückseite entfernt
+- Vereinswappen in `public/images/vereine/` (5 Stück).
+- JAKO:
+  - CI 2026 beachtet: nur Originallogo, keine Umfärbung, mind. 2 cm, Schutzraum.
+  - Werbemittel mit JAKO-Logo nur nach Freigabe durch das JAKO-Marketing.
+  - „JAKO Corporate Teamwear“-Logo nur im Firmen-Kontext.
+  - Bis dahin steht JAKO nur als Text im Logo-Feld.
+- Menü (`MAIN_NAV`), Sitemap und E2E-Test „teamwear page shows the club crests and turns a jersey“ ergänzt.

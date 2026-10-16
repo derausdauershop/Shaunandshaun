@@ -36,6 +36,7 @@ export const MAIN_NAV: NavItem[] = [
   { href: "/run-academy", label: "Run Academy" },
   { href: "/ausdauer-cup", label: "AUSDAUER CUP" },
   { href: "/community", label: "Community" },
+  { href: "/teamwear", label: "Teamwear" },
   { href: "/magazin", label: "Magazin" },
 ];
 
