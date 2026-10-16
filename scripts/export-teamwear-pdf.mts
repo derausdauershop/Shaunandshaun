@@ -11,7 +11,7 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const DIR = path.join(ROOT, "public", "brand", "teamwear");
 const OUT = path.join(DIR, "pdf");
 /** Recommended width in mm per mark (see src/lib/brand/teamwear.ts). */
-const WIDTH: Record<string, number> = { "aermel-plakette": 35, logo: 75, innendruck: 50 };
+const WIDTH: Record<string, number> = { "aermel-plakette": 35, "aermel-badge": 40, logo: 75, innendruck: 50 };
 
 const browser = await chromium.launch({ executablePath: process.env.PW_CHROMIUM || "/opt/pw-browsers/chromium" });
 const page = await browser.newPage();

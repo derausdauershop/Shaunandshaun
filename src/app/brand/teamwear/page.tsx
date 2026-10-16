@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { TopoLines } from "@/components/brand/topo-lines";
-import { CLUB_SWATCHES, TEXTILE_RULES, teamwearLogo, textileMark, type TeamwearColor } from "@/lib/brand/teamwear";
+import { CLUB_SWATCHES, TEXTILE_RULES, teamwearLogo, textileMark, type TeamwearColor, type TextileColor, type TextileMark } from "@/lib/brand/teamwear";
 import { cn } from "@/lib/utils";
 import { Rule, Section } from "../_sections/section";
 
@@ -19,6 +19,8 @@ const SURFACE: Record<TeamwearColor, string> = {
   weiss: "bg-brand",
 };
 const COLORS: TeamwearColor[] = ["farbig", "negativ", "schwarz", "weiss"];
+const LIGHT: Record<TextileMark, TextileColor> = { "aermel-plakette": "farbig", "aermel-badge": "farbig", logo: "1c-schwarz", innendruck: "1c-schwarz" };
+const DARK: Record<TextileMark, TextileColor> = { "aermel-plakette": "farbig", "aermel-badge": "negativ", logo: "1c-weiss", innendruck: "1c-weiss" };
 
 /** Literal swatch classes (Tailwind needs static class names). */
 const SWATCH: Record<string, string> = {
@@ -30,8 +32,8 @@ const SWATCH: Record<string, string> = {
   Gelb: "bg-[#F7D417]",
 };
 
-/** Jersey silhouette with the three print positions. */
-function Jersey({ color, mark, neck, label }: { color: string; mark: string; neck: string; label: string }) {
+/** Jersey front with the sleeve mark (the original logo goes on the back, see rules). */
+function Jersey({ color, mark, label }: { color: string; mark: string; label: string }) {
   return (
     <figure className="min-w-0">
       <div className="relative mx-auto aspect-[10/9] w-full max-w-sm">
@@ -41,7 +43,6 @@ function Jersey({ color, mark, neck, label }: { color: string; mark: string; nec
         </svg>
         {/* sleeve, rotated with the sleeve edge */}
         <img src={mark} alt="" className="absolute left-[81.5%] top-[25%] w-[9%] rotate-[22deg]" />
-        <img src={neck} alt="" className="absolute left-1/2 top-[15%] w-[18%] -translate-x-1/2" />
         <span className="absolute left-1/2 top-[42%] -translate-x-1/2 font-mono text-[0.6rem] uppercase tracking-[0.2em] opacity-40">Vereinswappen</span>
       </div>
       <figcaption className="mt-3 text-center font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">{label}</figcaption>
@@ -135,18 +136,18 @@ export default function TeamwearBrandPage() {
           id="textil"
           km={3}
           kicker="Textil-Marken"
-          title="Plakette am Ärmel, Logo wo Platz ist."
-          intro="Auf dem Vereinstrikot ist AUSDAUER der Absender, nicht „Teamwear“. Die 1-farbige Plakette ist ein einziger Pfad mit ausgespartem ∞. Der Plotter schneidet sie in einem Stück, im Flex erscheint dort die Textilfarbe."
+          title="Plakette am Ärmel, Logo, wo Platz ist."
+          intro="Die Plakette ist der Absender. Als Ärmel-Badge sagt TEAMWEAR darunter, wer das Trikot gemacht hat: die kompakte Form der Untermarke, gebaut wie RUN ACADEMY. Die 1-farbigen Plaketten sind ein einziger Pfad mit ausgespartem ∞. Der Plotter schneidet sie in einem Stück, im Flex erscheint dort die Textilfarbe."
         >
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {TEXTILE_RULES.map((r) => (
               <figure key={r.mark} className="flex flex-col overflow-hidden rounded-sm ring-1 ring-border">
                 <div className="grid flex-1 grid-cols-2">
                   <div className="flex min-h-40 items-center justify-center bg-white p-5">
-                    <img src={textileMark(r.mark, r.mark === "aermel-plakette" ? "farbig" : "1c-schwarz")} alt={`${r.label} auf hell`} className={cn("h-auto", r.mark === "aermel-plakette" ? "w-[45%]" : "w-[85%]")} />
+                    <img src={textileMark(r.mark, LIGHT[r.mark])} alt={`${r.label} auf hell`} className={cn("h-auto", r.mark.startsWith("aermel") ? "w-[45%]" : "w-[85%]")} />
                   </div>
                   <div className="flex min-h-40 items-center justify-center bg-ink p-5">
-                    <img src={textileMark(r.mark, r.mark === "aermel-plakette" ? "farbig" : "1c-weiss")} alt={`${r.label} auf dunkel`} className={cn("h-auto", r.mark === "aermel-plakette" ? "w-[45%]" : "w-[85%]")} />
+                    <img src={textileMark(r.mark, DARK[r.mark])} alt={`${r.label} auf dunkel`} className={cn("h-auto", r.mark.startsWith("aermel") ? "w-[45%]" : "w-[85%]")} />
                   </div>
                 </div>
                 <figcaption className="bg-card p-5">
@@ -182,9 +183,9 @@ export default function TeamwearBrandPage() {
 
         <Section id="platzierung" km={4} kicker="Platzierung" title="Der Verein vorn, wir am Ärmel." dark>
           <div className="grid gap-10 md:grid-cols-3">
-            <Jersey color="fill-white" mark={textileMark("aermel-plakette", "farbig")} neck={textileMark("logo", "1c-schwarz")} label="Heimtrikot weiß · DTF farbig" />
-            <Jersey color="fill-[#C8102E]" mark={textileMark("aermel-plakette", "1c-weiss")} neck={textileMark("logo", "1c-weiss")} label="Rot · Flex weiß" />
-            <Jersey color="fill-[#1D4FA0]" mark={textileMark("aermel-plakette", "1c-weiss")} neck={textileMark("logo", "1c-weiss")} label="Royalblau · Flex weiß" />
+            <Jersey color="fill-white" mark={textileMark("aermel-plakette", "farbig")} label="Heimtrikot weiß · DTF farbig" />
+            <Jersey color="fill-[#C8102E]" mark={textileMark("aermel-badge", "1c-weiss")} label="Rot · Ärmel-Badge Flex weiß" />
+            <Jersey color="fill-[#1D4FA0]" mark={textileMark("aermel-plakette", "1c-weiss")} label="Royalblau · Flex weiß" />
           </div>
           <div className="mt-12 grid gap-8 lg:grid-cols-2">
             <ul className="space-y-3">
@@ -195,7 +196,7 @@ export default function TeamwearBrandPage() {
             <ul className="space-y-3">
               <Rule kind="dont">Das Original-Logo unter 60 mm Breite, auseinandergenommen oder ohne ∞ vor dem Schriftzug.</Rule>
               <Rule kind="dont">Vereinswappen, JAKO- oder Sponsorlogos umfärben oder mit der Plakette verbinden.</Rule>
-              <Rule kind="dont">Rote Plakette auf rotem Trikot. Claim, „TEAMWEAR“ oder Innendruck außen auf dem Vereinstrikot.</Rule>
+              <Rule kind="dont">Rote Plakette auf rotem Trikot. Claim oder Innendruck außen auf dem Vereinstrikot. „TEAMWEAR“ nur im Ärmel-Badge, nie als lose Zeile.</Rule>
             </ul>
           </div>
         </Section>
@@ -220,6 +221,11 @@ export default function TeamwearBrandPage() {
                   <td className="font-mono text-xs">textil-aermel-plakette-farbig</td>
                   <td>DTF</td>
                   <td>Rote Plakette, weißes ∞ – auf hellen und dunklen Textilien.</td>
+                </tr>
+                <tr>
+                  <td className="font-mono text-xs">textil-aermel-badge-*</td>
+                  <td>Flex / DTF</td>
+                  <td>Plakette mit TEAMWEAR. 1c-* für Flex, farbig (helle) und negativ (dunkle Textilien) für DTF.</td>
                 </tr>
                 <tr>
                   <td className="font-mono text-xs">textil-logo-1c-*</td>

@@ -15,7 +15,7 @@ type Row = { label: string; note: string; src: string; min: number };
 const ROWS: Row[] = TEXTILE_RULES.map((r) => ({
   label: r.label,
   note: `${r.where.split(" – ")[0]} · ab ${r.min} mm`,
-  src: textileMark(r.mark, r.mark === "aermel-plakette" ? "farbig" : "1c-schwarz"),
+  src: textileMark(r.mark, r.mark.startsWith("aermel") ? "farbig" : "1c-schwarz"),
   min: r.min,
 }));
 

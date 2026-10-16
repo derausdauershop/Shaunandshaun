@@ -316,6 +316,20 @@ function sleevePlate(t: Textile) {
   const body = t.one ? `<path fill="${t.one}" fill-rule="evenodd" d="${plateKnockout(0, 0, 64)}"/>` : plate(0, 0, 64, t.plate!, t.mark!);
   return svg(80, 64, body, "AUSDAUER – Ärmel-Plakette");
 }
+/** Sleeve badge: plate + "TEAMWEAR" set to the plate's width – the compact form of the sub-brand (like RUN ACADEMY). */
+function sleeveBadge(t: Textile, word: string) {
+  const W = 80, ph = 64, gap = 8;
+  const size0 = 40;
+  const b0 = bounds(DISPLAY, "TEAMWEAR", size0);
+  const size = (size0 * W) / b0.width;
+  const tb = bounds(DISPLAY, "TEAMWEAR", size);
+  const y = ph + gap + tb.height;
+  const txt = text(DISPLAY, "TEAMWEAR", 0, y, size);
+  const body = t.one
+    ? `<path fill="${t.one}" fill-rule="evenodd" d="${plateKnockout(0, 0, ph)}"/><path fill="${t.one}" d="${txt}"/>`
+    : plate(0, 0, ph, t.plate!, t.mark!) + `<path fill="${word}" d="${txt}"/>`;
+  return svg(W + 1, y + 1, body, "AUSDAUER TEAMWEAR – Ärmel-Badge");
+}
 /** Original AUSDAUER logo, unchanged (∞ + lettering), one colour – neck, back, lengthwise on long sleeves (from 60 mm). */
 function originalLogo(color: string) {
   const s = 200 / LOGO.vw;
@@ -364,7 +378,10 @@ for (const b of SUBBRANDS) {
   if (b.id === "teamwear") {
     for (const t of TEXTILE) {
       write(b.dir, `textil-aermel-plakette-${t.name}.svg`, sleevePlate(t));
+      if (t.one) write(b.dir, `textil-aermel-badge-${t.name}.svg`, sleeveBadge(t, t.one));
     }
+    write(b.dir, "textil-aermel-badge-farbig.svg", sleeveBadge(TEXTILE[0], INK)); // DTF, light textiles
+    write(b.dir, "textil-aermel-badge-negativ.svg", sleeveBadge(TEXTILE[0], WHITE)); // DTF, dark textiles
     for (const [n, c] of [["1c-schwarz", INK], ["1c-weiss", WHITE], ["1c-rot", RED]] as const) {
       write(b.dir, `textil-logo-${n}.svg`, originalLogo(c));
       write(b.dir, `textil-innendruck-${n}.svg`, neck(c));

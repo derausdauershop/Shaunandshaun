@@ -4,8 +4,8 @@
  */
 export type TeamwearColor = "farbig" | "negativ" | "schwarz" | "weiss";
 export type TeamwearKind = "" | "gestapelt-";
-export type TextileColor = "farbig" | "1c-weiss" | "1c-schwarz" | "1c-rot";
-export type TextileMark = "aermel-plakette" | "logo" | "innendruck";
+export type TextileColor = "farbig" | "negativ" | "1c-weiss" | "1c-schwarz" | "1c-rot";
+export type TextileMark = "aermel-plakette" | "aermel-badge" | "logo" | "innendruck";
 
 export const teamwearLogo = (kind: TeamwearKind, color: TeamwearColor) => `/brand/teamwear/ausdauer-teamwear-${kind}${color}.svg`;
 export const textileMark = (mark: TextileMark, color: TextileColor) => `/brand/teamwear/textil-${mark}-${color}.svg`;
@@ -13,6 +13,7 @@ export const textileMark = (mark: TextileMark, color: TextileColor) => `/brand/t
 /** Aspect ratios (width / height) of the generated files – used to size marks in mm. */
 export const TEXTILE_RATIO: Record<TextileMark, number> = {
   "aermel-plakette": 80 / 64,
+  "aermel-badge": 81 / 86.74,
   logo: 203.39 / 28.35,
   innendruck: 200 / 46.55,
 };
@@ -29,6 +30,7 @@ export interface TextileRule {
 
 export const TEXTILE_RULES: TextileRule[] = [
   { mark: "aermel-plakette", label: "Ärmel-Plakette", where: "Ärmel, Hosenbein, Kappe, Stutzen", min: 25, ideal: "30–40 mm" },
+  { mark: "aermel-badge", label: "Ärmel-Badge", where: "Ärmel – Plakette mit TEAMWEAR, zeigt, wer das Trikot gemacht hat", min: 30, ideal: "35–45 mm" },
   { mark: "logo", label: "Original-Logo", where: "Nacken, Rücken unten, längs am Langarm oder Hosenbein", min: 60, ideal: "70–90 mm" },
   { mark: "innendruck", label: "Innendruck", where: "Innen im Nacken statt Etikett – nur eigene Produktion, nie außen auf Vereinskleidung", min: 40, ideal: "50 mm" },
 ];

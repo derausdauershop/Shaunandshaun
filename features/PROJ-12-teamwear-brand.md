@@ -13,7 +13,7 @@
 - Name: **AUSDAUER TEAMWEAR** (Kunde, 2026-10-16).
 - Untermarke nach dem Bauplan von Run Academy und CUP: rote ∞-Plakette, Name, Claim.
 - Claim: **„Bedruckt in Betzdorf“** (Kunde, 2026-10-16). „Made in Betzdorf“ wurde verworfen: Die Ware kommt von JAKO, in Betzdorf wird veredelt. Eine Herkunftsangabe „Made in“ wäre irreführend.
-- Auf Vereinskleidung steht **AUSDAUER** als Absender, nicht „Teamwear“. Dafür gibt es eigene Textil-Marken.
+- Auf Vereinskleidung ist die Plakette der Absender. Vorschlag des Kunden (2026-10-16): **„TEAMWEAR“ unter der Plakette am Ärmel**, umgesetzt als Ärmel-Badge. Das ist die kompakte Form der Untermarke, nach dem Bauplan von RUN ACADEMY. „TEAMWEAR“ steht nie als lose Zeile.
 - **Das Original-Logo wird nie getrennt** (Kunde, 2026-10-16): Das ∞ bleibt vor dem Schriftzug. Die Variante „Ärmel vertikal“ (Plakette über dem Schriftzug ohne ∞) ist verworfen. Auf dem Ärmel steht die Plakette allein, das komplette Logo kommt dorthin, wo mindestens 60 mm Platz sind.
 - JAKO: offizieller **JAKO Teamwear Partner**. Das Logo darf genannt werden, die Originaldatei kommt vom Kunden.
 
@@ -21,6 +21,7 @@
 | Marke | Mindestbreite | Ideal | Einsatz |
 |---|---|---|---|
 | Ärmel-Plakette | 25 mm | 30–40 mm | Ärmel, Hosenbein, Kappe, Stutzen |
+| Ärmel-Badge (Plakette + TEAMWEAR) | 30 mm | 35–45 mm | Ärmel – kompakte Untermarke, zeigt den Hersteller des Trikots |
 | Original-Logo (unverändert) | 60 mm | 70–90 mm | Nacken, Rücken unten, längs am Langarm/Hosenbein |
 | Innendruck (Logo + „TEAMWEAR · BETZDORF“) | 40 mm | 50 mm | innen statt Etikett, nur eigene Produktion |
 
@@ -48,3 +49,4 @@ Farbvarianten:
 - `src/components/templates/teamwear.tsx`: Lesbarkeitstest A4 (Registry-ID `teamwear-testbogen`), Export unter `public/brand/vorlagen-export/teamwear-testbogen.pdf`.
 - Vereinswappen für PROJ-13 abgelegt unter `public/images/vereine/*.png` (aus den gelieferten PDF/SVG, freigestellt, 480 px).
 - Änderung 2026-10-16: „Ärmel vertikal“ und die Claim-Alternative entfernt. Neu sind `textil-logo-*` (Original-Logo) und `textil-innendruck-*` (vorher „Nacken-Print“, jetzt nur innen).
+- Ergänzt 2026-10-16: `textil-aermel-badge-*` (Plakette + TEAMWEAR in Plakettenbreite, Barlow Condensed Black Italic). Flex 1c, DTF farbig/negativ, im Testbogen und auf `/brand/teamwear`.
