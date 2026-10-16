@@ -30,3 +30,8 @@
 - E2E: `tests/site.spec.ts` (22 Tests, `PW_CHROMIUM=… npm run test:e2e -- --project=chromium`).
 - 2026-10-15 (Kundenhinweis): Currex-Druckmessung und Dartfish werden nicht mehr genutzt. Ersetzt durch FootBalance 3D-Fußvermessung mit individuell angepassten (thermoformbaren) Einlegesohlen und „Videoanalyse der dynamischen Bewegung“ (`src/content/services.ts`, Laufanalyse-Seite, Startseite).
 - Bestätigt (Kunde): FootBalance in beiden Stores, Einlegesohlen werden direkt mitgenommen.
+
+## Änderungen 2026-10-16
+- Teamfotos von der alten Seite übernommen (`public/images/team/*.webp`, 600 × 600) und als Porträt-Karten (`src/components/site/team-card.tsx`) auf „Über uns“ und den Store-Seiten eingebaut.
+- Ohne Foto zeigt die Karte die Initialen. Fotos fehlen noch für Pauline Stendenbach, Mathilda Schneider, Tom Krumm und Fabian Huesmann.
+- Store Siegen: Raúl Vallero Gallegos entfernt, Fabian Huesmann (Fachberater) ergänzt.

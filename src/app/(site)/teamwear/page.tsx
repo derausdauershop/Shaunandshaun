@@ -6,11 +6,10 @@ import { Check, Mail, Phone } from "lucide-react";
 import { KitViewer } from "@/components/site/kit-viewer";
 import { PageHero } from "@/components/site/page-hero";
 import { SiteSection } from "@/components/site/section";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/content/site";
-import { AUDIENCES, CLUBS, FAQ, KITS, METHODS, STEPS, TEAMWEAR } from "@/content/teamwear";
+import { AUDIENCES, CLUBS, KITS, METHODS, STEPS, TEAMWEAR } from "@/content/teamwear";
 
 export const metadata: Metadata = {
   title: "Teamwear – Textildruck für Vereine & Firmen",
@@ -135,16 +134,12 @@ export default function TeamwearPage() {
         </ol>
       </SiteSection>
 
-      <SiteSection km={7} kicker="Fragen" title="Gut zu wissen.">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
-          <Accordion type="single" collapsible className="max-w-3xl">
-            {FAQ.map((f) => (
-              <AccordionItem key={f.q} value={f.q}>
-                <AccordionTrigger className="text-left font-display text-xl font-bold uppercase">{f.q}</AccordionTrigger>
-                <AccordionContent className="text-base text-muted-foreground">{f.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+      <SiteSection km={7} kicker="Kontakt" title="Lass uns über euer Trikot reden.">
+        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-start">
+          <p className="max-w-xl text-lg text-muted-foreground">
+            Keine Mindestmenge, Lieferzeit etwa vier Wochen je nach Auftragslage. Ruf an, schreib uns oder komm in Betzdorf vorbei – wir beraten dich
+            zu Modell, Größen und Druck.
+          </p>
           <aside className="surface-ink h-fit rounded-sm bg-ink p-8 text-paper">
             <img src="/brand/teamwear/ausdauer-teamwear-gestapelt-negativ.svg" alt="AUSDAUER TEAMWEAR – Bedruckt in Betzdorf" className="h-28 w-auto max-w-full" />
             <p className="mt-6 text-paper/85">Wilhelmstraße 16, 57518 Betzdorf</p>

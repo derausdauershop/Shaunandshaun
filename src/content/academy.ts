@@ -1,12 +1,15 @@
-import { COMPANY } from "./site";
-
 export interface Course {
   slug: string;
   title: string;
   level: string;
-  status: "buchbar" | "in-planung";
+  /** buchbar = online bookable, demnaechst = date announced but no booking yet, in-planung = idea */
+  status: "buchbar" | "demnaechst" | "in-planung";
+  /** Shown as start-number badge instead of a price, e.g. "Frühjahr" */
+  start?: string;
   price?: string;
   bookingUrl?: string;
+  /** Key facts from the course flyer */
+  facts?: Array<{ label: string; value: string }>;
   summary: string;
   contents: string[];
   includes?: string[];
@@ -18,9 +21,14 @@ export const COURSES: Course[] = [
     slug: "einsteiger-laufkurs",
     title: "Einsteiger-Laufkurs",
     level: "Für alle, die (wieder) anfangen",
-    status: "buchbar",
-    price: "130 €",
-    bookingUrl: `${COMPANY.shop}/products/einsteiger-laufkurs`,
+    status: "demnaechst",
+    start: "Frühjahr",
+    facts: [
+      { label: "Ziel", value: "Von 0 auf 5 km" },
+      { label: "Dauer", value: "8 Wochen" },
+      { label: "Training", value: "1× pro Woche mit Coach" },
+      { label: "Dazu", value: "Trainingsplan für zu Hause" },
+    ],
     summary: "Schritt für Schritt zu einem gesunden, regelmäßigen Lauftraining – in der Gruppe, mit Coach und mit Plan.",
     contents: [
       "1× pro Woche betreute Trainingseinheit mit professionellem Coaching",
@@ -35,7 +43,6 @@ export const COURSES: Course[] = [
       "6–8 Lauf-Kräftigungsübungen",
       "Grundlagen des Ausdauertrainings",
     ],
-    note: "Kommt der Kurs wegen zu weniger Anmeldungen nicht zustande, bekommst du den vollen Preis zurück.",
   },
   {
     slug: "10-km-halbmarathon",
@@ -54,5 +61,9 @@ export const COURSES: Course[] = [
     contents: ["Lauf-ABC und Koordination", "Videoanalyse deines Laufstils", "Übungen für zu Hause"],
   },
 ];
+
+/** Label for the status badge */
+export const courseStatusLabel = (c: Course) =>
+  c.status === "buchbar" ? "Jetzt buchbar" : c.status === "demnaechst" ? `Startet im ${c.start ?? "Frühjahr"}` : "In Planung";
 
 export const courseBySlug = (slug: string) => COURSES.find((c) => c.slug === slug);

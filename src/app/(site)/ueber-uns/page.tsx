@@ -5,6 +5,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { SiteSection } from "@/components/site/section";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/content/site";
+import { TeamCard } from "@/components/site/team-card";
 import { ADVISORS, LEADERSHIP } from "@/content/team";
 
 export const metadata: Metadata = {
@@ -67,20 +68,12 @@ export default function AboutPage() {
       <SiteSection id="team" km={2} kicker="Team" title="Die Menschen hinter AUSDAUER." tone="ink">
         <ul className="grid gap-px overflow-hidden rounded-sm bg-paper/10 sm:grid-cols-2 lg:grid-cols-4">
           {LEADERSHIP.map((m) => (
-            <li key={m.name} className="bg-ink p-6">
-              <p className="font-display text-2xl font-black uppercase italic">{m.name}</p>
-              <p className="mt-1 font-mono text-xs uppercase tracking-[0.2em] text-brand">{m.role}</p>
-            </li>
+            <TeamCard key={m.name} member={m} size="lg" />
           ))}
         </ul>
         <ul className="mt-px grid gap-px overflow-hidden rounded-sm bg-paper/10 sm:grid-cols-2 lg:grid-cols-4">
           {ADVISORS.map((m) => (
-            <li key={m.name} className="bg-ink p-5">
-              <p className="font-display text-xl font-bold uppercase">{m.name}</p>
-              <p className="text-sm text-muted-foreground">
-                {m.role} · {m.stores.map((s) => (s === "betzdorf" ? "Betzdorf" : "Siegen")).join(" & ")}
-              </p>
-            </li>
+            <TeamCard key={m.name} member={m} detail={`${m.role} · ${m.stores.map((s) => (s === "betzdorf" ? "Betzdorf" : "Siegen")).join(" & ")}`} />
           ))}
         </ul>
         <Button asChild variant="brand" className="mt-10">

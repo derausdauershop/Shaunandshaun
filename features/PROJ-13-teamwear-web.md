@@ -71,3 +71,6 @@ Inhalte kommen aus `src/content/teamwear.ts`. Der Menüpunkt „Teamwear“ komm
 - Vereinswappen in `public/images/vereine/` (5 Stück).
 - Marken: JAKO, erima und adidas nur als Text, da keine Herstellerlogos freigegeben sind. Den JAKO-CI-Guide 2026 beachten, falls doch Logos kommen: Originaldatei, keine Umfärbung, mind. 2 cm, Freigabe durch das JAKO-Marketing.
 - Menü (`MAIN_NAV`), Sitemap und E2E-Test „teamwear page shows the club crests and turns a jersey“ ergänzt.
+
+## Änderungen 2026-10-16
+- FAQ-Abschnitt entfernt (Kundenwunsch). Mindestmenge und Lieferzeit stehen jetzt im Kontakt-Abschnitt.

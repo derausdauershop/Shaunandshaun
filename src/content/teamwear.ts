@@ -105,26 +105,3 @@ export const STEPS = [
   { title: "Druck", text: "Nach deiner Freigabe drucken wir in unserer Werkstatt in Betzdorf." },
   { title: "Übergabe", text: "Abholung im Store oder Lieferung an den Verein." },
 ];
-
-export const FAQ = [
-  {
-    q: "Gibt es eine Mindestmenge?",
-    a: "Nein. Wir drucken für ganze Vereine genauso wie ein einzelnes Trikot für den Neuzugang.",
-  },
-  {
-    q: "Wie lange dauert es?",
-    a: "Rechne mit etwa vier Wochen, je nach Auftragslage. Den genauen Termin nennen wir dir mit dem Angebot.",
-  },
-  {
-    q: "Welche Druckdaten braucht ihr?",
-    a: "Am besten Vektordateien (PDF, SVG, AI oder EPS). Wenn ihr nur ein Bild habt, schick es trotzdem – wir prüfen es und sagen dir, was geht.",
-  },
-  {
-    q: "Können wir später nachbestellen?",
-    a: "Ja. Neue Spieler:innen bekommen das gleiche Trikot mit Namen und Nummer nach der Druckfreigabe, die wir für euch angelegt haben.",
-  },
-  {
-    q: "Druckt ihr auch auf mitgebrachte Kleidung?",
-    a: "Frag uns – ob ein Textil sich bedrucken lässt, hängt vom Material ab. Wir testen das vorher.",
-  },
-];

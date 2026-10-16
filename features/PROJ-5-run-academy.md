@@ -16,3 +16,9 @@
 ## Implementation Notes (2026-10-15)
 - `/run-academy` + `/run-academy/[slug]`; Einsteiger-Laufkurs mit Originalinhalten aus Shopify, Anmeldung über Shopify-Produktlink.
 - 10 km/HM und Lauf-ABC als „In Planung“ mit „Interesse melden“ (E-Mail); Inhalte dort sind Vorschläge.
+
+## Änderungen 2026-10-16
+- Einsteiger-Laufkurs: Status `demnaechst`, die Startnummer zeigt „Frühjahr / Kursstart“ statt des Preises. Das gilt für die Kursübersicht, die Kursseite und die Startseite.
+- Anmelde-Link zu Shopify entfernt. Die Kursseite zeigt stattdessen die Eckdaten vom Flyer: Von 0 auf 5 km, 8 Wochen, 1× pro Woche mit Coach, Trainingsplan für zu Hause.
+- Dazu der Hinweis „Der nächste Kurs startet im Frühjahr“ und „Interesse melden“ per Mail.
+- Flyer (PROJ-8) und Social-Post (PROJ-9) zeigen noch 130 € und „Jetzt anmelden“. Sie werden angepasst, sobald Termine und Preis für das Frühjahr feststehen.

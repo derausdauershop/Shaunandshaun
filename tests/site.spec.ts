@@ -48,9 +48,11 @@ test.describe("website", () => {
     await expect(page.locator("main").getByRole("img", { name: "Absolute Run Ausdauer" })).toHaveCount(0);
   });
 
-  test("course page links to the Shopify booking", async ({ page }) => {
+  test("beginner course shows the spring start instead of a booking link", async ({ page }) => {
     await page.goto("/run-academy/einsteiger-laufkurs");
-    await expect(page.getByRole("link", { name: "Jetzt anmelden" })).toHaveAttribute("href", /myshopify\.com\/products\/einsteiger-laufkurs/);
+    await expect(page.getByText("Frühjahr").first()).toBeVisible();
+    await expect(page.getByText("8 Wochen")).toBeVisible();
+    await expect(page.locator('a[href*="myshopify.com/products/einsteiger-laufkurs"]')).toHaveCount(0);
   });
 
   test("open status renders for both stores", async ({ page }) => {

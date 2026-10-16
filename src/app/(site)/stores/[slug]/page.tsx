@@ -11,6 +11,7 @@ import { StoreJsonLd } from "@/components/site/store-jsonld";
 import { Button } from "@/components/ui/button";
 import { ANALYSIS_STEPS } from "@/content/services";
 import { STORES, mapsUrl, storeBySlug } from "@/content/stores";
+import { TeamCard } from "@/components/site/team-card";
 import { advisorsFor } from "@/content/team";
 import { summarize } from "@/lib/opening-hours";
 
@@ -131,10 +132,7 @@ export default async function StorePage({ params }: { params: Promise<{ slug: st
       <SiteSection km={s.slug === "siegen" ? 3 : 2} kicker="Team" title={`Dein Team in ${s.city}`} tone="ink">
         <ul className="grid gap-px overflow-hidden rounded-sm bg-paper/10 sm:grid-cols-2 lg:grid-cols-4">
           {team.map((m) => (
-            <li key={m.name} className="bg-ink p-5">
-              <p className="font-display text-xl font-bold uppercase">{m.name}</p>
-              <p className="text-sm text-muted-foreground">{m.role}</p>
-            </li>
+            <TeamCard key={m.name} member={m} />
           ))}
         </ul>
       </SiteSection>

@@ -6,7 +6,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { SiteSection } from "@/components/site/section";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { COURSES } from "@/content/academy";
+import { COURSES, courseStatusLabel } from "@/content/academy";
 
 export const metadata: Metadata = {
   title: "Run Academy",
@@ -33,15 +33,19 @@ export default function AcademyPage() {
           {COURSES.map((c) => (
             <li key={c.slug} className="flex flex-col rounded-sm bg-white p-6 ring-1 ring-border">
               <div className="flex items-start justify-between gap-4">
-                <Badge variant={c.status === "buchbar" ? "default" : "outline"} className="font-mono uppercase tracking-[0.15em]">
-                  {c.status === "buchbar" ? "Jetzt buchbar" : "In Planung"}
+                <Badge variant={c.status === "in-planung" ? "outline" : "default"} className="font-mono uppercase tracking-[0.15em]">
+                  {courseStatusLabel(c)}
                 </Badge>
-                {c.price && <StartNumber number={c.price.replace(" ", "")} variant="signal" size="sm" className="-mt-2 rotate-3" />}
+                {c.start ? (
+                  <StartNumber number={c.start} label="Kursstart" variant="signal" size="sm" className="-mt-2 rotate-3" />
+                ) : (
+                  c.price && <StartNumber number={c.price.replace(" ", "")} variant="signal" size="sm" className="-mt-2 rotate-3" />
+                )}
               </div>
               <h2 className="mt-6 text-4xl">{c.title}</h2>
               <p className="mt-1 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">{c.level}</p>
               <p className="mt-4 flex-1 text-muted-foreground">{c.summary}</p>
-              <Button asChild variant={c.status === "buchbar" ? "signal" : "outline"} className="mt-6 self-start">
+              <Button asChild variant={c.status === "in-planung" ? "outline" : "signal"} className="mt-6 self-start">
                 <Link href={`/run-academy/${c.slug}`}>{c.status === "buchbar" ? "Details & Anmeldung" : "Mehr erfahren"}</Link>
               </Button>
             </li>

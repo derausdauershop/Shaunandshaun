@@ -173,7 +173,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="flex justify-center">
-            <StartNumber number="130€" label="Einsteigerkurs" sublabel="inkl. Trainingsplan" variant="signal" className="rotate-3 scale-110" />
+            <StartNumber number="Frühjahr" label="Kursstart" sublabel="Einsteigerkurs" variant="signal" className="rotate-3 scale-110" />
           </div>
         </div>
       </section>
